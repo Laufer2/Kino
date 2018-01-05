@@ -9,7 +9,7 @@ class baza{
 
 
     private function spoji(){
-        $mysqli = new mysqli( self::server, self::korisnik, self::password, self::dbime);
+        $mysqli = new mysqli( self::server, self::username, self::password, self::dbime);
 
         if ($mysqli->connect_errno) {
             echo "Pogreška prilikom spajanja na bazu:".$mysqli->connect_errno.", ".mysqli_connect_error();

@@ -1,6 +1,5 @@
 
 {if isset($korisnicko)}
-    <script src="js/korisnicko_ime_ajax_provjera.js"></script>
+    <script src="js/registracija_validacija.js"></script>
 {/if}
-
 </body>

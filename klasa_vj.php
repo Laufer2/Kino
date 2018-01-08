@@ -17,9 +17,12 @@ class auto{
 
 }
 
-$objekt = new auto();
+require_once 'datoteka.php';
+require_once 'virtualno_vrijeme.php';
 
-$objekt->ispis();
+$dat = new datoteka();
+$vv = new virtualno_vrijeme($dat);
 
-$objekt->a = " sve";
-echo $objekt->a;
+ $vv->postavi();
+
+echo $dat->dohvati('pomak');

@@ -32,12 +32,10 @@ class baza{
 
         if(!$rezultat){
             $rezultat = null;
-            trigger_error("Greška kod upita: ". $upit ." Greška: ". $veza->error);
+            return $rezultat;
         }
 
         self::prekini($veza);
-
-        //mysqli_result object
         return $rezultat;
     }
 

@@ -2,7 +2,6 @@ $( document ).ready( function() {
 
     "use strict";
 
-    var moguce_slanje = false;
     var polje_validacija = [0,0,0,0,0,0];
 
     function required(){
@@ -134,5 +133,18 @@ $( document ).ready( function() {
         if(!required() || validacija()){
             event.preventDefault();
         }
+        var forma = $("#registracija");
+
+        $.ajax({
+            type: "POST",
+            url: "registracija_obrada.php",
+            data: forma.serialize(),
+            
+            success: function (data) {
+                $("#greske").html(data['poruka']);
+            }
+
+
+        });
     });
 });

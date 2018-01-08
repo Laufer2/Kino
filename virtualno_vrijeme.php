@@ -16,26 +16,35 @@ class virtualno_vrijeme
     function dohvati()
     {
         $pomak = $this->dat->dohvati("pomak");
-        return $pomak;
-
+        if ($pomak !== false){
+            return $pomak;
+        }else{
+            return false;
+        }
     }
 
     //dohvaćanje pomaka sa stranice i zapisivanje u datoteku kino.ini
     function postavi()
     {
-        $json = file_get_contents('http://barka.foi.hr/WebDiP/pomak_vremena/pomak.php?format=json');
-        $polje = json_decode($json, true);
-        $novi_pomak = 0;
+        if($json = @file_get_contents('http://barka.foi.hr/WebDiP/pomak_vremena/pomak.php?format=json'))
+        {
+            $polje = json_decode($json, true);
+            $novi_pomak = 0;
 
-        foreach ($polje as $webdip => $vrijednosti){
-            foreach ($vrijednosti as $vrijeme => $pomak){
-                foreach ($pomak as $broj_sati => $vrijednost){
-                    foreach ($vrijednost as $item => $value){
-                        $novi_pomak = $value;
+            foreach ($polje as $webdip => $vrijednosti){
+                foreach ($vrijednosti as $vrijeme => $pomak){
+                    foreach ($pomak as $broj_sati => $vrijednost){
+                        foreach ($vrijednost as $item => $value){
+                            $novi_pomak = $value;
+                        }
                     }
                 }
             }
+            $this->dat->postavi('pomak',$novi_pomak);
         }
-        $this->dat->postavi('pomak',$novi_pomak);
+        else
+        {
+            return false;
+        }
     }
 }

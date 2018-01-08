@@ -23,6 +23,29 @@ require_once 'virtualno_vrijeme.php';
 $dat = new datoteka();
 $vv = new virtualno_vrijeme($dat);
 
- $vv->postavi();
+echo time();
+echo time() + ($dat->dohvati('rok_trajanja_aktivacijskog_koda')*60*60);
+/*
+if($dat->dohvati('trajanje_sesije') !== false){
+    echo $dat->dohvati('trajanje_sesije');
+}else{
+    echo "nien";
+}
 
-echo $dat->dohvati('pomak');
+*/
+if($vv->dohvati() !== false){
+    echo $vv->dohvati();
+}else{
+    echo "WWW";
+}
+
+/*
+if($vv->postavi() !== false){
+    echo "dobro";
+}else{
+    echo "nije dobro";
+}
+*/
+
+
+

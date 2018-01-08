@@ -1,5 +1,7 @@
 <form method="post" action="registracija_obrada.php" id="registracija" enctype="application/x-www-form-urlencoded">
 
+    <span id="greske"></span>
+
     <label for="ime">Ime: &malt; </label>
     <input type="text" name="ime" id="ime"> <br />
 

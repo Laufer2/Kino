@@ -7,7 +7,7 @@ class datoteka{
 
     function dohvati ($parametar){
 
-        if ($polje = parse_ini_file($this->ime_datoteke)) {
+        if ($polje = @parse_ini_file($this->ime_datoteke)) {
 
             foreach ($polje as $kljuc => $vrijednost) {
                 if ($parametar == $kljuc) {
@@ -21,7 +21,7 @@ class datoteka{
 
     function postavi ($parametar, $nova_vrijednost){
 
-        if ($polje = parse_ini_file($this->ime_datoteke)) {
+        if ($polje = @parse_ini_file($this->ime_datoteke)) {
             $novi_zapis = '';
             $datoteka = fopen($this->ime_datoteke,"w");
 

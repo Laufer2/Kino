@@ -2,7 +2,6 @@
 require_once '_header.php';
 
 $title = "Registracija";
-$jquery = "da";
 $korisnicko_provjera = "da";
 
 $smarty->assign('Naslov_stranice',$title);

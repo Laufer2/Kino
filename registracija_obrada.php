@@ -10,14 +10,15 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
     $ime = htmlspecialchars(filter_input(INPUT_POST, 'ime', FILTER_SANITIZE_STRING));
     $prezime = htmlspecialchars(filter_input(INPUT_POST, 'prezime', FILTER_SANITIZE_STRING));
     $email = htmlspecialchars(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
-    $korisnicko_ime = htmlspecialchars(filter_input(INPUT_POST, 'korime', FILTER_SANITIZE_STRING));
+    $korisnicko_ime = htmlspecialchars(filter_input(INPUT_POST, 'korisnicko_ime', FILTER_SANITIZE_STRING));
     $lozinka = htmlspecialchars(filter_input(INPUT_POST, 'lozinka', FILTER_SANITIZE_STRING));
     $ponovljena_lozinka = htmlspecialchars(filter_input(INPUT_POST, 'ponovo_lozinka', FILTER_SANITIZE_STRING));
 
-
-    if(!preg_match("/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/", $email)){
-        echo "Nepravilno strukturirana e-mail adresa.";
-    }
+/*
+    if(!preg_match("/^[a-zA-Z0-9.!#$%&’*+/?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/", $email)){
+       posalji_poruku("Nepravilno strukturirana e-mail adresa.");
+       exit();
+    }*/
 
     $upit = "SELECT * FROM Korisnik WHERE email = '$email';";
     $baza = new baza();
@@ -52,7 +53,6 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
         exit();
     }
 
-    //upiši podatke u bazu - tablica korisnik
     $upit = "INSERT INTO Korisnik(korisnicko_ime, lozinka, email, ime, prezime, aktivacijski_kod, aktivacijski_rok ) VALUES 
               ('$korisnicko_ime', '$lozinka', '$email', '$ime', '$prezime', '$aktivacijski_kod', '$aktivacijski_rok');";
 
@@ -65,13 +65,9 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
             ."Vaša lozinka: $lozinka <br/><br/>"
             //."Aktivirajte Vaš račun klikom na
             // <a href='http://barka.foi.hr/WebDiP/2015_projekti/WebDiP2015x047/aktivacija.php?kod=$aktivacijski_kod'>aktivacijski link </a>."
-            ."Aktivirajte Vaš račun klikom na <a href='localhost:8000/kino/aktivacija.php?kod=$aktivacijski_kod'>aktivacijski link.</a>";
+            ."Aktivirajte Vaš račun klikom na <a href='http://localhost:8000/kino/aktivacija.php?kod=$aktivacijski_kod'>aktivacijski link.</a>";
 
-        $header = "MIME-Version: 1.0" . "\r\n";
-        $header .= "Content-type:text/html; charset=UTF-8" . "\r\n";
-        $header .= "From: webmaster@kino.org" . "\r\n";
-
-        if(mail($email, $naslov, $poruka, $header)){
+        if(posalji_mail($email, $naslov, $poruka)){
             posalji_poruku("Uspješno ste se registrirali. Aktivacijski mail je poslan na '$email' <br>
                             Rok za aktivaciju vašeg računa iznosi '$rok_trajanja_aktivacijskog_koda'h.");
             // dodati zapis o uspješnoj registraciji u log

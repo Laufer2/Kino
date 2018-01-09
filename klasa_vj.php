@@ -23,29 +23,16 @@ require_once 'virtualno_vrijeme.php';
 $dat = new datoteka();
 $vv = new virtualno_vrijeme($dat);
 
-echo time();
-echo time() + ($dat->dohvati('rok_trajanja_aktivacijskog_koda')*60*60);
-/*
-if($dat->dohvati('trajanje_sesije') !== false){
-    echo $dat->dohvati('trajanje_sesije');
-}else{
-    echo "nien";
-}
+$email = 'ivan@localhost.com';
+$naslov = 'Testni mail';
+$poruka = 'Poruka';
+$headers = 'From: webmaster@kino.org';
 
-*/
-if($vv->dohvati() !== false){
-    echo $vv->dohvati();
+if(mail($email, $naslov, $poruka, $headers)){
+    echo "Poslano.";
 }else{
-    echo "WWW";
+    echo "nije poslano";
 }
-
-/*
-if($vv->postavi() !== false){
-    echo "dobro";
-}else{
-    echo "nije dobro";
-}
-*/
 
 
 

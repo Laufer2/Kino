@@ -1,8 +1,7 @@
 <form method="post" action="registracija_obrada.php" id="registracija" enctype="application/x-www-form-urlencoded">
 
-    <span id="greske"></span>
 
-    <label for="ime">Ime: &malt; </label>
+    <label for="ime">Ime: </label>
     <input type="text" name="ime" id="ime"> <br />
 
     <span id="ime_poruka" class="poruka"></span> <br />
@@ -32,6 +31,8 @@
 
     <span id="ponovo_lozinka_poruka" class="poruka"></span> <br />
 
-    <input type="submit" value="Registriraj se" name="rega" >
+    <input type="submit" value="Registriraj se" id="submit" name="rega" >
+
+    <span id="greske"></span>
 
 </form>

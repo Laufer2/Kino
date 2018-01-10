@@ -5,7 +5,6 @@ $title = "Registracija";
 $korisnicko_provjera = "da";
 
 $smarty->assign('Naslov_stranice',$title);
-$smarty->assign('jquery', $jquery);
 $smarty->assign('korisnicko', $korisnicko_provjera);
 
 $smarty->display('head.tpl');

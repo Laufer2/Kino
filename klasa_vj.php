@@ -12,27 +12,23 @@ class auto{
      function ispis(){
          $this->postavi();
          echo $this->a;
-
      }
-
 }
 
 require_once 'datoteka.php';
-require_once 'virtualno_vrijeme.php';
 
 $dat = new datoteka();
-$vv = new virtualno_vrijeme($dat);
+$vr = 0;
+$dat->postavi("pomak", $vr);
+$pomak = $dat->dohvati('pomak');
 
-$email = 'ivan@localhost.com';
-$naslov = 'Testni mail';
-$poruka = 'Poruka';
-$headers = 'From: webmaster@kino.org';
+$a = time() + ($pomak*60*60);
 
-if(mail($email, $naslov, $poruka, $headers)){
-    echo "Poslano.";
-}else{
-    echo "nije poslano";
-}
+
+echo "sada: " . time() . "<br/>";
+echo "s pomakom: " .$a. "<br/> ";
+echo "pomak u sekundama: ".$pomak*60*60 . "<br>";
+echo "pomak u satima: ". $pomak;
 
 
 

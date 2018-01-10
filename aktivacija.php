@@ -3,6 +3,7 @@
 require_once 'baza.php';
 require_once 'serverske_poruke.php';
 require_once '_header.php';
+require_once 'datoteka.php';
 
 $title = "Aktivacija";
 $novi_akt_link = "da";
@@ -18,17 +19,21 @@ if(filter_input(INPUT_GET, 'kod') !== null){
 
     $aktivacijski_kod = filter_input(INPUT_GET, 'kod');
 
+    $dat = new datoteka();
+    $pomak = $dat->dohvati("pomak");
+
     $baza = new baza();
     $upit = "SELECT aktivacijski_rok FROM korisnik WHERE aktivacijski_kod = '$aktivacijski_kod'";
 
     if ( $podaci = $baza->selectdb($upit)){
 
-        $akt_rok = $podaci->fetch_array();
-
-        $akt_rok = intval($akt_rok) * 1000;
+        $akt = $podaci->fetch_array();
+        $akt_rok = $akt['aktivacijski_rok'];
 
         //ako nije istekao
-        if ( $akt_rok >= time()){
+        if ($akt_rok >= (time() + ($pomak*60*60))){
+
+            $a = time() + ($pomak*60*60);
 
             $upit = "UPDATE Korisnik SET status_aktivacije = 1 WHERE aktivacijski_kod='$aktivacijski_kod'";
             $baza->update($upit);

@@ -3,6 +3,7 @@ $( document ).ready( function() {
     "use strict";
 
     var polje_validacija = [0,0,0,0,0,0,0];
+    var vazeci_email= false;
 
     function required(){
         var id = "";
@@ -16,7 +17,7 @@ $( document ).ready( function() {
     }
 
     function validacija() {
-        required();
+        $("#greske3").html("");
         for ( var i = 0; i < polje_validacija.length; i++){
             if(polje_validacija[i] === 0){
                 return false;
@@ -78,33 +79,36 @@ $( document ).ready( function() {
             if(!regex.test(email)){
                 polje_validacija[0] = 0;
                 $("#email_poruka").html("Nevazeca struktura e-mail adrese.");
+                vazeci_email = false;
             }else{
                 polje_validacija[0] = 1;
                 $("#email_poruka").html("");
+                vazeci_email = true;
             }
-
-            $.ajax({
-                type: "GET",
-                datatype: "JSON",
-                url: "registracija_ajax_provjera.php",
-                data: {
-                    'email': $(this).val()
-                },
-                success: function (data) {
-                    var polje = JSON.parse(data);
-                    if (polje["broj_redova"] > 0) {
-                        $("#email_poruka").html("Postoji korisnik s tom e-mail adresom");
-                        polje_validacija[6] = 0;
-                    } else {
-                        $("#email_poruka").html("");
-                        polje_validacija[6] = 1;
+            if(vazeci_email){
+                $.ajax({
+                    type: "GET",
+                    datatype: "JSON",
+                    url: "registracija_ajax_provjera.php",
+                    data: {
+                        'email': $(this).val()
+                    },
+                    success: function (data) {
+                        var polje = JSON.parse(data);
+                        if (polje["broj_redova"] > 0) {
+                            $("#email_poruka").html("Postoji korisnik s tom e-mail adresom");
+                            polje_validacija[6] = 0;
+                        } else {
+                            $("#email_poruka").html("");
+                            polje_validacija[6] = 1;
+                        }
+                    },
+                    error: function () {
+                        $("#email_poruka").html("Greska prilikom provjere korisnickog imena.");
+                        $("input[type='submit']").css("display", "none");
                     }
-                },
-                error: function () {
-                    $("#email_poruka").html("Greska prilikom provjere korisnickog imena.");
-                    $("input[type='submit']").css("display", "none");
-                }
-            });
+                });
+            }
         }
 
     });
@@ -112,9 +116,8 @@ $( document ).ready( function() {
 
     $("#registracija").submit( function(event) {
 
-        if(validacija()){
-            event.preventDefault();
-        }
+        required();
+        var forma = $("#registracija");
 
         var lozinka = $("#lozinka").val();
         var ponovljena_lozinka = $("#ponovo_lozinka").val();
@@ -145,27 +148,31 @@ $( document ).ready( function() {
                 $("#ponovo_lozinka_poruka").html("");
             }
         }
-        /*
+
         var kok = "";
-        $("#greske").html("");
+        $("#greske2").html("");
         for (var i=0; i<polje_validacija.length;i++){
             kok += polje_validacija[i];
         }
-        $("#greske").html(kok); */
+        $("#greske2").html(kok);
 
-        var forma = $("#registracija");
         event.preventDefault();
 
-        $.ajax({
-            type: "POST",
-            url: "registracija_obrada.php",
-            data: forma.serialize(),
+        if(!validacija()){
+            return false;
+        }else{
+
+            $.ajax({
+                type: "POST",
+                url: "registracija_obrada.php",
+                data: forma.serialize(),
 
 
-            success: function (data) {
-                var polje = JSON.parse(data);
-                $("#greske").html(polje['poruka']);
-            }
-        });
+                success: function (data) {
+                    var polje = JSON.parse(data);
+                    $("#greske").html(polje['poruka']);
+                }
+            });
+        }
     });
 });

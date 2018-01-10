@@ -31,8 +31,9 @@
 
     <span id="ponovo_lozinka_poruka" class="poruka"></span> <br />
 
-    <input type="submit" value="Registriraj se" id="submit" name="rega" >
+    <input type="submit" value="Registriraj se" id="submit" name="rega" ><br>
 
-    <span id="greske"></span>
+    <span id="greske"></span><br>
+
 
 </form>

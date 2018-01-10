@@ -1,7 +1,6 @@
 <?php
 
 require_once 'baza.php';
-require_once 'virtualno_vrijeme.php';
 require_once 'datoteka.php';
 require_once 'serverske_poruke.php';
 
@@ -10,14 +9,14 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
     $email = htmlspecialchars(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
 
     $dat = new datoteka();
-    $sati = $dat->dohvati('rok_trajanja_aktivacijskog_koda');
+    $sati = $dat->dohvati('rok_trajanja_aktivacijskog_linka');
 
-    $vrijeme = new virtualno_vrijeme($dat);
-    $pomak = $vrijeme->dohvati();
-    $akt_rok = time() + $pomak + ($sati * 60 * 60);
+    $pomak = $dat->dohvati('pomak');
+    $akt_rok = time() + ($pomak*60*60) + ($sati * 60 * 60);
 
     $baza = new baza();
     $upit = "SELECT aktivacijski_kod FROM korisnik WHERE email = '$email';";
+
     if($podaci = $baza->selectdb($upit)){
         $akt_kod = $podaci->fetch_array();
         $aktivacijski_kod = $akt_kod['aktivacijski_kod'];

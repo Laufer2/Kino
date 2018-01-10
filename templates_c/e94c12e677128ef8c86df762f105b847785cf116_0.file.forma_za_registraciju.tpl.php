@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-09 22:49:58
+/* Smarty version 3.1.30, created on 2018-01-10 00:30:58
   from "C:\xampp\htdocs\kino\templates\forma_za_registraciju.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a553906b6f8a5_82995914',
+  'unifunc' => 'content_5a5550b2f0b054_44188658',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e94c12e677128ef8c86df762f105b847785cf116' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\forma_za_registraciju.tpl',
-      1 => 1515534532,
+      1 => 1515540575,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a553906b6f8a5_82995914 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a5550b2f0b054_44188658 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <form method="post" action="registracija_obrada.php" id="registracija" enctype="application/x-www-form-urlencoded">
 
@@ -55,9 +55,10 @@ function content_5a553906b6f8a5_82995914 (Smarty_Internal_Template $_smarty_tpl)
 
     <span id="ponovo_lozinka_poruka" class="poruka"></span> <br />
 
-    <input type="submit" value="Registriraj se" id="submit" name="rega" >
+    <input type="submit" value="Registriraj se" id="submit" name="rega" ><br>
 
-    <span id="greske"></span>
+    <span id="greske"></span><br>
+
 
 </form><?php }
 }

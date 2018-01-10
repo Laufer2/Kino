@@ -2,7 +2,6 @@
 
 require_once 'baza.php';
 require_once 'datoteka.php';
-require_once 'virtualno_vrijeme.php';
 require_once 'serverske_poruke.php';
 
 if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
@@ -43,11 +42,12 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
 
     $aktivacijski_kod = sha1($email);
 
-    //postavi aktivacijski rok ( s obzirom na trenutno postavljeno vrijeme )
-    $datoteka = new datoteka();
-    $rok_trajanja_aktivacijskog_koda = $datoteka->dohvati('rok_trajanja_aktivacijskog_koda');
+    $dat = new datoteka();
+    $rok_trajanja_aktivacijskog_koda = $dat->dohvati('rok_trajanja_aktivacijskog_linka');
+    $pomak = $dat->dohvati("pomak");
+
     if($rok_trajanja_aktivacijskog_koda !== false){
-        $aktivacijski_rok = time() + ($rok_trajanja_aktivacijskog_koda*60*60);
+        $aktivacijski_rok = time() + ($pomak*60*60) + ($rok_trajanja_aktivacijskog_koda*60*60) ;
     }else{
         posalji_poruku("Nemoguće dohvatiti konfiguracijsku datoteku sustava.");
         exit();
@@ -69,7 +69,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
 
         if(posalji_mail($email, $naslov, $poruka)){
             posalji_poruku("Uspješno ste se registrirali. Aktivacijski mail je poslan na '$email' <br>
-                            Rok za aktivaciju vašeg računa iznosi '$rok_trajanja_aktivacijskog_koda'h.");
+                            Rok za aktivaciju vašeg računa iznosi $rok_trajanja_aktivacijskog_koda h. $aktivacijski_rok time()");
             // dodati zapis o uspješnoj registraciji u log
         }else{
             posalji_poruku("Aktivacijski mail nije poslan. Kontaktirajte administratora.");

@@ -16,9 +16,8 @@ class auto{
 }
 
 require_once 'datoteka.php';
-/*
 $dat = new datoteka();
-$vr = 25;
+$vr = 0;
 $dat->postavi("pomak", $vr);
 $pomak = $dat->dohvati('pomak');
 
@@ -30,8 +29,6 @@ echo "sada: " . time() . "<br/>";
 echo "s pomakom: " .$a. "<br/> ";
 echo "pomak u sekundama: ".$pomak*60*60 . "<br>";
 echo "pomak u satima: ". $pomak;
-*/
 
-echo phpinfo();
 
 

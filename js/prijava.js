@@ -2,19 +2,14 @@ $(document).ready(function() {
     "use strict"
 
     $.ajax({
-        url: "prijava.php",
-        type: "GET",
-        data:{
-            'kolacic':1
-        },
+        url: "kolacic.php",
+        type: "POST",
 
         success: function (data) {
-            var korisnicko_ime = data['poruka'];
-            if(korisnicko_ime !== "") {
-                $("#korisnicko_ime").attr('value', korisnicko_ime);
-            }
+            var poruka = JSON.parse(data);
+            $("#korisnicko_ime").val(poruka['poruka']);
+
         }
     });
-
 
 });

@@ -7,4 +7,8 @@
     <script src="js/novi_akt_link.js"></script>
 {/if}
 
+{if isset($prijava)}
+    <script src="js/prijava.js"></script>
+{/if}
+
 </body>

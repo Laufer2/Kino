@@ -16,19 +16,22 @@ class auto{
 }
 
 require_once 'datoteka.php';
-
+/*
 $dat = new datoteka();
-$vr = 0;
+$vr = 25;
 $dat->postavi("pomak", $vr);
 $pomak = $dat->dohvati('pomak');
 
 $a = time() + ($pomak*60*60);
 
+$f = 'ivan@localhost.com';
 
 echo "sada: " . time() . "<br/>";
 echo "s pomakom: " .$a. "<br/> ";
 echo "pomak u sekundama: ".$pomak*60*60 . "<br>";
 echo "pomak u satima: ". $pomak;
+*/
 
+echo phpinfo();
 
 

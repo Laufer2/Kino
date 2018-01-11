@@ -4,7 +4,10 @@ $(document).ready( function () {
     $("#novi_link").submit(function (event) {
         var forma = $("#novi_link");
         var email = $("#email").val();
+
         event.preventDefault();
+        $("#poruke").html("Slanje u tijeku...");
+
         $.ajax({
             url: 'novi_akt_link.php',
             type: 'POST',
@@ -16,8 +19,6 @@ $(document).ready( function () {
                 $("#poruke").html(json['poruka']);
 
             }
-
-
         });
 
     });

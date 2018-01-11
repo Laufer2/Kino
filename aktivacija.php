@@ -14,7 +14,6 @@ $smarty->assign('novi_aktivacijski_link',$novi_akt_link);
 $smarty->display('head.tpl');
 $smarty->display('zaglavlje.tpl');
 
-
 if(filter_input(INPUT_GET, 'kod') !== null){
 
     $aktivacijski_kod = filter_input(INPUT_GET, 'kod');
@@ -41,11 +40,27 @@ if(filter_input(INPUT_GET, 'kod') !== null){
             $smarty->assign('poruka','Uspješno ste aktivirali korisnički račun. Možete se prijaviti sa svojim podacima.');
 
         }else{
-            $smarty->assign('rok_istekao','Rok za aktivaciju je istekao. Unesite e-mail za ponovno slanje aktivacijskog linka.');
+            if(filter_has_var(INPUT_GET, 'status_aktivacije')){
 
+                $status = filter_input(INPUT_GET,'status_aktivacije');
+
+                if($status == 2){
+
+                    $smarty->assign('poruka','Vaš račun je zaključan. Kontaktirajte administratora.');
+
+                }
+
+                if($status == 1){
+
+                    $smarty->assign('rok_istekao', 'Niste aktivirali Vaš korisnički račun.
+                            Aktivirajte račun ili unesite e-mail za ponovno slanje aktivacijskog linka.');
+                }
+            }else{
+
+                $smarty->assign('rok_istekao', 'Rok za aktivaciju je istekao. Unesite e-mail za ponovno slanje aktivacijskog linka.');
+            }
         }
     }
 }
-
 $smarty->display('aktivacija.tpl');
 $smarty->display('podnozje.tpl');

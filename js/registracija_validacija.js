@@ -149,19 +149,20 @@ $( document ).ready( function() {
             }
         }
 
+        /*
         var kok = "";
         $("#greske2").html("");
         for (var i=0; i<polje_validacija.length;i++){
             kok += polje_validacija[i];
         }
-        $("#greske2").html(kok);
+        $("#greske2").html(kok);*/
 
         event.preventDefault();
 
         if(!validacija()){
             return false;
         }else{
-
+            $("#greske").html("Registracija u tijeku...");
             $.ajax({
                 type: "POST",
                 url: "registracija_obrada.php",

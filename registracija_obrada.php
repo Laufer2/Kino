@@ -40,8 +40,6 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
 
     /*lozinka mora imati veliko slovo te broj*/
 
-    $aktivacijski_kod = sha1($email);
-
     $dat = new datoteka();
     $rok_trajanja_aktivacijskog_koda = $dat->dohvati('rok_trajanja_aktivacijskog_linka');
     $pomak = $dat->dohvati("pomak");
@@ -53,13 +51,15 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
         exit();
     }
 
+    $aktivacijski_kod = sha1($email . $aktivacijski_rok);
+
     $upit = "INSERT INTO Korisnik(korisnicko_ime, lozinka, email, ime, prezime, aktivacijski_kod, aktivacijski_rok ) VALUES 
               ('$korisnicko_ime', '$lozinka', '$email', '$ime', '$prezime', '$aktivacijski_kod', '$aktivacijski_rok');";
 
     //slanje aktivacijskog mail-a
 
     if($baza->update($upit)){
-        $naslov = "Molimo vas aktivirajte svoj račun";
+        $naslov = "Molimo Vas aktivirajte vaš račun";
         $poruka = "Uspješno ste se registrirali na Kino.org. <br/> <br/>"
             ."Vaše korisničko ime: $korisnicko_ime <br/>"
             ."Vaša lozinka: $lozinka <br/><br/>"
@@ -69,7 +69,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
 
         if(posalji_mail($email, $naslov, $poruka)){
             posalji_poruku("Uspješno ste se registrirali. Aktivacijski mail je poslan na '$email' <br>
-                            Rok za aktivaciju vašeg računa iznosi $rok_trajanja_aktivacijskog_koda h. $aktivacijski_rok time()");
+                            Rok za aktivaciju vašeg računa iznosi $rok_trajanja_aktivacijskog_koda h.");
             // dodati zapis o uspješnoj registraciji u log
         }else{
             posalji_poruku("Aktivacijski mail nije poslan. Kontaktirajte administratora.");

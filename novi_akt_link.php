@@ -15,17 +15,16 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
     $akt_rok = time() + ($pomak*60*60) + ($sati * 60 * 60);
 
     $baza = new baza();
-    $upit = "SELECT aktivacijski_kod FROM korisnik WHERE email = '$email';";
+    $upit = "SELECT id_korisnik FROM korisnik WHERE email = '$email';";
 
     if($podaci = $baza->selectdb($upit)){
-        $akt_kod = $podaci->fetch_array();
-        $aktivacijski_kod = $akt_kod['aktivacijski_kod'];
+        $aktivacijski_kod = sha1($email . $akt_rok);
     }else{
         posalji_poruku("Ne postoji korisnički račun s tom e-mail adresom.");
         exit();
     }
 
-    $upit = "UPDATE korisnik SET aktivacijski_rok = $akt_rok WHERE email = '$email';";
+    $upit = "UPDATE korisnik SET aktivacijski_rok = $akt_rok, aktivacijski_kod = '$aktivacijski_kod' WHERE email = '$email';";
 
     if($baza->update($upit)){
         //slanje novog akt maila
@@ -34,10 +33,9 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
         $poruka = "Aktivirajte Vaš račun klikom na <a href='http://localhost:8000/kino/aktivacija.php?kod=$aktivacijski_kod'>aktivacijski link.</a>";
 
         if(posalji_mail($email,$naslov,$poruka)){
-            posalji_poruku("Aktivacijski link je poslan na vašu e-mail adresu. Račun možete aktivirati u sljedećih $sati h.");
+            posalji_poruku("Aktivacijski link je poslan na vašu e-mail adresu. Račun možete aktivirati tokom $sati h.");
         }else{
             posalji_poruku("Greška kod slanja aktivacijskog linka. Pokušajte ponovo.");
         }
-
     }
 }

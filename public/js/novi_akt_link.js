@@ -9,7 +9,7 @@ $(document).ready( function () {
         $("#poruke").html("Slanje u tijeku...");
 
         $.ajax({
-            url: 'novi_akt_link.php',
+            url: 'src/registracija/novi_akt_link.php',
             type: 'POST',
             data: forma.serialize(),
 

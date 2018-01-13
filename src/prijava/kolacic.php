@@ -1,5 +1,5 @@
 <?php
-require_once 'serverske_poruke.php';
+require_once '../serverske_poruke.php';
 
 if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
 

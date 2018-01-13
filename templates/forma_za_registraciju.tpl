@@ -1,4 +1,4 @@
-<form method="post" action="registracija_obrada.php" id="registracija" enctype="application/x-www-form-urlencoded">
+<form method="post" action="src/registracija/registracija_obrada.php" id="registracija" enctype="application/x-www-form-urlencoded">
 
 
     <label for="ime">Ime: </label>

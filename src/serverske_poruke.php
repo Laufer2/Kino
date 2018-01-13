@@ -1,7 +1,7 @@
 <?php
 
-function posalji_poruku($sadrzaj){
-    $polje = array("poruka" => $sadrzaj);
+function posalji_poruku($sadrzaj, $redirect=0){
+    $polje = array("poruka" => $sadrzaj, "redirect" => $redirect);
     echo json_encode($polje);
 }
 

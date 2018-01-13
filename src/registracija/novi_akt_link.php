@@ -1,8 +1,8 @@
 <?php
 
-require_once 'baza.php';
-require_once 'datoteka.php';
-require_once 'serverske_poruke.php';
+require_once '../klase/baza.php';
+require_once '../klase/datoteka.php';
+require_once '../serverske_poruke.php';
 
 if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
 

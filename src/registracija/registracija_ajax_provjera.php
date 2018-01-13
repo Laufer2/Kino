@@ -1,6 +1,6 @@
 <?php
 
-    require_once 'baza.php';
+    require_once '../klase//baza.php';
 
     if (filter_has_var(INPUT_GET, 'email')){
 

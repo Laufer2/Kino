@@ -1,9 +1,9 @@
 <?php
 
-require_once 'baza.php';
-require_once 'serverske_poruke.php';
+require_once 'src/klase/baza.php';
+require_once 'src/serverske_poruke.php';
 require_once '_header.php';
-require_once 'datoteka.php';
+require_once 'src/klase/datoteka.php';
 
 $title = "Aktivacija";
 $novi_akt_link = "da";

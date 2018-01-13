@@ -47,7 +47,7 @@ $( document ).ready( function() {
                 $.ajax({
                     type: "GET",
                     datatype: "JSON",
-                    url: "registracija_ajax_provjera.php",
+                    url: "src/registracija/registracija_ajax_provjera.php",
                     data: {
                         'korisnicko_ime': $(this).val()
                     },
@@ -89,7 +89,7 @@ $( document ).ready( function() {
                 $.ajax({
                     type: "GET",
                     datatype: "JSON",
-                    url: "registracija_ajax_provjera.php",
+                    url: "src/registracija/registracija_ajax_provjera.php",
                     data: {
                         'email': $(this).val()
                     },
@@ -165,7 +165,7 @@ $( document ).ready( function() {
             $("#greske").html("Registracija u tijeku...");
             $.ajax({
                 type: "POST",
-                url: "registracija_obrada.php",
+                url: "src/registracija/registracija_obrada.php",
                 data: forma.serialize(),
 
 

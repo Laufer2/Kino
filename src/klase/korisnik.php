@@ -21,11 +21,19 @@ class korisnik
 
     }
 
-    public function get_kor_ime(){
+
+    public function getKorisnickoIme()
+    {
         return $this->korisnicko_ime;
     }
 
-    public function get_ime(){
-        return $this->ime;
+    public function getIdKorisnik()
+    {
+        return $this->id_korisnik;
+    }
+
+    public function getTipId()
+    {
+        return $this->tip_id;
     }
 }

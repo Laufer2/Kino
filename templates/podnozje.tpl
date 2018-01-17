@@ -23,12 +23,9 @@
     <script src="public/js/crud_korisnik.js"></script>
 {/if}
 
-{if isset($tip_korisnika)}
-    <script src="public/js/crud_tipkorisnika.js"></script>
+{if isset($katalozi)}
+    <script src="public/js/crud_katalozi.js"></script>
 {/if}
 
-{if isset($lokacija)}
-    <script src="public/js/crud_lokacija.js"></script>
-{/if}
 
 </body>

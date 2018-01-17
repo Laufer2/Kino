@@ -7,7 +7,7 @@ class datoteka{
 
     function dohvati ($parametar){
 
-        if ($polje = @parse_ini_file($this->ime_datoteke)) {
+        if ($polje = parse_ini_file($this->ime_datoteke)) {
 
             foreach ($polje as $kljuc => $vrijednost) {
                 if ($parametar == $kljuc) {

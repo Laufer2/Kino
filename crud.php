@@ -20,13 +20,53 @@ if(!isset($_GET['tablica'])){
             break;
         case "tipkorisnika":
             $tip_korisnika = "Tip korisnika";
-            $smarty->assign('tip_korisnika', $tip_korisnika);
+            $smarty->assign('katalozi', $tip_korisnika);
             $smarty->assign('Naslov_stranice',$tip_korisnika);
             break;
         case "lokacija":
-            $lokacija = "Lokacije";
-            $smarty->assign('lokacija', $lokacija);
-            $smarty->assign('Naslov_stranice', $lokacija);
+            $tablica = "Lokacije";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
+            break;
+        case "drzava":
+            $tablica = "Države";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
+            break;
+        case "grad":
+            $tablica = "Gradovi";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
+            break;
+        case "zanr":
+            $tablica = "Žanrovi";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
+            break;
+        case "osoba":
+            $tablica = "Osobe";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
+            break;
+        case "tipuloga":
+            $tablica = "Tip uloga";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
+            break;
+        case "tag":
+            $tablica = "Oznake";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
+            break;
+        case "stranica":
+            $tablica = "Stranice";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
+            break;
+        case "upit":
+            $tablica = "upit";
+            $smarty->assign('katalozi', $tablica);
+            $smarty->assign('Naslov_stranice', $tablica);
             break;
 
     }

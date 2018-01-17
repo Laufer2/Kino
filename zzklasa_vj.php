@@ -1,5 +1,6 @@
 <?php
 
+
 class auto{
 
      public $a = "unutra";
@@ -14,7 +15,7 @@ class auto{
          echo $this->a;
      }
 }
-
+/*
 require_once 'src/klase/datoteka.php';
 $dat = new datoteka();
 $vr = 0;
@@ -30,10 +31,8 @@ $f = 'ivan@localhost.com';
 echo "sada: " . time() . "<br/>";
 echo "s pomakom: " .$a. "<br/> ";
 echo "pomak u sekundama: ".$pomak*60*60 . "<br>";
-echo "pomak u satima: ". $pomak;
-session_start();
-$tip_korisnika = $_SESSION['kino']->getIdKorisnik;
+echo "pomak u satima: ". $pomak . "<br>";
+*/
+require_once 'src/stranice_ispisa.php';
 
-echo $tip_korisnika;
-
-
+echo stranice_ispisa("tipkorisnika",15);

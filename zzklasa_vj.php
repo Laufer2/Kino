@@ -35,4 +35,4 @@ echo "pomak u satima: ". $pomak . "<br>";
 */
 require_once 'src/stranice_ispisa.php';
 
-echo stranice_ispisa("tipkorisnika",15);
+echo ceil(4/3);

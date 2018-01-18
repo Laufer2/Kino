@@ -13,23 +13,30 @@
             <li><a href="crud.php?tablica=tag">Oznaka</a></li>
             <li><a href="crud.php?tablica=stranica">Stranica</a></li>
             <li><a href="crud.php?tablica=upit">Upit</a></li>
-
-
         </ul>
     </div>
 
-    <div>
-        <button class="gumb-kreiraj">Kreiraj novu lokaciju</button>
-    </div>
+    <div id="iznad-tablice">
+        <div id="search">
 
-    <div id="prikaz-tablice">
+        </div>
+        <div id="prikaz-tablice">
 
+        </div>
+
+        <div id="paginacija">
+
+        </div>
     </div>
 
     <div style="display: none;">
         <div id="dialog-potvrda" title="Obrisati red iz tablice?">
             <p>Zapis će se zauvijek izbrisati iz tablice. Jeste li sigurni?</p>
         </div>
+    </div>
+
+    <div id="forma">
+
     </div>
 
     <div id="test">

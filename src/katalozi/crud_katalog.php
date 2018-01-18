@@ -3,9 +3,14 @@
 require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
+require_once '../serverske_poruke.php';
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
+    if(!isset($_GET['tablica'])){
+        posalji_poruku("Tablica nije definirana");
+        exit();
+    }
     $tablica = filter_input(INPUT_GET, 'tablica');
     $pojam = filter_input(INPUT_GET, 'pojam');
     $sort = filter_input(INPUT_GET,'sort');
@@ -22,9 +27,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
     $prikazi = $dat->dohvati('prikazi_po_stranici');
 
-    $broj_stranica = stranice_ispisa($tablica, $prikazi);
-    $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
-
     $json = array();
     $json['podaci']=array();
 
@@ -39,9 +41,17 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             $rezultat = $baza->update($upit);
 
             break;
-        case 3: // ažuriranje (update)
-            $upit = "UPDATE $tablica SET $db_stupac WHERE $db_id = $id;";
+        case 3: //dohvati jednog
+            $upit = "SELECT * FROM $tablica WHERE $db_id = $id";
+            $rezultat = $baza->update($upit);
+            list($id, $naziv) = $rezultat->fetch_array();
+            $polje = array("id" => $id, "naziv" => $naziv);
+            echo json_encode($polje);
+            exit();
 
+        case 4: // ažuriranje (update)
+            $upit = "UPDATE $tablica SET $db_stupac = '$naziv' WHERE $db_id = $id;";
+            $rezultat = $baza->update($upit);
             break;
 
     }
@@ -62,20 +72,27 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
         }
     }else{*/
 
+    $broj_stranica = stranice_ispisa($tablica, $prikazi);
+
+    $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
 
     if(!$sort){ //bez sorta
 
         $upit = "SELECT * FROM $tablica";
-        if($broj_stranica){
+        if($akcija == 5 && $pojam != ""){
+            $upit .= " WHERE $db_stupac = '$pojam'";
+        }
+        if($broj_stranica){ // paginacija u searhu neće raditi jer treba izbrojati redove u search upitu
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
         $rezultat = $baza->selectdb($upit);
 
     }else{
+        $upit = "SELECT * FROM $tablica ORDER BY $db_stupac";
+
         if(!$broj_stranica){
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
-        $upit = "SELECT * FROM $tablica ORDER BY $db_stupac";
         $rezultat = $baza->selectdb($upit);
     }
 
@@ -88,6 +105,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
         array_push($json['podaci'], $polje);
     }
 
+    $json['broj_stranica'] = $broj_stranica;
     $json['tablica'] = $tablica;
 
     echo json_encode($json);

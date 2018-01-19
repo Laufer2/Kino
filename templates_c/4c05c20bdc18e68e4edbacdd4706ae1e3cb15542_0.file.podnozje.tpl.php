@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-17 15:10:33
+/* Smarty version 3.1.30, created on 2018-01-19 14:32:28
   from "C:\xampp\htdocs\kino\templates\podnozje.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a5f59590f7596_05058667',
+  'unifunc' => 'content_5a61f36c7dc3d2_47096841',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4c05c20bdc18e68e4edbacdd4706ae1e3cb15542' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\podnozje.tpl',
-      1 => 1516198027,
+      1 => 1516367636,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a5f59590f7596_05058667 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a61f36c7dc3d2_47096841 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
 <?php if (isset($_smarty_tpl->tpl_vars['korisnicko']->value)) {?>
@@ -49,21 +49,22 @@ function content_5a5f59590f7596_05058667 (Smarty_Internal_Template $_smarty_tpl)
 
 <?php if (isset($_smarty_tpl->tpl_vars['js_funkcije']->value)) {?>
     <?php echo '<script'; ?>
- src="public/js/crud_funkcije.js"><?php echo '</script'; ?>
+ src="public/js/funkcije.js"><?php echo '</script'; ?>
 >
 <?php }?>
 
-<?php if (isset($_smarty_tpl->tpl_vars['korisnik']->value)) {?>
+<?php if (isset($_smarty_tpl->tpl_vars['katal']->value)) {?>
     <?php echo '<script'; ?>
- src="public/js/crud_korisnik.js"><?php echo '</script'; ?>
+ src="public/js/crud/katalog.js"><?php echo '</script'; ?>
 >
 <?php }?>
 
-<?php if (isset($_smarty_tpl->tpl_vars['katalozi']->value)) {?>
+<?php if (isset($_smarty_tpl->tpl_vars['adresa']->value)) {?>
     <?php echo '<script'; ?>
- src="public/js/crud_katalozi.js"><?php echo '</script'; ?>
+ src="public/js/crud/adresa.js"><?php echo '</script'; ?>
 >
 <?php }?>
+
 
 
 </body>

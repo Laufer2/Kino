@@ -2,7 +2,7 @@ $(document).ready(function(){
     "use strict";
 
     $.ajax({
-        url: "src/katalozi/crud_katalog.php",
+        url: "src/crud/katalog.php",
         type: "GET",
         data:{
             tablica : crud.getUrlVariable("tablica"),
@@ -22,7 +22,7 @@ $(document).ready(function(){
 
     function nacrtaj_search(akcija){
         var tablica = crud.getUrlVariable("tablica");
-        var prikaz_searcha = "<form method='get' action='src/katalozi/crud_katalog.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
+        var prikaz_searcha = "<form method='get' action='src/crud/katalog.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
         prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
         prikaz_searcha += "<input type='hidden' name='tablica' value='"+tablica+"'>";
         prikaz_searcha += "<input type='hidden' name='akcija' value='"+akcija+"'>";
@@ -67,7 +67,7 @@ $(document).ready(function(){
 
     function nacrtaj_formu(akcija, id) {
         var tablica = crud.getUrlVariable("tablica");
-        var prikaz_forme = "<form action='src/katalozi/crud_katalog.php' ";
+        var prikaz_forme = "<form action='src/crud/katalog.php' ";
         prikaz_forme += "id='novi_zapis' method='get' enctype='application/x-www-form-urlencoded'>";
 
         prikaz_forme += "<label for='naziv_"+tablica+"'>"+tablica+"</label>";
@@ -117,7 +117,7 @@ $(document).ready(function(){
     $(document).on('click', '.broj-paginacija', function () {
 
         $.ajax({
-            url : 'src/katalozi/crud_katalog.php',
+            url : 'src/crud/katalog.php',
             type : 'GET',
             data : {
                 tablica : crud.getUrlVariable("tablica"),
@@ -147,7 +147,7 @@ $(document).ready(function(){
     $(document).on('click', '.gumb-edit', function() {
         var id = $(this).attr("data-id");
         $.ajax({
-            url: 'src/katalozi/crud_katalog.php',
+            url: 'src/crud/katalog.php',
             type: 'GET',
             data: {
                 tablica: crud.getUrlVariable("tablica"),
@@ -177,7 +177,7 @@ $(document).ready(function(){
                     //brisanje i refresh tablice
 
                     $.ajax({
-                        url: 'src/katalozi/crud_katalog.php',
+                        url: 'src/crud/katalog.php',
                         type: 'GET',
                         data: {
                             tablica : crud.getUrlVariable("tablica"),

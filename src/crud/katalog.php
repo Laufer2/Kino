@@ -13,7 +13,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
     }
     $tablica = filter_input(INPUT_GET, 'tablica');
     $pojam = filter_input(INPUT_GET, 'pojam');
+
     $sort = filter_input(INPUT_GET,'sort');
+
     $aktivna_stranica = filter_input(INPUT_GET,'stranica');
     $id = filter_input(INPUT_GET, 'id');
     $akcija = filter_input(INPUT_GET, 'akcija');
@@ -79,10 +81,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
     if(!$sort){ //bez sorta
 
         $upit = "SELECT * FROM $tablica";
-        if($akcija == 5 && $pojam != ""){
+        if($akcija == 5 && $pojam != ""){ //search
             $upit .= " WHERE $db_stupac = '$pojam'";
         }
-        if($broj_stranica){ // paginacija u searhu neće raditi jer treba izbrojati redove u search upitu
+        if($broj_stranica){ // paginacija u searchu neće raditi jer treba izbrojati redove u search upitu
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
         $rezultat = $baza->selectdb($upit);

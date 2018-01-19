@@ -16,16 +16,17 @@
 {/if}
 
 {if isset($js_funkcije)}
-    <script src="public/js/crud_funkcije.js"></script>
+    <script src="public/js/funkcije.js"></script>
 {/if}
 
-{if isset($korisnik)}
-    <script src="public/js/crud_korisnik.js"></script>
+{if isset($katal)}
+    <script src="public/js/crud/katalog.js"></script>
 {/if}
 
-{if isset($katalozi)}
-    <script src="public/js/crud_katalozi.js"></script>
+{if isset($adresa)}
+    <script src="public/js/crud/adresa.js"></script>
 {/if}
+
 
 
 </body>

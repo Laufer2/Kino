@@ -9,7 +9,16 @@ $smarty->assign('js_funkcije',"da");
 
 
 function crud_tablica($smarty, $tablica){
-    $smarty->assign($tablica, $tablica);
+    if($tablica == 'lokacija' || $tablica == "tipkorisnika"
+        || $tablica == 'zanr' || $tablica == "osoba"
+        || $tablica == "drzava" || $tablica == "grad"
+        || $tablica == "tipuloga" || $tablica == "tag"
+        || $tablica == " stranica" || $tablica == "upit"){
+        $smarty->assign('katalog', 'da');
+    }else{
+        $smarty->assign($tablica, $tablica);
+    }
+
     $smarty->assign('Naslov_stranice', $tablica);
 }
 
@@ -20,6 +29,7 @@ if(!isset($_GET['tablica'])){
     crud_tablica($smarty,$tablica);
     //$smarty->assign('katalog',$tablica);
 }
+
 
 
 $smarty->display('head.tpl');

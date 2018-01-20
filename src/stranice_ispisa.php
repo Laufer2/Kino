@@ -11,7 +11,6 @@ function stranice_ispisa($tablica, $prikazi){
 
     $redovi = $rezultat->num_rows;
 
-
     if($redovi > $prikazi){ // potrebna paginacija
 
         $stranice = $redovi / $prikazi;

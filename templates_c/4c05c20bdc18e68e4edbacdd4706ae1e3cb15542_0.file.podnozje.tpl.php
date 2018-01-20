@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-19 14:32:28
+/* Smarty version 3.1.30, created on 2018-01-20 18:34:08
   from "C:\xampp\htdocs\kino\templates\podnozje.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a61f36c7dc3d2_47096841',
+  'unifunc' => 'content_5a637d903f5617_42840081',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4c05c20bdc18e68e4edbacdd4706ae1e3cb15542' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\podnozje.tpl',
-      1 => 1516367636,
+      1 => 1516469646,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a61f36c7dc3d2_47096841 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a637d903f5617_42840081 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
 <?php if (isset($_smarty_tpl->tpl_vars['korisnicko']->value)) {?>
@@ -53,7 +53,7 @@ function content_5a61f36c7dc3d2_47096841 (Smarty_Internal_Template $_smarty_tpl)
 >
 <?php }?>
 
-<?php if (isset($_smarty_tpl->tpl_vars['katal']->value)) {?>
+<?php if (isset($_smarty_tpl->tpl_vars['katalog']->value)) {?>
     <?php echo '<script'; ?>
  src="public/js/crud/katalog.js"><?php echo '</script'; ?>
 >

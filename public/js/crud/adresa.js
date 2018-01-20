@@ -5,7 +5,7 @@ $(document).ready( function(){
         url : 'src/crud/adresa.php',
         type : 'POST',
         data : {
-            stranica : 0,
+            aktivna_stranica : 0,
             akcija : 10
         },
 
@@ -13,10 +13,8 @@ $(document).ready( function(){
             data = JSON.parse(data);
             $("#prikaz-tablice").html(nacrtaj_tablicu(data));
             $("#search").html(search(5));
-            $("#paginacija").html(paginacija(data['broj_stranica']));
-
+            $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
         }
-
     });
 
     function search(akcija){
@@ -29,21 +27,57 @@ $(document).ready( function(){
         return prikaz_searcha;
     }
 
-    function paginacija(broj_stranica) {
+    function paginacija(aktivna_stranica, broj_stranica, tip_sorta, stupac) {
 
-        var paginacija = "";
-        var broj=0;
-        for (var i=0; i<broj_stranica; i++){
-            broj = i+1;
-            paginacija += "<span class='broj-paginacija' style='cursor: pointer' data-stranica='"+ i +"'>"+ broj +" </span>";
+        var broj, pocetak = 0;
+
+        var paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
+            "data-stranica='0' data-tip_sorta='"+tip_sorta+"' data-stupac='"+ stupac +"'> |< &nbsp;</span>";
+
+        if(aktivna_stranica > 2){
+            paginacija += "<span class='prednje'>&nbsp; ... &nbsp;</span>"; // na početku
+        }else{
+            $(".prednje").css("display: none;");
         }
-        return paginacija;
 
+        var max = aktivna_stranica + 3;
+        if( max > broj_stranica){
+            max = broj_stranica;
+        }
+
+        if(aktivna_stranica < 3){
+            pocetak = 0;
+        }else{
+            pocetak = aktivna_stranica - 2;
+        }
+
+        for (var i = pocetak; i < max; i++){
+            broj = i+1;
+            if( i === aktivna_stranica){
+                paginacija += "<span class='broj-paginacija' style='cursor: pointer; color: red' " +
+                    "data-stranica='"+ i +"' data-stupac='"+ stupac +"' data-tip_sorta='"+tip_sorta+"'>"+ broj +" </span>";
+                continue;
+            }
+            paginacija += "<span class='broj-paginacija' style='cursor: pointer' " +
+                "data-stranica='"+ i +"' data-stupac='"+ stupac +"' data-tip_sorta='"+tip_sorta+"'>"+ broj +" </span>";
+        }
+
+        if((aktivna_stranica+3) < broj_stranica){
+            paginacija += "<span class='zadnje'>&nbsp; ... &nbsp;</span>"; // na kraju
+        }else{
+            $(".zadnje").css("display: none;");
+        }
+
+        var zadnja = broj_stranica-1;
+        paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
+            "data-stranica='"+ zadnja +"' data-stupac='"+ stupac +"' data-tip_sorta='"+tip_sorta+"'>&nbsp;>| </span>";
+
+        return paginacija;
     }
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraja'>";
+        var prikaz_tablice = "<button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
         prikaz_tablice += "</button>";
 
@@ -88,7 +122,7 @@ $(document).ready( function(){
         return prikaz_tablice;
     }
 
-    function nacrtaj_forma(lista, akcija, id) {
+    function nacrtaj_formu(lista, akcija, id) {
 
         var prikaz_forme = "<form action='src/crud/adresa.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
@@ -159,10 +193,41 @@ $(document).ready( function(){
             success: function (data) {
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-                $("#paginacija").html(paginacija(data['broj_stranica']));
+                $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
             }
         });
     }
+
+    $(document).on('click', '.broj-paginacija', function () {
+        var pojam, akcija="";
+        if($("#pojam").val() !== ""){
+            pojam = $("#pojam").val();
+            akcija = 5;
+        }
+        $.ajax({
+            url: "src/crud/adresa.php",
+            type: "POST",
+            data: {
+                aktivna_stranica: $(this).attr("data-stranica"),
+                tip_sorta: $(this).attr("data-tip_sorta"),
+                stupac: $(this).attr("data-stupac"),
+                pojam: pojam,
+                akcija: akcija
+            },
+
+            success: function (data) {
+                data = JSON.parse(data);
+                $("#prikaz-tablice").html(nacrtaj_tablicu(data));
+                if(data.stupac.length > 0){
+                    $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
+                }else{
+                    $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
+                }
+
+            }
+
+        });
+    });
 
     $(document).on('click', '.uzlazno', function () {
         sort('ASC', $(this).attr("data-stupac"));
@@ -185,6 +250,8 @@ $(document).ready( function(){
             success: function (data) {
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
+                $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
+
                 if(data.poruka['poruka']){
                     $("#test").html("Nema podataka.");
 
@@ -217,7 +284,7 @@ $(document).ready( function(){
                             data = JSON.parse(data);
                             $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                             $("#search").html(search(5));
-                            $("#paginacija").html(paginacija(data['broj_stranica']));
+                            $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, "",""));
 
                         }
                     });
@@ -248,9 +315,7 @@ $(document).ready( function(){
 
             success: function (data) {
                 var lista = JSON.parse(data);
-                $("#forma").html( nacrtaj_forma(lista, 2, 2));
-
-                $("#test").html("test");
+                $("#forma").html( nacrtaj_formu(lista, 2, 2));
 
                 var forma = $("#novi_zapis");
                 $("#ulica").val(lista['podaci'].ulica);
@@ -268,7 +333,7 @@ $(document).ready( function(){
 
     });
 
-    $(document).on('click', '#gumb-kreiraja', function() {
+    $(document).on('click', '#gumb-kreiraj', function() {
         var tablice = ["lokacija","grad","drzava"];
 
         $.ajax({
@@ -281,12 +346,9 @@ $(document).ready( function(){
 
             success: function (data) {
                 var lista = JSON.parse(data);
-                $("#forma").html( nacrtaj_forma(lista, 1 ,0));
+                $("#forma").html( nacrtaj_formu(lista, 1 ,0));
             }
         });
-
-        //selectmenu_podaci(tablice, 1);
-
     });
 
     $(document).on('submit', '#novi_zapis', function(event) {
@@ -311,9 +373,8 @@ $(document).ready( function(){
                     $("#forma").html("");
                 }
 
-                $("#paginacija").html(paginacija(data['broj_stranica']));
+                $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
                 $("#search").html(search(5));
-                //poruka potvrde?
             }
         });
 

@@ -19,7 +19,7 @@
     <script src="public/js/funkcije.js"></script>
 {/if}
 
-{if isset($katal)}
+{if isset($katalog)}
     <script src="public/js/crud/katalog.js"></script>
 {/if}
 

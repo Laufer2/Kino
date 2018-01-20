@@ -8,7 +8,7 @@ require_once '../serverske_poruke.php';
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
     if(!isset($_GET['tablica'])){
-        posalji_poruku("Tablica nije definirana");
+        posalji_poruku("Tablica nije definirana.");
         exit();
     }
     $tablica = filter_input(INPUT_GET, 'tablica');
@@ -58,22 +58,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
     }
 
-    /*
-    if($broj_stranica){//ima paginacija
-
-        if(!$sort){//bez sorta
-
-            $upit = "SELECT * FROM $tablica LIMIT $prikazi OFFSET $offset";
-            $rezultat = $baza->selectdb($upit);
-
-        }else{
-            $db_stupac = "naziv_" . $tablica;
-
-            $upit = "SELECT * FROM $tablica ORDER BY $db_stupac LIMIT $prikazi OFFSET $offset ";
-            $rezultat = $baza->selectdb($upit);
-        }
-    }else{*/
-
     $broj_stranica = stranice_ispisa($tablica, $prikazi);
 
     $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
@@ -82,21 +66,20 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
         $upit = "SELECT * FROM $tablica";
         if($akcija == 5 && $pojam != ""){ //search
-            $upit .= " WHERE $db_stupac = '$pojam'";
+            $upit .= " WHERE $db_stupac = '$pojam%'";
         }
         if($broj_stranica){ // paginacija u searchu neće raditi jer treba izbrojati redove u search upitu
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
-        $rezultat = $baza->selectdb($upit);
-
     }else{
         $upit = "SELECT * FROM $tablica ORDER BY $db_stupac";
 
         if(!$broj_stranica){
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
-        $rezultat = $baza->selectdb($upit);
     }
+
+    $rezultat = $baza->selectdb($upit);
 
     while($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
 

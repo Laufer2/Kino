@@ -12,14 +12,14 @@ $(document).ready( function(){
         success: function (data) {
             data = JSON.parse(data);
             $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-            $("#search").html(nacrtaj_search(5));
-            //$("#paginacija").html(nacrtaj_paginaciju(data['broj_stranica']));
+            $("#search").html(search(5));
+            $("#paginacija").html(paginacija(data['broj_stranica']));
 
         }
 
     });
 
-    function nacrtaj_search(akcija){
+    function search(akcija){
         var prikaz_searcha = "<form method='post' action='src/crud/adresa.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
         prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
         prikaz_searcha += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
@@ -29,6 +29,17 @@ $(document).ready( function(){
         return prikaz_searcha;
     }
 
+    function paginacija(broj_stranica) {
+
+        var paginacija = "";
+        var broj=0;
+        for (var i=0; i<broj_stranica; i++){
+            broj = i+1;
+            paginacija += "<span class='broj-paginacija' style='cursor: pointer' data-stranica='"+ i +"'>"+ broj +" </span>";
+        }
+        return paginacija;
+
+    }
 
     function nacrtaj_tablicu(data) {
 
@@ -38,11 +49,19 @@ $(document).ready( function(){
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
-        prikaz_tablice += "<th>Lokacija</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Lokacija";
+        prikaz_tablice += "<button class='silazno' data-stupac='l.naziv_lokacija'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='l.naziv_lokacija'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Ulica</th>";
         prikaz_tablice += "<th>Broj</th>";
         prikaz_tablice += "<th>Poštanski broj</th>";
-        prikaz_tablice += "<th>Grad</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Grad";
+        prikaz_tablice += "<button class='silazno' data-stupac='g.naziv_grad'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='g.naziv_grad'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Država</th>";
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";
@@ -120,6 +139,39 @@ $(document).ready( function(){
         return prikaz_forme;
     }
 
+    function sort(tip_sorta, stupac){
+        var pojam, akcija="";
+        if($("#pojam").val() !== ""){
+            pojam = $("#pojam").val();
+            akcija = 5;
+        }
+
+        $.ajax({
+            url: 'src/crud/adresa.php',
+            type: 'POST',
+            data : {
+                stupac : stupac,
+                tip_sorta : tip_sorta,
+                pojam : pojam,
+                akcija : akcija
+            },
+
+            success: function (data) {
+                data = JSON.parse(data);
+                $("#prikaz-tablice").html(nacrtaj_tablicu(data));
+                $("#paginacija").html(paginacija(data['broj_stranica']));
+            }
+        });
+    }
+
+    $(document).on('click', '.uzlazno', function () {
+        sort('ASC', $(this).attr("data-stupac"));
+    });
+
+    $(document).on('click', '.silazno', function () {
+        sort('DESC', $(this).attr("data-stupac"));
+    });
+
     $(document).on('submit', '#pretraga', function (event){
 
         var forma = $("#pretraga");
@@ -164,8 +216,8 @@ $(document).ready( function(){
                         success: function (data) {
                             data = JSON.parse(data);
                             $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-                            $("#search").html(nacrtaj_search(5));
-                            //$("#paginacija").html(nacrtaj_paginaciju(data['broj_stranica']));
+                            $("#search").html(search(5));
+                            $("#paginacija").html(paginacija(data['broj_stranica']));
 
                         }
                     });
@@ -259,8 +311,8 @@ $(document).ready( function(){
                     $("#forma").html("");
                 }
 
-                //$("#paginacija").html(nacrtaj_paginaciju(data['broj_stranica']));
-                $("#search").html(nacrtaj_search(5));
+                $("#paginacija").html(paginacija(data['broj_stranica']));
+                $("#search").html(search(5));
                 //poruka potvrde?
             }
         });

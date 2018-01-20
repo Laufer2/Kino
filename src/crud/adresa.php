@@ -4,11 +4,13 @@ require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
 require_once '../serverske_poruke.php';
+require_once '../stranice_ispisa.php';
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $pojam = filter_input(INPUT_POST, 'pojam');
-    $sort = filter_input(INPUT_POST, 'sort');
+    $stupac = filter_input(INPUT_POST, 'stupac');
+    $tip_sorta = filter_input(INPUT_POST,'tip_sorta');
     $aktivna_stranica = filter_input(INPUT_POST, 'stranica');
     $id = filter_input(INPUT_POST, 'id');
     $akcija = filter_input(INPUT_POST, 'akcija');
@@ -16,6 +18,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $baza = new baza();
     $dat = new datoteka();
+
+    $prikazi = $dat->dohvati('prikazi_po_stranici');
 
     $poruka = 0;
     $json = array();
@@ -103,23 +107,29 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             array_push($json['podaci'],$polje);
             echo json_encode($json);
             exit();
-        case 5:
-
-            break;
     }
 
-    $prikazi = $dat->dohvati('prikazi_po_stranici');
+    $broj_stranica = stranice_ispisa("adresa", $prikazi);
+    $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
 
     if ($akcija == 5 && $pojam != ""){ // search
-        $a = "%";
-        $pojam = $a . $pojam . $a;
+
+        $pojam = "%" . $pojam . "%";
         $upit = "SELECT * FROM adresa a JOIN lokacija l ON a.lokacija_id = l.id_lokacija JOIN grad g ON a.grad_id = g.id_grad
                       JOIN drzava d ON a.drzava_id = d.id_drzava WHERE d.naziv_drzava LIKE '$pojam' OR g.naziv_grad LIKE '$pojam' OR 
                       l.naziv_lokacija LIKE '$pojam' OR a.ulica LIKE '$pojam'";
+        if($tip_sorta != "") {
+            $upit .= " ORDER BY $stupac $tip_sorta";
+        }
     }else {
-        $upit = "SELECT * FROM adresa a JOIN lokacija l ON a.lokacija_id = l.id_lokacija 
-              JOIN grad g ON a.grad_id = g.id_grad JOIN drzava d ON a.drzava_id = d.id_drzava";
+
+        $upit = "SELECT * FROM adresa a JOIN lokacija l ON a.lokacija_id = l.id_lokacija JOIN grad g ON a.grad_id = g.id_grad JOIN drzava d ON a.drzava_id = d.id_drzava";
+        if($tip_sorta != "") {
+            $upit .= " ORDER BY $stupac $tip_sorta";
+        }
     }
+    $json['$upit'] = $upit;
+
 
     if($rezultat = $baza->selectdb($upit)){
 
@@ -138,6 +148,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             array_push($json['podaci'],$polje);
         }
 
+        $json['broj_stranica'] = $broj_stranica;
         $json['poruka'] = array('poruka'=>$poruka);
 
         echo json_encode($json);

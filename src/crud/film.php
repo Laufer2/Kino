@@ -17,7 +17,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
     $aktivna_stranica = filter_input(INPUT_GET,'aktivna_stranica');
     $id = filter_input(INPUT_GET, 'id');
     $akcija = filter_input(INPUT_GET, 'akcija');
+
     $naziv = filter_input(INPUT_GET, 'naziv');
+    $trajanje = filter_input(INPUT_GET, 'trajanje');
+    $sadrzaj = filter_input(INPUT_GET, 'sadrzaj');
 
     $baza = new baza();
     $dat = new datoteka();
@@ -46,15 +49,15 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
                 $poruka = 1;
                 break;
             }
-            $upit = "INSERT INTO $tablica VALUES(default, '$naziv')";
+            $upit = "INSERT INTO $tablica VALUES(default, '$naziv', '$trajanje', '$sadrzaj')";
             $rezultat = $baza->update($upit);
 
             break;
         case 3: //dohvati jednog
             $upit = "SELECT * FROM $tablica WHERE $db_id = $id";
             $rezultat = $baza->update($upit);
-            list($id, $naziv) = $rezultat->fetch_array();
-            $polje = array("id" => $id, "naziv" => $naziv);
+            list($id, $naziv, $trajanje, $sadrzaj) = $rezultat->fetch_array();
+            $polje = array("id" => $id, "naziv" => $naziv, "trajanje"=> $trajanje, "sadrzaj" => $sadrzaj);
             echo json_encode($polje);
             exit();
 
@@ -62,21 +65,23 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             $upit = "SELECT * FROM $tablica WHERE $db_stupac = '$naziv'";
             $rezultat = $baza->selectdb($upit);
 
-            list($id_tablice) = $rezultat->fetch_array();
-            if(!$rezultat->num_rows && $id_tablice != $id){
-
-                $upit = "UPDATE $tablica SET $db_stupac = '$naziv' WHERE $db_id = $id;";
+            list($id_filma) = $rezultat->fetch_array();
+            $json['id_filma'] = $id_filma;
+            $json['id'] = $id;
+            if(!$rezultat->num_rows || $id_filma == $id){
+                $upit = "UPDATE $tablica SET $db_stupac = '$naziv', trajanje = $trajanje, sadrzaj = '$sadrzaj' WHERE $db_id = $id;";
                 $rezultat = $baza->update($upit);
                 break;
             }else{
                 $poruka = 1;
+
             }
     }
 
     $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
 
     if($akcija == 5 && $pojam != ""){ //search
-        $upit = "SELECT * FROM $tablica WHERE $db_stupac LIKE '%$pojam%'";
+        $upit = "SELECT * FROM $tablica WHERE $db_stupac LIKE '%$pojam%' OR sadrzaj LIKE '%$pojam%'";
         if(isset($stupac) && $stupac != "" ) { // sort
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
@@ -120,6 +125,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }
+    $json['upit'] = $upit;
 
     if($rezultat = $baza->selectdb($upit)) {
 
@@ -127,7 +133,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
             $polje = array(
                 "id" => $red[$db_id],
-                "naziv" => $red[$db_stupac]
+                "naziv" => $red[$db_stupac],
+                "trajanje" => $red['trajanje'],
+                "sadrzaj" => $red['sadrzaj']
             );
             array_push($json['podaci'], $polje);
         }

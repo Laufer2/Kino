@@ -14,6 +14,8 @@
             <li><a href="crud.php?tablica=stranica">Stranica</a></li>
             <li><a href="crud.php?tablica=upit">Upit</a></li>
             <li><a href="crud.php?tablica=adresa">Adresa</a></li>
+            <li><a href="crud.php?tablica=film">Film</a></li>
+            <li><a href="crud.php?tablica=projekcija">Projekcija</a></li>
         </ul>
     </div>
 

@@ -27,6 +27,14 @@
     <script src="public/js/crud/adresa.js"></script>
 {/if}
 
+{if isset($film)}
+    <script src="public/js/crud/film.js"></script>
+{/if}
+
+{if isset($projekcija)}
+    <script src="public/js/crud/projekcija.js"></script>
+{/if}
+
 
 
 </body>

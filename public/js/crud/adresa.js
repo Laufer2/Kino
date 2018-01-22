@@ -29,50 +29,54 @@ $(document).ready( function(){
 
     function paginacija(aktivna_stranica, broj_stranica, tip_sorta, stupac) {
 
-        var broj, pocetak = 0;
+        if(broj_stranica > 0) {
 
-        var paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
-            "data-stranica='0' data-tip_sorta='"+tip_sorta+"' data-stupac='"+ stupac +"'> |< &nbsp;</span>";
+            var broj, pocetak = 0;
 
-        if(aktivna_stranica > 2){
-            paginacija += "<span class='prednje'>&nbsp; ... &nbsp;</span>"; // na početku
-        }else{
-            $(".prednje").css("display: none;");
-        }
+            var paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
+                "data-stranica='0' data-tip_sorta='" + tip_sorta + "' data-stupac='" + stupac + "'> |< &nbsp;</span>";
 
-        var max = aktivna_stranica + 3;
-        if( max > broj_stranica){
-            max = broj_stranica;
-        }
-
-        if(aktivna_stranica < 3){
-            pocetak = 0;
-        }else{
-            pocetak = aktivna_stranica - 2;
-        }
-
-        for (var i = pocetak; i < max; i++){
-            broj = i+1;
-            if( i === aktivna_stranica){
-                paginacija += "<span class='broj-paginacija' style='cursor: pointer; color: red' " +
-                    "data-stranica='"+ i +"' data-stupac='"+ stupac +"' data-tip_sorta='"+tip_sorta+"'>"+ broj +" </span>";
-                continue;
+            if (aktivna_stranica > 2) {
+                paginacija += "<span class='prednje'>&nbsp; ... &nbsp;</span>"; // na početku
+            } else {
+                $(".prednje").css("display: none;");
             }
-            paginacija += "<span class='broj-paginacija' style='cursor: pointer' " +
-                "data-stranica='"+ i +"' data-stupac='"+ stupac +"' data-tip_sorta='"+tip_sorta+"'>"+ broj +" </span>";
+
+            var max = aktivna_stranica + 3;
+            if (max > broj_stranica) {
+                max = broj_stranica;
+            }
+
+            if (aktivna_stranica < 3) {
+                pocetak = 0;
+            } else {
+                pocetak = aktivna_stranica - 2;
+            }
+
+            for (var i = pocetak; i < max; i++) {
+                broj = i + 1;
+                if (i === aktivna_stranica) {
+                    paginacija += "<span class='broj-paginacija' style='cursor: pointer; color: red' " +
+                        "data-stranica='" + i + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>" + broj + " </span>";
+                    continue;
+                }
+                paginacija += "<span class='broj-paginacija' style='cursor: pointer' " +
+                    "data-stranica='" + i + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>" + broj + " </span>";
+            }
+
+            if ((aktivna_stranica + 3) < broj_stranica) {
+                paginacija += "<span class='zadnje'>&nbsp; ... &nbsp;</span>"; // na kraju
+            } else {
+                $(".zadnje").css("display: none;");
+            }
+
+            var zadnja = broj_stranica - 1;
+            paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
+                "data-stranica='" + zadnja + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>&nbsp;>| </span>";
+
+            return paginacija;
         }
 
-        if((aktivna_stranica+3) < broj_stranica){
-            paginacija += "<span class='zadnje'>&nbsp; ... &nbsp;</span>"; // na kraju
-        }else{
-            $(".zadnje").css("display: none;");
-        }
-
-        var zadnja = broj_stranica-1;
-        paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
-            "data-stranica='"+ zadnja +"' data-stupac='"+ stupac +"' data-tip_sorta='"+tip_sorta+"'>&nbsp;>| </span>";
-
-        return paginacija;
     }
 
     function nacrtaj_tablicu(data) {
@@ -318,13 +322,12 @@ $(document).ready( function(){
                 $("#forma").html( nacrtaj_formu(lista, 2, 2));
 
                 var forma = $("#novi_zapis");
-                $("#ulica").val(lista['podaci'].ulica);
+
                 $.each(lista.podaci, function(index, value){
                     $.each(value,function (ind, val) {
                         $('[name='+ind+']', forma).val(val);
                     });
                 });
-
             },
             error: function (xhr) {
                 $("#test").html(xhr.status);

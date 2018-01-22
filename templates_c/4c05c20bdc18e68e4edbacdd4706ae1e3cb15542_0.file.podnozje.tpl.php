@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-20 23:24:09
+/* Smarty version 3.1.30, created on 2018-01-22 14:33:51
   from "C:\xampp\htdocs\kino\templates\podnozje.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a63c18993d8e6_46532811',
+  'unifunc' => 'content_5a65e83f11f4d4_05875655',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4c05c20bdc18e68e4edbacdd4706ae1e3cb15542' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\podnozje.tpl',
-      1 => 1516487049,
+      1 => 1516628029,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a63c18993d8e6_46532811 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a65e83f11f4d4_05875655 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
 <?php if (isset($_smarty_tpl->tpl_vars['korisnicko']->value)) {?>
@@ -77,6 +77,23 @@ function content_5a63c18993d8e6_46532811 (Smarty_Internal_Template $_smarty_tpl)
 >
 <?php }?>
 
+<?php if (isset($_smarty_tpl->tpl_vars['korisnik']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/crud/korisnik.js"><?php echo '</script'; ?>
+>
+<?php }?>
+
+<?php if (isset($_smarty_tpl->tpl_vars['konfiguracija']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/konfiguracija.js"><?php echo '</script'; ?>
+>
+<?php }?>
+
+<?php if (isset($_smarty_tpl->tpl_vars['moderatorlokacije']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/crud/moderatori_lokacija.js"><?php echo '</script'; ?>
+>
+<?php }?>
 
 
 </body>

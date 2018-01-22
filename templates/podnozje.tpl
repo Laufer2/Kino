@@ -35,6 +35,17 @@
     <script src="public/js/crud/projekcija.js"></script>
 {/if}
 
+{if isset($korisnik)}
+    <script src="public/js/crud/korisnik.js"></script>
+{/if}
+
+{if isset($konfiguracija)}
+    <script src="public/js/konfiguracija.js"></script>
+{/if}
+
+{if isset($moderatorlokacije)}
+    <script src="public/js/crud/moderatori_lokacija.js"></script>
+{/if}
 
 
 </body>

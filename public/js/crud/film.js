@@ -5,7 +5,7 @@ $(document).ready(function(){
         url: "src/crud/film.php",
         type: "GET",
         data:{
-            tablica : crud.getUrlVariable("tablica"),
+            tablica : funkcija.getUrlVariable("tablica"),
             aktivna_stranica : 0,
             akcija : 10
         },
@@ -20,7 +20,7 @@ $(document).ready(function(){
     });
 
     function search(akcija){
-        var tablica = crud.getUrlVariable("tablica");
+        var tablica = funkcija.getUrlVariable("tablica");
         var prikaz_searcha = "<form method='get' action='src/crud/film.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
         prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
         prikaz_searcha += "<input type='hidden' name='tablica' value='"+tablica+"'>";
@@ -77,7 +77,7 @@ $(document).ready(function(){
     }
 
     function nacrtaj_formu(akcija, id) {
-        var tablica = crud.getUrlVariable("tablica");
+        var tablica = funkcija.getUrlVariable("tablica");
         var prikaz_forme = "<form action='src/crud/film.php' ";
         prikaz_forme += "id='novi_zapis' method='get' enctype='application/x-www-form-urlencoded'>";
 
@@ -102,56 +102,59 @@ $(document).ready(function(){
 
     function paginacija(aktivna_stranica, broj_stranica, tip_sorta) {
 
-        var broj, pocetak = 0;
+        if(broj_stranica > 0) {
 
-        var paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
-            "data-stranica='0' data-tip_sorta='"+tip_sorta+"'> |< &nbsp;</span>";
+            var broj, pocetak = 0;
 
-        if(aktivna_stranica > 2){
-            paginacija += "<span class='prednje'>&nbsp; ... &nbsp;</span>"; // na početku
-        }else{
-            $(".prednje").css("display: none;");
-        }
+            var paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
+                "data-stranica='0' data-tip_sorta='" + tip_sorta + "'> |< &nbsp;</span>";
 
-        var max = aktivna_stranica + 3;
-        if( max > broj_stranica){
-            max = broj_stranica;
-        }
-
-        if(aktivna_stranica < 3){
-            pocetak = 0;
-        }else{
-            pocetak = aktivna_stranica - 2;
-        }
-
-        for (var i = pocetak; i < max; i++){
-            broj = i+1;
-            if( i === aktivna_stranica){
-                paginacija += "<span class='broj-paginacija' style='cursor: pointer; color: red' " +
-                    "data-stranica='"+ i +"' data-tip_sorta='"+tip_sorta+"'>"+ broj +" </span>";
-                continue;
+            if (aktivna_stranica > 2) {
+                paginacija += "<span class='prednje'>&nbsp; ... &nbsp;</span>"; // na početku
+            } else {
+                $(".prednje").css("display: none;");
             }
-            paginacija += "<span class='broj-paginacija' style='cursor: pointer' " +
-                "data-stranica='"+ i +"' data-tip_sorta='"+tip_sorta+"'>"+ broj +" </span>";
+
+            var max = aktivna_stranica + 3;
+            if (max > broj_stranica) {
+                max = broj_stranica;
+            }
+
+            if (aktivna_stranica < 3) {
+                pocetak = 0;
+            } else {
+                pocetak = aktivna_stranica - 2;
+            }
+
+            for (var i = pocetak; i < max; i++) {
+                broj = i + 1;
+                if (i === aktivna_stranica) {
+                    paginacija += "<span class='broj-paginacija' style='cursor: pointer; color: red' " +
+                        "data-stranica='" + i + "' data-tip_sorta='" + tip_sorta + "'>" + broj + " </span>";
+                    continue;
+                }
+                paginacija += "<span class='broj-paginacija' style='cursor: pointer' " +
+                    "data-stranica='" + i + "' data-tip_sorta='" + tip_sorta + "'>" + broj + " </span>";
+            }
+
+            if ((aktivna_stranica + 3) < broj_stranica) {
+                paginacija += "<span class='zadnje'>&nbsp; ... &nbsp;</span>"; // na kraju
+            } else {
+                $(".zadnje").css("display: none;");
+            }
+
+            var zadnja = broj_stranica - 1;
+            paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
+                "data-stranica='" + zadnja + "' data-tip_sorta='" + tip_sorta + "'>&nbsp;>| </span>";
+
+            return paginacija;
         }
-
-        if((aktivna_stranica+3) < broj_stranica){
-            paginacija += "<span class='zadnje'>&nbsp; ... &nbsp;</span>"; // na kraju
-        }else{
-            $(".zadnje").css("display: none;");
-        }
-
-        var zadnja = broj_stranica-1;
-        paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
-            "data-stranica='"+ zadnja +"' data-tip_sorta='"+tip_sorta+"'>&nbsp;>| </span>";
-
-        return paginacija;
 
     }
 
     function sort(tip_sorta){
         var pojam, akcija="";
-        var tablica = crud.getUrlVariable("tablica");
+        var tablica = funkcija.getUrlVariable("tablica");
         var stupac = "naziv_" + tablica;
         if($("#pojam").val() !== ""){
             pojam = $("#pojam").val();
@@ -212,7 +215,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.broj-paginacija', function () {
         var pojam, akcija="";
-        var tablica = crud.getUrlVariable("tablica");
+        var tablica = funkcija.getUrlVariable("tablica");
         var stupac = "naziv_"+ tablica;
 
         if($("#pojam").val() !== ""){
@@ -257,7 +260,7 @@ $(document).ready(function(){
             url: 'src/crud/film.php',
             type: 'GET',
             data: {
-                tablica: crud.getUrlVariable("tablica"),
+                tablica: funkcija.getUrlVariable("tablica"),
                 id: id,
                 akcija: 3
             },
@@ -290,7 +293,7 @@ $(document).ready(function(){
                         url: 'src/crud/film.php',
                         type: 'GET',
                         data: {
-                            tablica : crud.getUrlVariable("tablica"),
+                            tablica : funkcija.getUrlVariable("tablica"),
                             id : id,
                             akcija : 1
                         },
@@ -340,7 +343,5 @@ $(document).ready(function(){
                 $("#search").html(search(5));
             }
         });
-
     });
-
 });

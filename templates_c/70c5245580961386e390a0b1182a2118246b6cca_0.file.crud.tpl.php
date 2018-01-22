@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-20 23:23:36
+/* Smarty version 3.1.30, created on 2018-01-22 14:34:15
   from "C:\xampp\htdocs\kino\templates\crud.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a63c168c7ded7_55856122',
+  'unifunc' => 'content_5a65e857e4faa2_91730296',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '70c5245580961386e390a0b1182a2118246b6cca' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\crud.tpl',
-      1 => 1516487016,
+      1 => 1516628055,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a63c168c7ded7_55856122 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a65e857e4faa2_91730296 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -40,6 +40,7 @@ function content_5a63c168c7ded7_55856122 (Smarty_Internal_Template $_smarty_tpl)
             <li><a href="crud.php?tablica=adresa">Adresa</a></li>
             <li><a href="crud.php?tablica=film">Film</a></li>
             <li><a href="crud.php?tablica=projekcija">Projekcija</a></li>
+            <li><a href="crud.php?tablica=moderatorlokacije">Moderatori lokacija</a></li>
         </ul>
     </div>
 
@@ -64,6 +65,14 @@ function content_5a63c168c7ded7_55856122 (Smarty_Internal_Template $_smarty_tpl)
 
     <div id="forma">
 
+    </div>
+
+    <div style="display: none;">
+        <select id="meni-statusa" title="Status korisničkog računa">
+            <option value='0'>Neaktiviran</option>
+            <option value='1'>Aktiviran</option>
+            <option value='2'>Zaključan</option>
+        </select>
     </div>
 
     <div id="test">

@@ -16,16 +16,6 @@ $( document ).ready( function() {
         });
     }
 
-    function validacija() {
-        $("#greske3").html("");
-        for ( var i = 0; i < polje_validacija.length; i++){
-            if(polje_validacija[i] === 0){
-                return false;
-            }
-        }
-        return true;
-    }
-
     $("#ime").blur(function () {
         $("#ime_poruka").html("");
     });
@@ -159,7 +149,7 @@ $( document ).ready( function() {
 
         event.preventDefault();
 
-        if(!validacija()){
+        if(!funkcija.validacija(polje_validacija)){
             return false;
         }else{
             $("#greske").html("Registracija u tijeku...");

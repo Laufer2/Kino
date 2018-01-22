@@ -16,6 +16,7 @@
             <li><a href="crud.php?tablica=adresa">Adresa</a></li>
             <li><a href="crud.php?tablica=film">Film</a></li>
             <li><a href="crud.php?tablica=projekcija">Projekcija</a></li>
+            <li><a href="crud.php?tablica=moderatorlokacije">Moderatori lokacija</a></li>
         </ul>
     </div>
 
@@ -40,6 +41,14 @@
 
     <div id="forma">
 
+    </div>
+
+    <div style="display: none;">
+        <select id="meni-statusa" title="Status korisničkog računa">
+            <option value='0'>Neaktiviran</option>
+            <option value='1'>Aktiviran</option>
+            <option value='2'>Zaključan</option>
+        </select>
     </div>
 
     <div id="test">

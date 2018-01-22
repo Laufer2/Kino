@@ -1,8 +1,9 @@
 $(document).ready( function(){
     "use strict";
+    var polje_validacija = [0,0,0,0];
 
     $.ajax({
-        url : 'src/crud/projekcija.php',
+        url : 'src/crud/korisnik.php',
         type : 'POST',
         data : {
             aktivna_stranica : 0,
@@ -18,7 +19,7 @@ $(document).ready( function(){
     });
 
     function search(akcija){
-        var prikaz_searcha = "<form method='post' action='src/crud/projekcija.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
+        var prikaz_searcha = "<form method='post' action='src/crud/korisnik.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
         prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
         prikaz_searcha += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
         prikaz_searcha += "<input type='submit' value='P'>";
@@ -87,33 +88,44 @@ $(document).ready( function(){
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Film";
-        prikaz_tablice += "<button class='silazno' data-stupac='l.naziv_lokacija'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='l.naziv_lokacija'>&#708;</button>"; //ASC
+        prikaz_tablice += "Korisničko ime";
+        prikaz_tablice += "<button class='silazno' data-stupac='k.korisnicko_ime'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='k.korisnicko_ime'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
-        prikaz_tablice += "<th>Max gledatelja</th>";
-        prikaz_tablice += "<th>Dostupan od</th>";
-        prikaz_tablice += "<th>Dostupan do</th>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Lokacija";
-        prikaz_tablice += "<button class='silazno' data-stupac='g.naziv_grad'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='g.naziv_grad'>&#708;</button>"; //ASC
+        prikaz_tablice += "Tip korisnika";
+        prikaz_tablice += "<button class='silazno' data-stupac='k.tip_id'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='k.tip_id'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
+        prikaz_tablice += "<th>Ime</th>";
+        prikaz_tablice += "<th>Prezime</th>";
+        prikaz_tablice += "<th>E-mail</th>";
+        prikaz_tablice += "<th>Status aktivacije</th>";
+        prikaz_tablice += "<th>Neuspješne prijave</th>";
+        prikaz_tablice += "<th>Lozinka</th>";
+        prikaz_tablice += "<th>Aktivacijski rok</th>";
+        //prikaz_tablice += "<th>Aktivacijski kod</th>";
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";
 
-        $.each(data.podaci, function (index, projekcija) {
+        $.each(data.podaci, function (index, korisnik) {
 
             prikaz_tablice += "<tr>";
-            prikaz_tablice += "<td>"+ projekcija.film +"</td>"
-            prikaz_tablice += "<td>"+ projekcija.max_gledatelja +"</td>"
-            prikaz_tablice += "<td>"+ projekcija.dostupan_od +"</td>";
-            prikaz_tablice += "<td>"+ projekcija.dostupan_do +"</td>";
-            prikaz_tablice += "<td>"+ projekcija.lokacija +"</td>";
+            prikaz_tablice += "<td>"+ korisnik.korisnicko +"</td>"
+            prikaz_tablice += "<td>"+ korisnik.tipkorisnika +"</td>"
+            prikaz_tablice += "<td>"+ korisnik.ime +"</td>";
+            prikaz_tablice += "<td>"+ korisnik.prezime +"</td>";
+            prikaz_tablice += "<td>"+ korisnik.email +"</td>";
+            prikaz_tablice += "<td>"+ korisnik.status +"</td>";
+            prikaz_tablice += "<td>"+ korisnik.neuspjesne_prijave +"</td>";
+            prikaz_tablice += "<td>"+ korisnik.lozinka +"</td>";
+            prikaz_tablice += "<td>"+ korisnik.akt_rok +"</td>";
+            //prikaz_tablice += "<td>"+ korisnik.akt_kod +"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-edit' data-id='"+ projekcija.id +"'>Uredi</button>";
-            prikaz_tablice += "<button class='gumb-delete' data-id='"+ projekcija.id +"'>Izbriši</button>";
+            prikaz_tablice += "<button class='gumb-edit' data-id='"+ korisnik.id +"'>Uredi</button>";
+            prikaz_tablice += "<button class='gumb-delete' data-id='"+ korisnik.id +"'>Izbriši</button>";
+            prikaz_tablice += "<button class='gumb-block' data-id='"+ korisnik.id +"'>Zaključaj</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
 
@@ -125,35 +137,45 @@ $(document).ready( function(){
 
     function nacrtaj_formu(lista, akcija, id) {
 
-        var prikaz_forme = "<form action='src/crud/projekcija.php' ";
+        var prikaz_forme = "<form action='src/crud/korisnik.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='film'>Film</label>";
-        // select za lokaciju
+        prikaz_forme += "<label for='korisnicko'>Korisničko ime</label>";
+        prikaz_forme += "<input type='text' name='korisnicko' id='korisnicko' required>";
+        prikaz_forme += "<span id='korisnicko_poruka'></span>";
+        prikaz_forme += "<br/>";
 
-        prikaz_forme += "<select name='film' id='film'>";
-        $.each(lista.film, function (index, val) {
+        prikaz_forme += "<label for='tipkorisnika'>Tip korisnika</label>";
+        prikaz_forme += "<select name='tipkorisnika' id='tipkorisnika'>";
+        $.each(lista.tipkorisnika, function (index, val) {
 
             prikaz_forme += "<option value='"+ val.id +"'>"+ val.naziv +"</option>";
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='max_gledatelja'>Max gledatelja</label>";
-        prikaz_forme += "<input type='number' name='max_gledatelja' id='max_gledatelja 'required><br/>";
+        prikaz_forme += "<label for='ime'>Ime</label>";
+        prikaz_forme += "<input type='text' name='ime' id='ime' required><br/>";
 
-        prikaz_forme += "<label for='dostupan_od'>Dostupan od</label>";
-        prikaz_forme += "<input type='number' name='dostupan_od' id='dostupan_od' required><br/>";
+        prikaz_forme += "<label for='prezime'>Prezime</label>";
+        prikaz_forme += "<input type='text' name='prezime' id='prezime' required><br/>";
 
-        prikaz_forme += "<label for='dostupan_do'>Dostupan do</label>";
-        prikaz_forme += "<input type='number' name='dostupan_do' id='dostupan_do' required><br/>";
+        prikaz_forme += "<label for='email'>E-mail</label>";
+        prikaz_forme += "<input type='text' name='email' id='email' required>";
+        prikaz_forme += "<span id='email_poruka'></span>";
+        prikaz_forme += "<br/>";
 
-        prikaz_forme += "<label for='lokacija'>Lokacija</label>";
+        prikaz_forme += "<label for='lozinka'>Lozinka</label>";
+        prikaz_forme += "<input type='text' name='lozinka' id='lozinka' required><br/>";
 
-        prikaz_forme += "<select name='lokacija' id='lokacija'>";
-        $.each(lista.lokacija, function (index, val) {
+        prikaz_forme += "<label for='status'>Status aktivacije</label>";
+        prikaz_forme += "<select name='status' id='status'>";
+        prikaz_forme += "<option value='0'>Neaktiviran</option>";
+        prikaz_forme += "<option value='1'>Aktiviran</option>";
+        prikaz_forme += "<option value='2'>Zaključan</option>";
+        prikaz_forme += "</select><br/>";
 
-            prikaz_forme += "<option value='"+ val.id +"'>"+ val.naziv +"</option>";
-        });
+        prikaz_forme += "<label for='neuspjesne_prijave'>Neuspješne prijave</label>";
+        prikaz_forme += "<input type='number' name='neuspjesne_prijave' id='neuspjesne_prijave' required><br/>";
 
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
         prikaz_forme += "<input type='hidden' name='id' value='"+ id +"'>";
@@ -172,7 +194,7 @@ $(document).ready( function(){
         }
 
         $.ajax({
-            url: 'src/crud/projekcija.php',
+            url: 'src/crud/korisnik.php',
             type: 'POST',
             data : {
                 stupac : stupac,
@@ -189,6 +211,122 @@ $(document).ready( function(){
         });
     }
 
+    $(document).on('blur', '#email', function () {
+        var vazeci_email = false;
+        if($(this).val().length !== 0) {
+            var email = $("#email").val();
+            //preuzeto s emailregex.com
+            var regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+            if(!regex.test(email)){
+                polje_validacija[0] = 0;
+                $("#email_poruka").html("Nevazeca struktura e-mail adrese.");
+                vazeci_email = false;
+            }else{
+                polje_validacija[0] = 1;
+                $("#email_poruka").html("");
+                vazeci_email = true;
+            }
+            if(vazeci_email){
+                $.ajax({
+                    type: "GET",
+                    datatype: "JSON",
+                    url: "src/registracija/registracija_ajax_provjera.php",
+                    data: {
+                        'email': $(this).val()
+                    },
+                    success: function (data) {
+                        var polje = JSON.parse(data);
+                        if (polje["broj_redova"] > 0) {
+                            $("#email_poruka").html("Postoji korisnik s tom e-mail adresom");
+                            polje_validacija[3] = 0;
+                        } else {
+                            $("#email_poruka").html("");
+                            polje_validacija[3] = 1;
+                        }
+                    },
+                    error: function () {
+                        $("#email_poruka").html("Greska prilikom provjere korisnickog imena.");
+                        $("input[type='submit']").css("display", "none");
+                    }
+                });
+            }
+        }
+
+    });
+
+    $(document).on('blur', '#korisnicko', function() {
+
+        if($(this).val().length !== 0){
+            if ($(this).val().length < 4) {
+                polje_validacija[2] = 0;
+                $("#korisnicko_poruka").html("Min 4 znaka u korisnickom imenu.");
+            } else {
+                polje_validacija[2] = 1;
+
+                $.ajax({
+                    type: "GET",
+                    datatype: "JSON",
+                    url: "src/registracija/registracija_ajax_provjera.php",
+                    data: {
+                        'korisnicko_ime': $(this).val()
+                    },
+                    success: function (data) {
+                        var polje = JSON.parse(data);
+                        if (polje["broj_redova"] > 0) {
+                            $("#korisnicko_poruka").html("Zauzeto korisnicko ime.");
+                            polje_validacija[1] = 0;
+                        } else {
+                            $("#korisnicko_poruka").html("OK");
+                            polje_validacija[1] = 1;
+                        }
+                    },
+                    error: function () {
+                        $("#korisnicko_poruka").html("Greska prilikom provjere korisnickog imena.");
+                    }
+                });
+            }
+        }
+    });
+
+    $(document).on('click', '.gumb-block', function(){
+        var id = $(this).attr("data-id");
+        $("#meni-statusa").dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                "Promijeni status": function() {
+                    var status = $(this).val();
+                    $.ajax({
+                        url: 'src/crud/korisnik.php',
+                        type: 'POST',
+                        data: {
+                            id : id,
+                            status: status,
+                            akcija : 6
+                        },
+
+                        success: function (data) {
+                            data = JSON.parse(data);
+                            $("#prikaz-tablice").html(nacrtaj_tablicu(data));
+                            $("#search").html(search(5));
+                            $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, "",""));
+
+                        }
+                    });
+
+                    $( this ).dialog( "close" );
+
+                },
+                "Odustani": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+    });
+
     $(document).on('click', '.broj-paginacija', function () {
         var pojam, akcija="";
         if($("#pojam").val() !== ""){
@@ -196,7 +334,7 @@ $(document).ready( function(){
             akcija = 5;
         }
         $.ajax({
-            url: "src/crud/projekcija.php",
+            url: "src/crud/korisnik.php",
             type: "POST",
             data: {
                 aktivna_stranica: $(this).attr("data-stranica"),
@@ -264,7 +402,7 @@ $(document).ready( function(){
                     //brisanje i refresh tablice
 
                     $.ajax({
-                        url: 'src/crud/projekcija.php',
+                        url: 'src/crud/korisnik.php',
                         type: 'POST',
                         data: {
                             id : id,
@@ -292,10 +430,10 @@ $(document).ready( function(){
 
     $(document).on('click', '.gumb-edit', function() {
         var id = $(this).attr("data-id");
-        var tablice = ["lokacija", "film"];
+        var tablice = ["tipkorisnika"];
 
         $.ajax({
-            url: 'src/crud/projekcija.php',
+            url: 'src/crud/korisnik.php',
             type: 'POST',
             data: {
                 id: id,
@@ -309,7 +447,7 @@ $(document).ready( function(){
                 $("#forma").html( nacrtaj_formu(lista, 2, 2));
 
                 var forma = $("#novi_zapis");
-                $("#ulica").val(lista['podaci'].ulica);
+
                 $.each(lista.podaci, function(index, value){
                     $.each(value,function (ind, val) {
                         $('[name='+ind+']', forma).val(val);
@@ -325,10 +463,10 @@ $(document).ready( function(){
     });
 
     $(document).on('click', '#gumb-kreiraj', function() {
-        var tablice = ["lokacija","film"];
+        var tablice = ["tipkorisnika"];
 
         $.ajax({
-            url : 'src/crud/projekcija.php',
+            url : 'src/crud/korisnik.php',
             type : 'POST',
             data : {
                 tablica : tablice,
@@ -347,6 +485,11 @@ $(document).ready( function(){
         var forma = $("#novi_zapis");
         event.preventDefault();
 
+        /*
+        if(!funkcija.validacija(polje_validacija)){
+            return false;
+        }
+        */
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),

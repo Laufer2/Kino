@@ -44,24 +44,22 @@ class datoteka{
         }
     }
 
-    //dohvaćanje pomaka sa stranice i zapisivanje u datoteku kino.ini
+    //dohvaćanje pomaka sa stranice
     function dohvati_pomak()
     {
         if($json = @file_get_contents('http://barka.foi.hr/WebDiP/pomak_vremena/pomak.php?format=json'))
         {
             $polje = json_decode($json, true);
-            $novi_pomak = 0;
 
             foreach ($polje as $webdip => $vrijednosti){
                 foreach ($vrijednosti as $vrijeme => $pomak){
                     foreach ($pomak as $broj_sati => $vrijednost){
                         foreach ($vrijednost as $item => $value){
-                            $novi_pomak = $value;
+                            return $value;
                         }
                     }
                 }
             }
-            $this->postavi('pomak',$novi_pomak);
         }
         else
         {

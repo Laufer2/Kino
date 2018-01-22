@@ -1,15 +1,14 @@
-var crud ={
+var funkcija ={
 
-    dorpdownKorisnik: function(){
-
-    },
-    
-    dropdownLokacija: function () {
-        
-    },
-    
-    dropdownFilm: function () {
-        
+    validacija: function (polje_validacija) {
+        "use strict";
+        $("#greske3").html("");
+        for ( var i = 0; i < polje_validacija.length; i++){
+            if(polje_validacija[i] === 0){
+                return false;
+            }
+        }
+        return true;
     },
 
     //preuzeto s https://css-tricks.com/snippets/javascript/get-url-variables/

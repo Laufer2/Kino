@@ -78,7 +78,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $rezultat = $baza->update($upit);
             break;
 
-        case 2:// ažuriranje
+        case 2:// auriranje
 
             $upit = "UPDATE adresa SET lokacija_id = $lokacija, ulica = '$ulica', broj = $broj, grad_id = $grad, 
                       drzava_id = $drzava WHERE id_adresa = $id;";

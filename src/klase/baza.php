@@ -8,7 +8,7 @@ class baza{
     const dbime = "WebDiP2015x047";
 
 
-    private function spoji(){
+    function spoji(){
         $mysqli = new mysqli( self::server, self::username, self::password, self::dbime);
 
         if ($mysqli->connect_errno) {

@@ -85,6 +85,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit = "UPDATE korisnik SET tip_id = $tipkorisnika, korisnicko_ime = '$korisnicko', status_aktivacije = $status, email = '$email', 
                     ime = '$ime', prezime = '$prezime' WHERE id_korisnik = $id";
             $rezultat = $baza->update($upit);
+
+            if($tipkorisnika == 3){
+                $upit = "DELETE FROM moderatorlokacije WHERE korisnik_id = $id";
+                $rezultat = $baza->update($upit);
+            }
+            $json['upit'] = $upit;
             break;
 
         case 3: // brisanje

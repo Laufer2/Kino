@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-22 17:27:47
+/* Smarty version 3.1.30, created on 2018-01-22 21:40:39
   from "C:\xampp\htdocs\kino\templates\crud.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a6611032739e2_10944585',
+  'unifunc' => 'content_5a664c475299f8_39738522',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '70c5245580961386e390a0b1182a2118246b6cca' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\crud.tpl',
-      1 => 1516638435,
+      1 => 1516650190,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a6611032739e2_10944585 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a664c475299f8_39738522 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -42,6 +42,10 @@ function content_5a6611032739e2_10944585 (Smarty_Internal_Template $_smarty_tpl)
             <li><a href="crud.php?tablica=projekcija">Projekcija</a></li>
             <li><a href="crud.php?tablica=moderatorlokacije">Moderatori lokacija</a></li>
             <li><a href="crud.php?tablica=zanrfilma">Zanr filma</a></li>
+            <li><a href="crud.php?tablica=tagslika">Tag slike</a></li>
+            <li><a href="crud.php?tablica=tag">Tag</a></li>
+            <li><a href="crud.php?tablica=slika">Slike</a></li>
+            <li><a href="crud.php?tablica=filmosoba">Film osobe</a></li>
         </ul>
     </div>
 
@@ -75,6 +79,7 @@ function content_5a6611032739e2_10944585 (Smarty_Internal_Template $_smarty_tpl)
             <option value='2'>Zaključan</option>
         </select>
     </div>
+
 
     <div id="test">
 

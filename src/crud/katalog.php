@@ -148,5 +148,4 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
         echo json_encode($json);
     }
-
 }

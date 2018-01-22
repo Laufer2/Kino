@@ -10,8 +10,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $stupac = filter_input(INPUT_POST, 'stupac');
     $tip_sorta = filter_input(INPUT_POST,'tip_sorta');
     $aktivna_stranica = filter_input(INPUT_POST, 'aktivna_stranica');
-    $idk = filter_input(INPUT_POST, 'idk');
-    $idl = filter_input(INPUT_POST, 'idl');
+    $idf = filter_input(INPUT_POST, 'idf');
+    $ido = filter_input(INPUT_POST, 'ido');
+    $idu = filter_input(INPUT_POST, 'idu');
     $akcija = filter_input(INPUT_POST, 'akcija');
     $selectmenu = filter_input(INPUT_POST,'selectmenu');
 
@@ -27,8 +28,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     //novi zapis
     if($akcija < 3) {
 
-        $lokacija = filter_input(INPUT_POST, 'lokacija');
-        $korisnik = filter_input(INPUT_POST, 'korisnik');
+        $film = filter_input(INPUT_POST, 'film'); // film_id
+        $osoba = filter_input(INPUT_POST, 'osoba'); //osoba_id
+        $uloga = filter_input(INPUT_POST, 'uloga'); //osoba_id
 
     }
 
@@ -45,19 +47,11 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
             $rezultat = $baza->selectdb($upit);
 
-            if($tablica == "korisnik"){
-                $db_stupac = "korisnicko_ime";
-            }else{
-                $db_stupac = "naziv_" . $tablica;
-            }
+            $db_stupac = "naziv_" . $tablica;
 
             $json[$tablica] = array();
 
             while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
-
-                if($tablica == "korisnik" && $red['tip_id'] == 1){
-                    continue;
-                }
 
                 $polje = array(
                     "id" => $red[$db_id],
@@ -71,28 +65,21 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     switch ($akcija){
         case 1://kreiranje
-            $upit = "SELECT * FROM moderatorlokacije WHERE lokacija_id = $korisnik AND korisnik_id = $korisnik";
+            $upit = "SELECT * FROM filmosoba WHERE osoba_id = $osoba AND film_id = $film AND uloga_id = $uloga";
             $rezultat = $baza->selectdb($upit);
 
             if($rezultat->num_rows){
                 $poruka = 1;
-            }else{
-                $upit = "UPDATE korisnik SET tip_id = 2 WHERE id_korisnik = $korisnik";
-                $rezultat = $baza->update($upit);
-
-                $upit = "INSERT INTO moderatorlokacije VALUES ($korisnik, $lokacija)";
-                $rezultat = $baza->update($upit);
+                break;
             }
+
+            $upit = "INSERT INTO filmosoba VALUES ($film, $osoba, $uloga)";
+            $rezultat = $baza->update($upit);
+
             break;
 
         case 3: // brisanje
-            $upit = "SELECT * FROM moderatorlokacije WHERE korisnik_id = $idk";
-            $rezultat = $baza->selectdb($upit);
-            if($rezultat->num_rows < 2){
-                $upit = "UPDATE korisnik SET tip_id = 3 WHERE id_korisnik = $idk";
-                $rezultat = $baza->selectdb($upit);
-            }
-            $upit = "DELETE FROM moderatorlokacije WHERE lokacija_id = $idl AND korisnik_id = $idk";
+            $upit = "DELETE FROM filmosoba WHERE osoba_id = $ido AND film_id = $idf AND uloga_id = $idu";
             $rezultat = $baza->update($upit);
             break;
 
@@ -103,8 +90,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if ($akcija == 5 && $pojam != ""){ // search
 
         $pojam = "%" . $pojam . "%";
-        $upit = "SELECT * FROM moderatorlokacije m JOIN korisnik k ON m.korisnik_id = k.id_korisnik JOIN lokacija l ON m.lokacija_id = l.id_lokacija
-                  WHERE k.korisnicko_ime LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam'";
+        $upit = "SELECT * FROM filmosoba f JOIN film f2 ON f.film_id = f2.id_film JOIN osoba o ON f.osoba_id = o.id_osoba 
+                  JOIN tipuloga t ON f.uloga_id = t.id_tipuloga
+                  WHERE f2.naziv_film LIKE '$pojam' OR o.naziv_osoba LIKE '$pojam' OR t.naziv_tipuloga LIKE '$pojam'";
         if(isset($stupac) && $stupac != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
@@ -130,9 +118,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }else {
-        $broj_stranica = stranice_ispisa("moderatorlokacije", $prikazi);
+        $broj_stranica = stranice_ispisa("filmosoba", $prikazi);
 
-        $upit = "SELECT * FROM moderatorlokacije m JOIN korisnik k ON m.korisnik_id = k.id_korisnik JOIN lokacija l ON m.lokacija_id = l.id_lokacija";
+        $upit = "SELECT * FROM filmosoba f JOIN film f2 ON f.film_id = f2.id_film JOIN osoba o ON f.osoba_id = o.id_osoba 
+                  JOIN tipuloga t ON f.uloga_id = t.id_tipuloga";
         if(isset($stupac) && $stupac != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
@@ -147,17 +136,19 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }
-
+    $json['upit'] = $upit;
 
     if($rezultat = $baza->selectdb($upit)){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
 
             $polje = array(
-                "idl" => $red['lokacija_id'],
-                "idk" => $red['korisnik_id'],
-                "lokacija" => $red['naziv_lokacija'],
-                "korisnik" => $red['korisnicko_ime'],
+                "ido" => $red['osoba_id'],
+                "idf" => $red['film_id'],
+                "idu" => $red['uloga_id'],
+                "osoba" => $red['naziv_osoba'],
+                "film" => $red['naziv_film'],
+                "uloga" => $red['naziv_tipuloga'],
 
             );
 

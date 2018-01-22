@@ -51,5 +51,13 @@
     <script src="public/js/crud/zanr_filma.js"></script>
 {/if}
 
+{if isset($tagslika)}
+    <script src="public/js/crud/tag_slika.js"></script>
+{/if}
+
+{if isset($filmosoba)}
+    <script src="public/js/crud/film_osoba.js"></script>
+{/if}
+
 
 </body>

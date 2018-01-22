@@ -17,6 +17,7 @@
             <li><a href="crud.php?tablica=film">Film</a></li>
             <li><a href="crud.php?tablica=projekcija">Projekcija</a></li>
             <li><a href="crud.php?tablica=moderatorlokacije">Moderatori lokacija</a></li>
+            <li><a href="crud.php?tablica=zanrfilma">Zanr filma</a></li>
         </ul>
     </div>
 

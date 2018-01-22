@@ -1,9 +1,9 @@
 $(document).ready(function(){
     "use strict";
-    var tablice = ["korisnik","lokacija"];
+    var tablice = ["zanr","film"];
 
     $.ajax({
-        url: "src/crud/moderatori_lokacija.php",
+        url: "src/crud/zanr_filma.php",
         type: "POST",
         data:{
             tablica : tablice,
@@ -21,7 +21,7 @@ $(document).ready(function(){
     });
 
     function search(akcija){
-        var prikaz_searcha = "<form method='post' action='src/crud/moderatori_lokacija.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
+        var prikaz_searcha = "<form method='post' action='src/crud/zanr_filma.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
         prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
         prikaz_searcha += "<input type='hidden' name='tablica' value='"+tablice+"'>";
         prikaz_searcha += "<input type='hidden' name='akcija' value='"+akcija+"'>";
@@ -40,14 +40,14 @@ $(document).ready(function(){
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Moderatori";
-        prikaz_tablice += "<button class='silazno' data-stupac='k.korisnicko_ime'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='k.korisnicko_ime'>&#708;</button>"; //ASC
+        prikaz_tablice += "Film";
+        prikaz_tablice += "<button class='silazno' data-stupac='f.naziv_film'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='f.naziv_film'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Lokacije";
-        prikaz_tablice += "<button class='silazno' data-stupac='l.naziv_lokacija'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='l.naziv_lokacija'>&#708;</button>"; //ASC
+        prikaz_tablice += "Zanr";
+        prikaz_tablice += "<button class='silazno' data-stupac='z2.naziv_zanr'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='z2.naziv_zanr'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";
@@ -55,11 +55,11 @@ $(document).ready(function(){
         $.each(data.podaci, function (index, vrijednost) {
 
             prikaz_tablice += "<tr>";
-            prikaz_tablice += "<td>"+ vrijednost.korisnik +"</td>"
-            prikaz_tablice += "<td>"+ vrijednost.lokacija +"</td>";
+            prikaz_tablice += "<td>"+ vrijednost.film +"</td>"
+            prikaz_tablice += "<td>"+ vrijednost.zanr +"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-delete' data-idk='"+ vrijednost.idk +"' data-idl='"+ vrijednost.idl +"'>Izbriši</button>";
+            prikaz_tablice += "<button class='gumb-delete' data-idf='"+ vrijednost.idf +"' data-idz='"+ vrijednost.idz +"'>Izbriši</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
 
@@ -70,22 +70,22 @@ $(document).ready(function(){
     }
 
     function nacrtaj_formu(lista, akcija) {
-        var prikaz_forme = "<form action='src/crud/moderatori_lokacija.php' ";
+        var prikaz_forme = "<form action='src/crud/zanr_filma.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='korisnik'>Moderator</label>";
+        prikaz_forme += "<label for='film'>Film</label>";
 
-        prikaz_forme += "<select name='korisnik' id='korisnik'>";
-        $.each(lista.korisnik, function (index, val) {
+        prikaz_forme += "<select name='film' id='film'>";
+        $.each(lista.film, function (index, val) {
 
             prikaz_forme += "<option value='"+ val.id +"'>"+ val.naziv +"</option>";
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='lokacija'>Lokacija</label>";
+        prikaz_forme += "<label for='zanr'>Zanr</label>";
 
-        prikaz_forme += "<select name='lokacija' id='lokacija'>";
-        $.each(lista.lokacija, function (index, val) {
+        prikaz_forme += "<select name='zanr' id='zanr'>";
+        $.each(lista.zanr, function (index, val) {
 
             prikaz_forme += "<option value='"+ val.id +"'>"+ val.naziv +"</option>";
         });
@@ -101,7 +101,6 @@ $(document).ready(function(){
     }
 
     function paginacija(aktivna_stranica, broj_stranica, tip_sorta, stupac) {
-
         var paginacija = "";
         if(broj_stranica > 0) {
 
@@ -159,7 +158,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            url: 'src/crud/moderatori_lokacija.php',
+            url: 'src/crud/zanr_filma.php',
             type: 'POST',
             data : {
                 tablica : tablice,
@@ -218,7 +217,7 @@ $(document).ready(function(){
             akcija = 5;
         }
         $.ajax({
-            url: "src/crud/moderatori_lokacija.php",
+            url: "src/crud/zanr_filma.php",
             type: "POST",
             data: {
                 aktivna_stranica: $(this).attr("data-stranica"),
@@ -244,7 +243,7 @@ $(document).ready(function(){
     $(document).on('click', '#gumb-kreiraj', function() {
 
         $.ajax({
-            url : 'src/crud/moderatori_lokacija.php',
+            url : 'src/crud/zanr_filma.php',
             type : 'POST',
             data : {
                 tablica : tablice,
@@ -260,8 +259,8 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.gumb-delete', function(){
-        var idl = $(this).attr("data-idl");
-        var idk = $(this).attr("data-idk");
+        var idz = $(this).attr("data-idz");
+        var idf = $(this).attr("data-idf");
         $("#dialog-potvrda").dialog({
             resizable: false,
             height: "auto",
@@ -272,12 +271,12 @@ $(document).ready(function(){
                     //brisanje i refresh tablice
 
                     $.ajax({
-                        url: 'src/crud/moderatori_lokacija.php',
+                        url: 'src/crud/zanr_filma.php',
                         type: 'POST',
                         data: {
                             tablica : tablice,
-                            idl : idl,
-                            idk : idk,
+                            idz : idz,
+                            idf : idf,
                             akcija : 3
                         },
 

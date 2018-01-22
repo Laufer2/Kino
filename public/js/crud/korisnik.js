@@ -30,11 +30,12 @@ $(document).ready( function(){
 
     function paginacija(aktivna_stranica, broj_stranica, tip_sorta, stupac) {
 
+        var paginacija = "";
         if(broj_stranica > 0) {
 
             var broj, pocetak = 0;
 
-            var paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
+            paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
                 "data-stranica='0' data-tip_sorta='" + tip_sorta + "' data-stupac='" + stupac + "'> |< &nbsp;</span>";
 
             if (aktivna_stranica > 2) {
@@ -74,9 +75,8 @@ $(document).ready( function(){
             var zadnja = broj_stranica - 1;
             paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
                 "data-stranica='" + zadnja + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>&nbsp;>| </span>";
-
-            return paginacija;
         }
+        return paginacija;
     }
 
     function nacrtaj_tablicu(data) {

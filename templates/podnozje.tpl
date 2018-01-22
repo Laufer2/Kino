@@ -47,5 +47,9 @@
     <script src="public/js/crud/moderatori_lokacija.js"></script>
 {/if}
 
+{if isset($zanrfilma)}
+    <script src="public/js/crud/zanr_filma.js"></script>
+{/if}
+
 
 </body>

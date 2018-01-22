@@ -67,10 +67,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
                 $upit = "UPDATE $tablica SET $db_stupac = '$naziv' WHERE $db_id = $id;";
                 $rezultat = $baza->update($upit);
+
                 break;
             }else{
                 $poruka = 1;
             }
+
     }
 
     $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);

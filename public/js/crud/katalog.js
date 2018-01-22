@@ -87,11 +87,13 @@ $(document).ready(function(){
 
     function paginacija(aktivna_stranica, broj_stranica, tip_sorta) {
 
+        var paginacija = "";
+
         if(broj_stranica > 0) {
 
             var broj, pocetak = 0;
 
-            var paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
+            paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
                 "data-stranica='0' data-tip_sorta='" + tip_sorta + "'> |< &nbsp;</span>";
 
             if (aktivna_stranica > 2) {
@@ -131,10 +133,8 @@ $(document).ready(function(){
             var zadnja = broj_stranica - 1;
             paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
                 "data-stranica='" + zadnja + "' data-tip_sorta='" + tip_sorta + "'>&nbsp;>| </span>";
-
-            return paginacija;
         }
-
+        return paginacija;
     }
 
     function sort(tip_sorta){
@@ -234,7 +234,7 @@ $(document).ready(function(){
     //kasno kreiranje elementa pa se mora koristiti ovaj način selektiranja elemenata
     $(document).on('click', '#gumb-kreiraj', function() {
 
-        var forma = nacrtaj_formu(2,0);
+        var forma = nacrtaj_formu(2,"");
         $("#forma").html(forma);
 
     });

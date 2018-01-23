@@ -94,8 +94,8 @@ $(document).ready( function(){
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Tip korisnika";
-        prikaz_tablice += "<button class='silazno' data-stupac='k.tip_id'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='k.tip_id'>&#708;</button>"; //ASC
+        prikaz_tablice += "<button class='silazno' data-stupac='t.naziv_tipkorisnika'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='t.naziv_tipkorisnika'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Ime</th>";
         prikaz_tablice += "<th>Prezime</th>";
@@ -111,8 +111,8 @@ $(document).ready( function(){
         $.each(data.podaci, function (index, korisnik) {
 
             prikaz_tablice += "<tr>";
-            prikaz_tablice += "<td>"+ korisnik.korisnicko +"</td>"
-            prikaz_tablice += "<td>"+ korisnik.tipkorisnika +"</td>"
+            prikaz_tablice += "<td>"+ korisnik.korisnicko +"</td>";
+            prikaz_tablice += "<td>"+ korisnik.tipkorisnika +"</td>";
             prikaz_tablice += "<td>"+ korisnik.ime +"</td>";
             prikaz_tablice += "<td>"+ korisnik.prezime +"</td>";
             prikaz_tablice += "<td>"+ korisnik.email +"</td>";

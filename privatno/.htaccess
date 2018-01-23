@@ -1,0 +1,4 @@
+AuthName "privatno"
+AuthUserFile C:\xampp\htdocs\kino\privatno\.htpasswd
+AuthType Basic
+require user admin

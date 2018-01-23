@@ -3,6 +3,10 @@
     <script src="public/js/registracija_validacija.js"></script>
 {/if}
 
+{if isset($privatno)}
+    <script src="../public/js/korisnici.js"></script>
+{/if}
+
 {if isset($novi_aktivacijski_link)}
     <script src="public/js/novi_akt_link.js"></script>
 {/if}

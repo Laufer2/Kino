@@ -4,6 +4,7 @@ require_once '../klase/baza.php';
 require_once '../klase/datoteka.php';
 require_once '../serverske_poruke.php';
 require_once '../klase/korisnik.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 function postavljenje_kolacica($korisnicko_ime, $trajanje, $zapamti_me){
     if($zapamti_me){
@@ -21,7 +22,6 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
 
     $dat = new datoteka();
     $trajanje_kolacica = $dat->dohvati('trajanje_kolacica');
-
 
     $upit = "SELECT id_korisnik, tip_id, lozinka, ime, prezime, email, aktivacijski_rok,
               neuspjesne_prijave, aktivacijski_kod, status_aktivacije FROM korisnik WHERE korisnicko_ime = '$korisnicko_ime';";
@@ -85,7 +85,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
                     $upit = "UPDATE korisnik SET status_aktivacije = 2 WHERE korisnicko_ime = '$korisnicko_ime'";
                     $baza->update($upit);
 
-                    //Log zaključavanje
+                    dnevnik("Zaključavanje računa",1, $id_korisnik);
                 }
             }else{
                 posalji_poruku("Dogodila se greška. Pokušajte ponovo.");
@@ -121,7 +121,11 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
             */
             //$url = "http://barka.foi.hr/WebDiP/2015_projekti/WebDiP2015x047/index.php
             $url = "http://localhost:8000/kino/index.php";
+
+            dnevnik("Prijava",1, $id_korisnik);
+
             posalji_poruku("",$url);
+
         }
     }
 }

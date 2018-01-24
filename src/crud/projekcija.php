@@ -72,8 +72,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         case 2:// ažuriranje
 
-            $upit = "UPDATE projekcija SET lokacija_id = $lokacija, film_id = $film, max_gledatelja = $max_gledatelja, $dostupan_od = $dostupan_od, 
-                     WHERE id_projekcija = $id";
+            $upit = "UPDATE projekcija SET lokacija_id = $lokacija, film_id = $film, max_gledatelja = $max_gledatelja, dostupan_od = $dostupan_od,  
+                     dostupan_do = $dostupan_do WHERE id_projekcija = $id";
             $rezultat = $baza->update($upit);
             break;
 

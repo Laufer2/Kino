@@ -1,6 +1,7 @@
 
 {if isset($korisnicko)}
     <script src="public/js/registracija_validacija.js"></script>
+    <script src="public/js/funkcije.js"></script>
 {/if}
 
 {if isset($privatno)}
@@ -61,6 +62,14 @@
 
 {if isset($filmosoba)}
     <script src="public/js/crud/film_osoba.js"></script>
+{/if}
+
+{if isset($Lurker)}
+    <script src="public/js/naslovnica.js"></script>
+{/if}
+
+{if isset($Korisnik)}
+    <script src="public/js/naslovnica-prijavljeni.js"></script>
 {/if}
 
 

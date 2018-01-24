@@ -21,20 +21,16 @@ echo $tip_korisnika;
 //koja navigacija će se ispisati
 switch ($tip_korisnika){
     case 3:
-        $korisnik = 1;
-        $smarty->assign('Korisnik',$korisnik);
+        $smarty->assign('Korisnik',"1");
         break;
     case 2:
-        $moderator = 1;
-        $smarty->assign('Moderator',$moderator);
+        $smarty->assign('Moderator',"1");
         break;
     case 1:
-        $admin = 1;
-        $smarty->assign('Admin',$admin);
+        $smarty->assign('Admin',"1");
         break;
     case 0:
-        $lurker = 1;
-        $smarty->assign('Lurker', $lurker);
+        $smarty->assign('Lurker', "1");
         break;
 }
 

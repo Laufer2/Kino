@@ -148,7 +148,6 @@ $( document ).ready( function() {
         $("#greske2").html(kok);*/
 
         event.preventDefault();
-
         if(!funkcija.validacija(polje_validacija)){
             return false;
         }else{

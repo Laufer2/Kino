@@ -109,7 +109,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
         $broj_stranica = stranice_ispisa($tablica, $prikazi);
 
         $upit = "SELECT * FROM $tablica";
-        if(isset($stupac) && $stupac != "" ) { // sortirani prikaz
+        if(isset($tip_sorta) && $tip_sorta != "" ) { // sortirani prikaz
             $upit .= " ORDER BY $db_stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $db_stupac;
@@ -122,6 +122,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }
+    $json['upit'] = $upit;
 
     if($rezultat = $baza->selectdb($upit)) {
 

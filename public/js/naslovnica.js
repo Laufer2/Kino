@@ -67,7 +67,6 @@ $(document).ready( function () {
         prikaz_tablice += "</table>";
         return prikaz_tablice;
 
-
     }
 
     $(document).on('change','#lokacije', function () {

@@ -135,7 +135,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $broj_stranica = stranice_ispisa("projekcija", $prikazi);
 
         $upit = "SELECT * FROM projekcija p JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija";
-        if(isset($stupac) && $stupac != "" ) {
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;
@@ -171,15 +171,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $json['broj_stranica'] = $broj_stranica;
         $json['poruka'] = array('poruka'=>$poruka);
 
-        echo json_encode($json);
-
     }else{
 
         $poruka = 1;
 
         $json['poruka'] = array('poruka'=>$poruka);
-
-        echo json_encode($json);
-
     }
+
+    echo json_encode($json);
 }

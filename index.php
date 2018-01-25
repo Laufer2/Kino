@@ -34,7 +34,7 @@ switch ($tip_korisnika){
         break;
 }
 
-if($tip_korisnika == 0){
+if($tip_korisnika > 0){
     $smarty->display('naslovnica_neprijavljeni.tpl');
 }else{
     $odjava = 1;

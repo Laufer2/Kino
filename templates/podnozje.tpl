@@ -1,7 +1,6 @@
 
 {if isset($korisnicko)}
     <script src="public/js/registracija_validacija.js"></script>
-    <script src="public/js/funkcije.js"></script>
 {/if}
 
 {if isset($privatno)}
@@ -20,9 +19,7 @@
     <script src="public/js/odjava.js"></script>
 {/if}
 
-{if isset($js_funkcije)}
     <script src="public/js/funkcije.js"></script>
-{/if}
 
 {if isset($katalog)}
     <script src="public/js/crud/katalog.js"></script>
@@ -69,8 +66,19 @@
 {/if}
 
 {if isset($Korisnik)}
-    <script src="public/js/naslovnica-prijavljeni.js"></script>
+    <script src="public/js/naslovnica_prijavljeni.js"></script>
 {/if}
 
+{if isset($proj)}
+    <script src="public/js/projekcije.js"></script>
+{/if}
+
+{if isset($rezervacija)}
+    <script src="public/js/crud/rezervacija.js"></script>
+{/if}
+
+{if isset($rezervacije)}
+    <script src="public/js/rezervacije_korisnik.js"></script>
+{/if}
 
 </body>

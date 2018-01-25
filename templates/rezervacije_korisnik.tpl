@@ -1,9 +1,4 @@
 <div id="container">
-    <p>Pucaaaaj</p>
-
-    <div id="lokacije-naslovnica">
-
-    </div>
 
     <div id="iznad-tablice">
         <div id="search">
@@ -16,10 +11,6 @@
         <div id="paginacija">
 
         </div>
-    </div>
-
-    <div id="test">
-
     </div>
 
 </div>

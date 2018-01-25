@@ -40,10 +40,11 @@ if(!isset($_POST['id'])) { // padajući izbornik lokacija
               ORDER BY p.dostupan_do ASC LIMIT 3";
 
     $rezultat = $baza->selectdb($upit);
-    $json['upit'] = $upit;
+
     while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
 
         $polje = array(
+            "id" => $red['id_projekcija'],
             "naziv" => $red['naziv_film'],
             "trajanje" => $red['trajanje'],
             "pocetak" => date("F j, Y, H:i", $red['dostupan_do'])
@@ -71,7 +72,6 @@ if(!isset($_POST['id'])) { // padajući izbornik lokacija
         while($row = $rez->fetch_array(MYSQLI_ASSOC)){
 
             array_push($polje['redatelj'],$row['naziv_osoba']);
-            //$json['redatelj'] = $row['naziv_osoba'];
 
         }
 

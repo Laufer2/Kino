@@ -29,7 +29,7 @@ var funkcija ={
         "use strict";
 
         var paginacija = "";
-        if(broj_stranica > 0) {
+        if(broj_stranica > 1) {
 
             var broj, pocetak = 0;
 

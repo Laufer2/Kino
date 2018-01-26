@@ -16,12 +16,9 @@ class auto{
      }
 }
 
+session_start();
 
-if($a !== false){
-    echo "true";
-}else{
-    echo "false";
-}
+print_r( $_SESSION['kino']->getIdKorisnik);
 
 
 

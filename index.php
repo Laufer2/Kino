@@ -16,7 +16,7 @@ if (!isset($_SESSION['kino'])){
     $tip_korisnika = $_SESSION['kino']->getTipId();
 }
 
-echo $tip_korisnika;
+echo '<p>' . print_r($_SESSION) . '</p>';
 
 //koja navigacija će se ispisati
 switch ($tip_korisnika){

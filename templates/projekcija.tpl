@@ -42,7 +42,7 @@
         <div>
             <form method="post" id="rezerviranje" action="src/rezervacije/rezerviranje.php" enctype="application/x-www-form-urlencoded">
                 <input type="number" name="broj_rezervacija" id="broj_rezervacija">
-                <input type="submit" value="Rezerviraj">
+                <input type="submit" id="rezerviraj" value="Rezerviraj">
             </form>
         </div>
 

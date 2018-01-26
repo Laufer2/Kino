@@ -23,6 +23,7 @@
             <li><a href="crud.php?tablica=slika">Slike</a></li>
             <li><a href="crud.php?tablica=filmosoba">Film osobe</a></li>
             <li><a href="crud.php?tablica=rezervacija">Rezervacije</a></li>
+            <li><a href="crud.php?tablica=lajkovi">Lajkovi</a></li>
         </ul>
     </div>
 

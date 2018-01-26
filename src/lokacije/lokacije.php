@@ -13,11 +13,11 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $stupac = filter_input(INPUT_POST, 'stupac');
     $tip_sorta = filter_input(INPUT_POST,'tip_sorta');
     $aktivna_stranica = filter_input(INPUT_POST, 'aktivna_stranica');
-    $id = filter_input(INPUT_POST, 'id');
+    //$id = filter_input(INPUT_POST, 'id');
     $akcija = filter_input(INPUT_POST, 'akcija');
 
-    $korisnik = $_SESSION['kino']->getIdKorisnik();
-
+    //$korisnik = $_SESSION['kino']->getIdKorisnik();
+    $korisnik = 2;
     $baza = new baza();
     $dat = new datoteka();
 
@@ -32,9 +32,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if ($akcija == 5 && $pojam != ""){ // search
 
         $pojam = "%" . $pojam . "%";
-        $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
-                  JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija WHERE r.korisnik_id = $korisnik AND 
-                  (f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
+        $upit = "SELECT * FROM lokacija JOIN adresa a ON lokacija.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
+                  JOIN grad g ON a.grad_id = g.id_grad JOIN lajkovi l ON lokacija.id_lokacija = l.lokacija_id WHERE 
+                  (g.naziv_grad = '$pojam' OR d.naziv_drzava = '$pojam' OR a.ulica = '$pojam' OR l2.naziv_lokacija)";
         if(isset($stupac) && $stupac != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
@@ -60,15 +60,14 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }else {
-        $broj_stranica = stranice_ispisa("rezervacija", $prikazi);
+        $broj_stranica = stranice_ispisa("lajkovi", $prikazi);
 
-        $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
-                  JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija WHERE r.korisnik_id = $korisnik";
+        $upit = "SELECT * FROM lokacija JOIN adresa a ON lokacija.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
+                  JOIN grad g ON a.grad_id = g.id_grad";
         if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;
-
         }else{
             $json['tip_sorta'] = "";
             $json['stupac'] = "";
@@ -79,20 +78,33 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         }
 
     }
-
+    $json['upit'] = $upit;
     if($rezultat = $baza->selectdb($upit)){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
 
             $polje = array(
+                "id" => $red['id_lokacija'],
                 "lokacija" => $red['naziv_lokacija'],
-                "film" => $red['naziv_film'],
-                "pocetak" => date("j.m.Y, H:i", $red['dostupan_do']),
-                "status" => $red['status'] == 0 ? "Nije potvrđena" : "Potvrđena",
-                "broj_rezervacija" => $red['broj_rezervacija'],
+                "grad" => $red['naziv_grad'],
+                "ulica" => $red['ulica'] . " " . $red['broj'],
+                "drzava" => $red['naziv_drzava'],
             );
 
+            $lokacija = $red['id_lokacija'];
+
+            // podupiti
+
+            $u = "SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=$lokacija AND svida_mi_se = 1";
+            $rez = $baza->selectdb($u);
+            $polje['lajkovi'] = $rez->fetch_array(MYSQLI_NUM);
+
+            $u = "SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=$lokacija AND svida_mi_se = 0";
+            $rez = $baza->selectdb($u);
+            $polje['ne_lajkovi'] = $rez->fetch_array(MYSQLI_NUM);
+
             array_push($json['podaci'],$polje);
+
         }
 
         $json['aktivna_stranica'] = intval($aktivna_stranica);

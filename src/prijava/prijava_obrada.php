@@ -111,6 +111,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
             $korisnik->set_podaci($id_korisnik, $tip_id, $ime, $prezime, $email, $korisnicko_ime);
             //stvori sesiju
             session_start();
+
             $_SESSION['kino'] = $korisnik;
 
             /*

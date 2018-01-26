@@ -74,7 +74,7 @@ $(document).ready( function(){
         return prikaz_tablice;
     }
 
-    function nacrtaj_formu(lista, akcija, id) {
+    function nacrtaj_formu(lista, akcija) {
 
         var prikaz_forme = "<form action='src/crud/adresa.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
@@ -117,7 +117,6 @@ $(document).ready( function(){
         prikaz_forme += "</select><br/>";
 
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
-        prikaz_forme += "<input type='hidden' name='id' value='"+ id +"'>";
 
         prikaz_forme += "<input type='submit' value='Dodaj'>";
         prikaz_forme += "</form>";
@@ -267,7 +266,7 @@ $(document).ready( function(){
 
             success: function (data) {
                 var lista = JSON.parse(data);
-                $("#forma").html( nacrtaj_formu(lista, 2, 2));
+                $("#forma").html( nacrtaj_formu(lista, 2));
 
                 var forma = $("#novi_zapis");
 
@@ -297,7 +296,7 @@ $(document).ready( function(){
 
             success: function (data) {
                 var lista = JSON.parse(data);
-                $("#forma").html( nacrtaj_formu(lista, 1 ,0));
+                $("#forma").html( nacrtaj_formu(lista, 1));
             }
         });
     });

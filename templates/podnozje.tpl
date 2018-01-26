@@ -81,4 +81,12 @@
     <script src="public/js/rezervacije_korisnik.js"></script>
 {/if}
 
+{if isset($lokacije)}
+    <script src="public/js/lokacije.js"></script>
+{/if}
+
+{if isset($lajkovi)}
+    <script src="public/js/crud/lajkovi.js"></script>
+{/if}
+
 </body>

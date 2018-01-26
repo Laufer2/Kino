@@ -29,6 +29,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         $lokacija = filter_input(INPUT_POST, 'lokacija');
         $korisnik = filter_input(INPUT_POST, 'korisnik');
+        $vrijeme = filter_input(INPUT_POST,'vrijeme');
+        $svidjanje = filter_input(INPUT_POST,'svidjanje');
 
     }
 
@@ -71,31 +73,45 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     switch ($akcija){
         case 1://kreiranje
-            $upit = "SELECT * FROM moderatorlokacije WHERE lokacija_id = $lokacija AND korisnik_id = $korisnik";
+            $upit = "SELECT * FROM lajkovi WHERE lokacija_id = $lokacija AND korisnik_id = $korisnik";
             $rezultat = $baza->selectdb($upit);
 
             if($rezultat->num_rows){
                 $poruka = 1;
             }else{
-                $upit = "UPDATE korisnik SET tip_id = 2 WHERE id_korisnik = $korisnik";
-                $rezultat = $baza->update($upit);
 
-                $upit = "INSERT INTO moderatorlokacije VALUES ($korisnik, $lokacija)";
+                $upit = "INSERT INTO lajkovi VALUES ($korisnik, $lokacija, $svidjanje, $vrijeme)";
                 $rezultat = $baza->update($upit);
             }
+            $json['u']=$upit;
+            break;
+
+        case 2:// ažuriranje
+            $upit = "UPDATE lajkovi SET svida_mi_se = $svidjanje, vrijeme=$vrijeme WHERE korisnik_id = $idk AND lokacija_id = $idl";
+            $rezultat = $baza->update($upit);
+
             break;
 
         case 3: // brisanje
-            $upit = "SELECT * FROM moderatorlokacije WHERE korisnik_id = $idk";
+            $upit = "DELETE FROM lajkovi WHERE korisnik_id = $idk AND lokacija_id = $idl";
             $rezultat = $baza->selectdb($upit);
-            if($rezultat->num_rows < 2){
-                $upit = "UPDATE korisnik SET tip_id = 3 WHERE id_korisnik = $idk";
-                $rezultat = $baza->selectdb($upit);
-            }
-            $upit = "DELETE FROM moderatorlokacije WHERE lokacija_id = $idl AND korisnik_id = $idk";
-            $rezultat = $baza->update($upit);
             break;
 
+        case 4: // dohvati jednog za ažuriranje
+            $upit = "SELECT * FROM lajkovi WHERE lokacija_id = $idl AND korisnik_id = $idk";
+            $rezultat = $baza->selectdb($upit);
+            list($korisnik, $lokacija, $svidjanje, $vrijeme) = $rezultat->fetch_array();
+            $polje = array(
+                "korisnik" => $korisnik,
+                "lokacija" => $lokacija,
+                "svidjanje" => $svidjanje,
+                "vrijeme" => $vrijeme,
+                "idl" => $lokacija,
+                "idk" => $korisnik
+            );
+            array_push($json['podaci'],$polje);
+            echo json_encode($json);
+            exit();
     }
 
     $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
@@ -103,8 +119,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if ($akcija == 5 && $pojam != ""){ // search
 
         $pojam = "%" . $pojam . "%";
-        $upit = "SELECT * FROM moderatorlokacije m JOIN korisnik k ON m.korisnik_id = k.id_korisnik JOIN lokacija l ON m.lokacija_id = l.id_lokacija
-                  WHERE k.korisnicko_ime LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam'";
+        $upit = "SELECT * FROM lajkovi l JOIN lokacija l2 ON l.lokacija_id = l2.id_lokacija JOIN korisnik k ON l.korisnik_id = k.id_korisnik
+                  WHERE k.korisnicko_ime LIKE '$pojam' OR l2.naziv_lokacija LIKE '$pojam'";
         if(isset($stupac) && $stupac != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
@@ -130,9 +146,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }else {
-        $broj_stranica = stranice_ispisa("moderatorlokacije", $prikazi);
+        $broj_stranica = stranice_ispisa("lajkovi", $prikazi);
 
-        $upit = "SELECT * FROM moderatorlokacije m JOIN korisnik k ON m.korisnik_id = k.id_korisnik JOIN lokacija l ON m.lokacija_id = l.id_lokacija";
+        $upit = "SELECT * FROM lajkovi l JOIN lokacija l2 ON l.lokacija_id = l2.id_lokacija JOIN korisnik k ON l.korisnik_id = k.id_korisnik";
         if(isset($stupac) && $stupac != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
@@ -147,8 +163,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }
-
-
+    $json['upit'] = $upit;
     if($rezultat = $baza->selectdb($upit)){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
@@ -158,7 +173,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 "idk" => $red['korisnik_id'],
                 "lokacija" => $red['naziv_lokacija'],
                 "korisnik" => $red['korisnicko_ime'],
-
+                "svidjanje" => $red['svida_mi_se'] > 0 ? "Sviđa mi se" : "Ne sviđa mi se",
+                "vrijeme" => date("j.m.Y, H:i", $red['vrijeme'])
             );
 
             array_push($json['podaci'],$polje);

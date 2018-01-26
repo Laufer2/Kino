@@ -15,6 +15,7 @@ $(document).ready(function () {
             dostupna_mjesta();
             if("poruka" in data){
                 $("#poruke").html(data.poruka);
+                $("#rezerviraj").prop('disabled', true);
             }
         }
 

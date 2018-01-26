@@ -11,7 +11,7 @@
     {/if}
 
     {if isset($Korisnik) || isset($Moderator) || isset($Admin)}
-        <li>Rezervacije</li>
+        <li><a href="rezervacije.php">Rezervacije</a></li>
         <li>Slike</li>
         <li>Lokacije kina</li>
         <li id="odjava" style="cursor: pointer">Odjava</li>

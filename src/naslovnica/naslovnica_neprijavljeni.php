@@ -61,7 +61,6 @@ if(!isset($_POST['id'])) { // padajući izbornik lokacija
         while($row = $rez->fetch_array(MYSQLI_ASSOC)){
 
              array_push($polje['zanr'],$row['naziv_zanr']);
-             //$json['zanr'] = $row['zanr'];
 
         }
 

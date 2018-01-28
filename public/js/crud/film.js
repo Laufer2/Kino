@@ -47,6 +47,7 @@ $(document).ready(function(){
         prikaz_tablice += "<button class='silazno' data-stupac='naziv_"+tablica+"'>&#709;</button>"; //DESC
         prikaz_tablice += "<button class='uzlazno' data-stupac='naziv_"+tablica+"'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
+        prikaz_tablice += "<th>Godina</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Trajanje";
         prikaz_tablice += "<button class='silazno' data-stupac='trajanje'>&#709;</button>"; //DESC
@@ -61,6 +62,7 @@ $(document).ready(function(){
             prikaz_tablice += "<tr>";
             prikaz_tablice += "<td>"+ vrijednost.id +"</td>"
             prikaz_tablice += "<td>"+ vrijednost.naziv +"</td>";
+            prikaz_tablice += "<td>"+ vrijednost.godina +"</td>";
             prikaz_tablice += "<td>"+ vrijednost.trajanje +"</td>";
             prikaz_tablice += "<td>"+ vrijednost.sadrzaj +"</td>";
 
@@ -83,6 +85,9 @@ $(document).ready(function(){
 
         prikaz_forme += "<label for='naziv'>Film</label>";
         prikaz_forme += "<input type='text' name='naziv' id='naziv' required><br/>";
+
+        prikaz_forme += "<label for='godina'>Godina</label>";
+        prikaz_forme += "<input type='number' name='godina' id='godina' required><br/>";
 
         prikaz_forme += "<label for='trajanje'>Trajanje</label>";
         prikaz_forme += "<input type='number' name='trajanje' id='trajanje' required><br/>";
@@ -272,6 +277,7 @@ $(document).ready(function(){
                 $("#naziv").val(prikaz['naziv']);
                 $("#trajanje").val(prikaz['trajanje']);
                 $("#sadrzaj").val(prikaz['sadrzaj']);
+                $("#godina").val(prikaz['godina']);
 
             }
         });

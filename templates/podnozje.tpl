@@ -89,4 +89,16 @@
     <script src="public/js/crud/lajkovi.js"></script>
 {/if}
 
+{if isset($filmovi)}
+    <script src="public/js/filmovi.js"></script>
+{/if}
+
+{if isset($termini)}
+    <script src="public/js/termini.js"></script>
+{/if}
+
+{if isset($potvrde)}
+    <script src="public/js/potvrde.js"></script>
+{/if}
+
 </body>

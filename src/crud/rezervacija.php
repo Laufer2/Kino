@@ -13,6 +13,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $id = filter_input(INPUT_POST, 'id');
     $akcija = filter_input(INPUT_POST, 'akcija');
     $selectmenu = filter_input(INPUT_POST,'selectmenu');
+    $id_projekcija = filter_input(INPUT_POST,'id_projekcija');
 
     $baza = new baza();
     $dat = new datoteka();
@@ -51,13 +52,11 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             array_push($json['korisnik'], $polje);
         }
 
-        $pomak = $dat->dohvati('pomak');
-        $virtualno_vrijeme = time() + ($pomak * 60 * 60);
+
         $json['projekcija'] = array();
 
         $upit = "SELECT * FROM projekcija 
-                  JOIN film f ON projekcija.film_id = f.id_film JOIN lokacija l ON projekcija.lokacija_id = l.id_lokacija 
-                  WHERE NOT projekcija.dostupan_do < $virtualno_vrijeme";
+                  JOIN film f ON projekcija.film_id = f.id_film JOIN lokacija l ON projekcija.lokacija_id = l.id_lokacija ";
 
         // rezervacije samo za one projekcije koje nisu prošle - uspoređujući s virtualnim vremenom
         $rezultat = $baza->selectdb($upit);
@@ -103,6 +102,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 "korisnik" => $korisnik,
                 "broj_rezervacija" => $broj_rezervacija,
                 "status" => $status,
+                "projekcija" => $id_projekcija
             );
             array_push($json['podaci'],$polje);
             echo json_encode($json);
@@ -161,6 +161,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         }
 
     }
+    $json['upit']=$upit;
 
     if($rezultat = $baza->selectdb($upit)){
 
@@ -171,6 +172,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 "korisnik" => $red['korisnicko_ime'],
                 "status" => $red['status'],
                 "broj_rezervacija" => $red['broj_rezervacija'],
+                "id_projekcija" => $red['id_projekcija'],
                 "projekcija" => $red["naziv_film"] . " - " . date("j.m.Y, H:i", $red['dostupan_do']) . " - " . $red['naziv_lokacija']
             );
 

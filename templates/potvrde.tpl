@@ -1,5 +1,9 @@
 <div id="container">
 
+    <div id="poruke">
+
+    </div>
+
     <div id="iznad-tablice">
 
         <div id="lokacije-potvrde">

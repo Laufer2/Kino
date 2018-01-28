@@ -59,7 +59,7 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ rezervacija.projekcija+"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-edit' data-id='"+ rezervacija.id +"'>Uredi</button>";
+            prikaz_tablice += "<button class='gumb-edit' data-id='"+ rezervacija.id +"' data-projek='"+ rezervacija.id_projekcija +"'>Uredi</button>";
             prikaz_tablice += "<button class='gumb-delete' data-id='"+ rezervacija.id +"'>Izbriši</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
@@ -236,6 +236,7 @@ $(document).ready( function(){
 
     $(document).on('click', '.gumb-edit', function() {
         var id = $(this).attr("data-id");
+        var projek = $(this).attr("data-projek");
 
         $.ajax({
             url: 'src/crud/rezervacija.php',
@@ -243,7 +244,8 @@ $(document).ready( function(){
             data: {
                 id: id,
                 akcija: 4,
-                selectmenu : 1
+                selectmenu : 1,
+                id_projekcija : projek
             },
 
             success: function (data) {
@@ -251,7 +253,7 @@ $(document).ready( function(){
                 $("#forma").html( nacrtaj_formu(lista, 2));
 
                 var forma = $("#novi_zapis");
-                $("#ulica").val(lista['podaci'].ulica);
+
                 $.each(lista.podaci, function(index, value){
                     $.each(value,function (ind, val) {
                         $('[name='+ind+']', forma).val(val);

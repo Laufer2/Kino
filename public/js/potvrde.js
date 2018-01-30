@@ -21,9 +21,9 @@ $(document).ready( function(){
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#lokacije-potvrde").html(padajuci_izbornik(data.lokacija))
-                $("#prikaz-tablice").html(nacrtaj_tablicu(data));
+                $("#lokacije-potvrde").html(padajuci_izbornik(data.lokacija));
                 $("#search").html(search(5, data.lok));
+                $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
                 if("poruka" in data){
                     $("#poruke").html(data.poruka);

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-27 18:35:01
+/* Smarty version 3.1.30, created on 2018-01-28 21:46:06
   from "C:\xampp\htdocs\kino\templates\termini.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a6cb8452102d4_48646575',
+  'unifunc' => 'content_5a6e368ede2ba3_30841043',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '559b15b20b63c018a393106f722e25ef9892fb2b' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\termini.tpl',
-      1 => 1517074494,
+      1 => 1517172364,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a6cb8452102d4_48646575 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a6e368ede2ba3_30841043 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -36,7 +36,7 @@ function content_5a6cb8452102d4_48646575 (Smarty_Internal_Template $_smarty_tpl)
 
                 <legend>Dostupan od</legend>
                 <label for="datum">Datum</label>
-                <input type="date" name="datum1" id="datum" required><br/>
+                <input type="date" name="datum1" id="datum" required>
 
                 <label for="sati">Vrijeme</label>
                 <input type="number" name="sati1" id="sati" placeholder="sati" required><span> : </span>
@@ -49,7 +49,7 @@ function content_5a6cb8452102d4_48646575 (Smarty_Internal_Template $_smarty_tpl)
 
                 <legend>Dostupan do</legend>
                 <label for="datum">Datum</label>
-                <input type="date" name="datum2" id="datum" required><br/>
+                <input type="date" name="datum2" id="datum" required>
 
                 <label for="sati">Vrijeme</label>
                 <input type="number" name="sati2" id="sati" placeholder="sati" required><span> : </span>

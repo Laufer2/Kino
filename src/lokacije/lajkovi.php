@@ -9,8 +9,7 @@ session_start();
 $lokacija = filter_input(INPUT_POST,'lokacija');
 $svidja = filter_input(INPUT_POST,'svidja');
 
-//$korisnik = $_SESSION['kino']->getIdKorisnik();
-$korisnik = 2;
+$korisnik = $_SESSION['kino']->getIdKorisnik();
 
 $baza = new baza();
 

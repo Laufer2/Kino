@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-27 15:46:13
+/* Smarty version 3.1.30, created on 2018-01-30 17:45:48
   from "C:\xampp\htdocs\kino\templates\filmovi.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a6c90b56910c1_38907601',
+  'unifunc' => 'content_5a70a13cd1c662_77342206',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '53b5e32f2bbb23466077ccc5eedb647ca1ccb591' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\filmovi.tpl',
-      1 => 1517064371,
+      1 => 1517067879,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a6c90b56910c1_38907601 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a70a13cd1c662_77342206 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -58,6 +58,10 @@ function content_5a6c90b56910c1_38907601 (Smarty_Internal_Template $_smarty_tpl)
         <input type="submit" value="Kreiraj novi film">
 
     </form>
+
+    <div id="poruke">
+
+    </div>
 
 </div><?php }
 }

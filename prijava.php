@@ -2,13 +2,9 @@
 require_once '_header.php';
 
 
-$title = "Prijava";
+$smarty->assign('prijava',"da");
 
-$prijava = "da";
-
-$smarty->assign('prijava',$prijava);
-
-$smarty->assign('Naslov_stranice', $title);
+$smarty->assign('Naslov_stranice', "Prijava");
 
 $smarty->display('head.tpl');
 

@@ -16,10 +16,15 @@ class auto{
      }
 }
 
+$uri = $_SERVER["REQUEST_URI"];
+$pos = strrpos($uri, "/");
+$skripta = substr($uri, $pos+1);
+
 session_start();
-
-print_r( $_SESSION['kino']->getIdKorisnik);
-
+setcookie(session_name(), '', -3600);
+session_unset();
+session_destroy();
+$_SESSION = array();
 
 
 

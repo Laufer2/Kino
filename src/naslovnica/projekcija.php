@@ -10,7 +10,9 @@ $baza = new baza();
 $json = array();
 $json['projekcija'] = array();
 
-$upit = "SELECT * FROM projekcija p JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija 
+$upit = "SELECT p.id_projekcija, p.dostupan_do, p.dostupan_od, p.max_gledatelja, f.naziv_film, f.godina, f.trajanje, f.sadrzaj, f.id_film, l.naziv_lokacija,
+          (SELECT SUM(r.broj_rezervacija)  FROM rezervacija r WHERE r.status = 1 AND r.projekcija_id = p.id_projekcija) as ostalo
+          FROM projekcija p JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija 
           WHERE  p.id_projekcija = $id";
 
 $rezultat = $baza->selectdb($upit);
@@ -24,8 +26,9 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
         "trajanje" => $red['trajanje'],
         "sadrzaj" => $red['sadrzaj'],
         "max_gledatelja" => $red['max_gledatelja'],
-        "dostupan_od" => date("F j, Y, H:i", $red['dostupan_od']),
-        "pocetak" => date("F j, Y, H:i", $red['dostupan_do'])
+        "dostupan_od" => date("d.m.Y, H:i", $red['dostupan_od']),
+        "pocetak" => date("d.m.Y, H:i", $red['dostupan_do']),
+        "ostalo" => ($red['max_gledatelja'] - $red['ostalo'])
     );
 
     $id_projekcija = $red['id_projekcija'];
@@ -87,7 +90,7 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
     $virtualno_vrijeme = time() + ($pomak * 60 * 60);
     if( $dotupan_od > $virtualno_vrijeme){
 
-        $json['poruka'] = "Rezervacijama možete pristupiti tek " . date("F j, Y, H:i", $red['dostupan_od']);
+        $json['poruka'] = "Rezervacijama možete pristupiti tek " .date("d.m.Y, H:i", $red['dostupan_do']);
 
     }
 

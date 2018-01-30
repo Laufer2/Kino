@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-24 13:56:16
+/* Smarty version 3.1.30, created on 2018-01-28 22:37:10
   from "C:\xampp\htdocs\kino\templates\head.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a68827076a1a1_75123931',
+  'unifunc' => 'content_5a6e428604c3b1_91283424',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '7f038792f30a8aab51af4459b286ddf3046003c3' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\head.tpl',
-      1 => 1516798575,
+      1 => 1517175428,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,9 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a68827076a1a1_75123931 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a6e428604c3b1_91283424 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
+<html lang="hr">
 <head>
     <title><?php echo (($tmp = @$_smarty_tpl->tpl_vars['Naslov_stranice']->value)===null||$tmp==='' ? "Kino" : $tmp);?>
 </title>

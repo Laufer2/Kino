@@ -1,5 +1,4 @@
 <div id="container">
-    <p>Pucaaaaj</p>
 
     <div id="lokacije-naslovnica">
 

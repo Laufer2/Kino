@@ -1,12 +1,10 @@
 <?php
-
 require_once '_header.php';
-require_once 'src/klase/korisnik.php';
 require_once 'src/restrikcije.php';
 
-$smarty->assign('Naslov_stranice',"Rezervacije");
-$smarty->assign('rezervacije','da');
+$smarty->assign('Naslov_stranice',"Log");
 
+$smarty->assign('dnevnik', "da");
 
 $tip_korisnika = restrikcije($smarty);
 
@@ -16,8 +14,8 @@ $smarty->display('zaglavlje.tpl');
 
 $smarty->display('navigacija.tpl');
 
-if($tip_korisnika < 4){
-    $smarty->display('rezervacije.tpl');
+if($tip_korisnika < 2){
+    $smarty->display('dnevnik.tpl');
 }else{
     $smarty->display('zabrana.tpl');
 }

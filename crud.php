@@ -1,8 +1,7 @@
 <?php
 require_once '_header.php';
+require_once 'src/restrikcije.php';
 
-$varijabla = "";
-$title = "CRUD";
 
 $smarty->assign('jquery_ui',"da");
 $smarty->assign('js_funkcije',"da");
@@ -23,17 +22,24 @@ function crud_tablica($smarty, $tablica){
 }
 
 if(!isset($_GET['tablica'])){
-    $smarty->assign('Naslov_stranice', $title);
+    $smarty->assign('Naslov_stranice', "CRUD");
 }else{
     $tablica = filter_input(INPUT_GET,'tablica');
     crud_tablica($smarty,$tablica);
-    //$smarty->assign('katalog',$tablica);
 }
+
+$tip_korisnika = restrikcije($smarty);
 
 $smarty->display('head.tpl');
 
 $smarty->display('zaglavlje.tpl');
 
-$smarty->display('crud.tpl');
+$smarty->display('navigacija.tpl');
+
+if($tip_korisnika < 2){
+    $smarty->display('crud.tpl');
+}else{
+    $smarty->display('zabrana.tpl');
+}
 
 $smarty->display('podnozje.tpl');

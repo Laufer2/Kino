@@ -1,3 +1,4 @@
+<html>
 <head>
     <title>{$Naslov_stranice|default: "Kino"}</title>
     <meta charset="utf-8">

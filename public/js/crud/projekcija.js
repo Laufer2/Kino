@@ -141,11 +141,20 @@ $(document).ready( function(){
         prikaz_forme += "<label for='max_gledatelja'>Max gledatelja</label>";
         prikaz_forme += "<input type='number' name='max_gledatelja' id='max_gledatelja 'required><br/>";
 
-        prikaz_forme += "<label for='dostupan_od'>Dostupan od</label>";
-        prikaz_forme += "<input type='number' name='dostupan_od' id='dostupan_od' required><br/>";
+        //dostupan od
+        prikaz_forme += "<label>Dostupan od</label><br/>";
+        prikaz_forme += "<label for='datum1'>Datum</label>";
+        prikaz_forme += "<input type='date' name='datum1' required>";
+        prikaz_forme += "<label for='sati1'>Vrijeme</label>";
+        prikaz_forme += "<input type='number' name='sati1' required>";
+        prikaz_forme += "<input type='number' name='minute1' required><br/>";
 
-        prikaz_forme += "<label for='dostupan_do'>Dostupan do</label>";
-        prikaz_forme += "<input type='number' name='dostupan_do' id='dostupan_do' required><br/>";
+        prikaz_forme += "<label>Dostupan do</label><br/>";
+        prikaz_forme += "<label for='datum2'>Datum</label>";
+        prikaz_forme += "<input type='date' name='datum2' required>";
+        prikaz_forme += "<label for='sati2'>Vrijeme</label>";
+        prikaz_forme += "<input type='number' name='sati2' required>";
+        prikaz_forme += "<input type='number' name='minute2' required><br/>";
 
         prikaz_forme += "<label for='lokacija'>Lokacija</label>";
 

@@ -88,30 +88,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                   JOIN film f ON p.film_id = f.id_film JOIN korisnik k ON r.korisnik_id = k.id_korisnik 
                   WHERE r.status = 0 AND p.lokacija_id = $lokacija AND ( f.naziv_film LIKE '$pojam' OR k.korisnicko_ime LIKE '$pojam')";
 
-        if(isset($stupac) && $stupac != "" ) {
-            $upit .= " ORDER BY $stupac $tip_sorta";
-            $json['tip_sorta'] = $tip_sorta;
-            $json['stupac'] = $stupac;
-
-        }else{
-            $json['tip_sorta'] = "";
-            $json['stupac'] = "";
-        }
-        $rezultat = $baza->selectdb($upit);
-        $redovi = $rezultat->num_rows;
-        if(!$redovi){
-            $json['poruka'] = "Nema podataka.";
-        }
-        if ($rezultat > $prikazi){
-            $broj_stranica = ceil($redovi/$prikazi);
-        }else{
-            $broj_stranica = 0;
-        }
-
-        //paginacija
-        if($broj_stranica){
-            $upit .= " LIMIT $prikazi OFFSET $offset";
-        }
     }else {
 
         $upit = "SELECT f.naziv_film, k.korisnicko_ime, p.max_gledatelja, r.broj_rezervacija, f.godina, p.dostupan_do, r.id_rezervacija, k.email,
@@ -120,31 +96,34 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                   JOIN film f ON p.film_id = f.id_film JOIN korisnik k ON r.korisnik_id = k.id_korisnik 
                   WHERE r.status = 0 AND p.lokacija_id = $lokacija";
 
-        if(isset($tip_sorta) && $tip_sorta != "" ) {
-            $upit .= " ORDER BY $stupac $tip_sorta";
-            $json['tip_sorta'] = $tip_sorta;
-            $json['stupac'] = $stupac;
-
-        }else{
-            $json['tip_sorta'] = "";
-            $json['stupac'] = "";
-        }
-
-        $rezultat = $baza->selectdb($upit);
-        $redovi = $rezultat->num_rows;
-        if(!$redovi){
-            $json['poruka'] = "Nema rezervacija za odobravanje.";
-        }
-        if ($rezultat > $prikazi){
-            $broj_stranica = ceil($redovi/$prikazi);
-        }else{
-            $broj_stranica = 0;
-        }
-
-        if($broj_stranica){
-            $upit .= " LIMIT $prikazi OFFSET $offset";
-        }
     }
+
+    if(isset($tip_sorta) && $tip_sorta != "" ) {
+        $upit .= " ORDER BY $stupac $tip_sorta";
+        $json['tip_sorta'] = $tip_sorta;
+        $json['stupac'] = $stupac;
+
+    }else{
+        $json['tip_sorta'] = "";
+        $json['stupac'] = "";
+    }
+    $rezultat = $baza->selectdb($upit);
+    $redovi = $rezultat->num_rows;
+    if(!$redovi){
+        $json['poruka'] = "Nema podataka.";
+    }
+    if ($rezultat > $prikazi){
+        $broj_stranica = ceil($redovi/$prikazi);
+    }else{
+        $broj_stranica = 0;
+    }
+
+    //paginacija
+    if($broj_stranica){
+        $upit .= " LIMIT $prikazi OFFSET $offset";
+    }
+
+    $json['upit'] = $upit;
 
     if($rezultat = $baza->selectdb($upit)){
 

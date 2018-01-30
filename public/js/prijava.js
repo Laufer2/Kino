@@ -12,11 +12,12 @@ $(document).ready(function() {
         }
     });
 
-    $("#prijava").submit(function () {
+    $("#prijava").submit(function (event) {
 
         var forma = $("#prijava");
         event.preventDefault();
         $("#poruke").html("Prijava...");
+
         $.ajax({
             url: "src/prijava/prijava_obrada.php",
             type: "POST",
@@ -28,9 +29,8 @@ $(document).ready(function() {
                 if(poruka['redirect'] === 0){
                     $("#poruke").html(poruka['poruka']);
                 }else{
-                    window.location.replace(poruka['redirect']);
+                    window.location.replace(decodeURIComponent(poruka.redirect));
                 }
-
             }
 
         });

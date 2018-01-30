@@ -29,8 +29,18 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $lokacija = filter_input(INPUT_POST, 'lokacija');
         $film = filter_input(INPUT_POST, 'film');
         $max_gledatelja = filter_input(INPUT_POST, 'max_gledatelja');
-        $dostupan_do = filter_input(INPUT_POST, 'dostupan_do');
-        $dostupan_od = filter_input(INPUT_POST, 'dostupan_od');
+        $datum1 = filter_input(INPUT_POST,'datum1');
+        $sati1 = filter_input(INPUT_POST,'sati1');
+        $minute1 = filter_input(INPUT_POST,'minute1');
+        $datum2 = filter_input(INPUT_POST,'datum2');
+        $sati2 = filter_input(INPUT_POST,'sati2');
+        $minute2 = filter_input(INPUT_POST,'minute2');
+
+        $dat1 = strtotime($datum1);
+        $dostupan_od = $dat1 + ($sati1*60*60) + ($minute1 * 60);
+
+        $dat2 = strtotime($datum2);
+        $dostupan_do = $dat2 + ($sati2*60*60) + ($minute2 * 60);
     }
 
     // padajući meniji za vanjske ključeve
@@ -87,14 +97,32 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $rezultat = $baza->selectdb($upit);
 
             list($id_projekcija, $lokacija, $film, $max_gledatelja, $dostupan_od, $dostupan_do) = $rezultat->fetch_array();
+
+            $vrijeme = date("Y-m-d;H;i", $dostupan_od);
+            $split = explode(";",$vrijeme);
+            $datum = $split[0];
+            $sati = $split[1];
+            $minute = $split[2];
+
+            $vrijeme4 = date("Y-m-d;H;i", $dostupan_do);
+            $split4 = explode(";",$vrijeme4);
+            $datum4 = $split4[0];
+            $sati4 = $split4[1];
+            $minute4 = $split4[2];
+
             $polje = array(
                 "id" => $id,
                 "lokacija" => $lokacija,
                 "film" => $film,
                 "max_gledatelja" => $max_gledatelja,
-                "dostupan_od" => $dostupan_od,
-                "dostupan_do" => $dostupan_do
+                "datum1" => $datum,
+                "sati1" => $sati,
+                "minute1" => $minute,
+                "datum2" => $datum4,
+                "sati2" => $sati4,
+                "minute2" => $minute4
             );
+
             array_push($json['podaci'],$polje);
             echo json_encode($json);
             exit();
@@ -148,7 +176,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         if($broj_stranica){
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
-
     }
 
     if($rezultat = $baza->selectdb($upit)){
@@ -160,8 +187,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 "lokacija" => $red['naziv_lokacija'],
                 "film" => $red['naziv_film'],
                 "max_gledatelja" => $red['max_gledatelja'],
-                "dostupan_od" => date("F j, Y, H:i", $red['dostupan_od']),
-                "dostupan_do" => date("F j, Y, H:i", $red['dostupan_do'])
+                "dostupan_od" => date("d.m.Y, H:i", $red['dostupan_od']),
+                "dostupan_do" => date("d.m.Y, H:i", $red['dostupan_do'])
             );
 
             array_push($json['podaci'],$polje);

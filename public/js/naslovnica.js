@@ -80,10 +80,8 @@ $(document).ready( function () {
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#projekcije-naslovnica").html(tablica(data));
+                $("#prikaz-tablice").html(tablica(data));
             }
-
-
         });
 
     });

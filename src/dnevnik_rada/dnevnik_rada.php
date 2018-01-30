@@ -2,6 +2,8 @@
 
 require_once '../klase/baza.php';
 require_once '../klase/datoteka.php';
+require_once '../klase/korisnik.php';
+session_start();
 
 function dnevnik($zapis, $tip, $id_korisnik){
 
@@ -12,21 +14,13 @@ function dnevnik($zapis, $tip, $id_korisnik){
     $vrijeme = time()+($pomak * 60 * 60);
     $ip_adresa = $_SERVER["REMOTE_ADDR"];
 
+    $uri = $_SERVER["REQUEST_URI"];
+    $pos = strrpos($uri, "/");
+    $skripta = substr($uri, $pos+1);
+
     $baza = new baza();
 
-    $upit = "INSERT INTO log VALUES (default, $korisnik,$vrijeme,'$ip_adresa')";
-
-    $rez = $baza->update($upit);
-
-    $upit = "SELECT id_log FROM log WHERE vrijeme = $vrijeme";
-    $rez = $baza->selectdb($upit);
-    list($id_log) = $rez->fetch_array();
-
-    if($tip == 1){
-        $upit = "INSERT INTO logradnja VALUES ($id_log, '$zapis')";
-    }else{
-        $upit = "INSERT INTO logbaza VALUES ($id_log, '$zapis')";
-    }
+    $upit = "INSERT INTO log VALUES (default, $korisnik,$vrijeme,'$ip_adresa', '$skripta', $tip, '$zapis')";
 
     if($rezultat = $baza->update($upit)){
         return true;

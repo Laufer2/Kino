@@ -1,11 +1,10 @@
 <?php
 require_once '_header.php';
 
-$title = "Registracija";
-$korisnicko_provjera = "da";
 
-$smarty->assign('Naslov_stranice',$title);
-$smarty->assign('korisnicko', $korisnicko_provjera);
+$smarty->assign('Naslov_stranice',"Registracija");
+
+$smarty->assign('korisnicko', "da");
 
 $smarty->display('head.tpl');
 

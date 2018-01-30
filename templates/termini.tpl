@@ -12,7 +12,7 @@
 
                 <legend>Dostupan od</legend>
                 <label for="datum">Datum</label>
-                <input type="date" name="datum1" id="datum" required><br/>
+                <input type="date" name="datum1" id="datum" required>
 
                 <label for="sati">Vrijeme</label>
                 <input type="number" name="sati1" id="sati" placeholder="sati" required><span> : </span>
@@ -25,7 +25,7 @@
 
                 <legend>Dostupan do</legend>
                 <label for="datum">Datum</label>
-                <input type="date" name="datum2" id="datum" required><br/>
+                <input type="date" name="datum2" id="datum" required>
 
                 <label for="sati">Vrijeme</label>
                 <input type="number" name="sati2" id="sati" placeholder="sati" required><span> : </span>

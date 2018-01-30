@@ -6,9 +6,9 @@ require_once '../serverske_poruke.php';
 require_once '../klase/korisnik.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
 
-function postavljenje_kolacica($korisnicko_ime, $trajanje, $zapamti_me){
+function postavljenje_kolacica($korisnicko_ime, $zapamti_me){
     if($zapamti_me){
-        setcookie('kino',$korisnicko_ime,time() + ($trajanje*24*60+60));
+        setcookie('kino',$korisnicko_ime);
     }else{
         setcookie('kino',$korisnicko_ime, time()-3600);
     }
@@ -18,7 +18,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
 
     $korisnicko_ime = htmlspecialchars(filter_input(INPUT_POST, 'korisnicko_ime', FILTER_SANITIZE_STRING));
     $lozinka = htmlspecialchars(filter_input(INPUT_POST, 'lozinka', FILTER_SANITIZE_STRING));
-    $zapamti_me = htmlspecialchars(filter_input(INPUT_POST, 'zapamti_me', FILTER_SANITIZE_STRING));
+    $zapamti_me = filter_input(INPUT_POST, 'zapamti_me');
 
     $dat = new datoteka();
     $trajanje_kolacica = $dat->dohvati('trajanje_kolacica');
@@ -104,13 +104,13 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
             }
 
             //kreiranje cookija
-            $trajanje_kolacica = $dat->dohvati('trajanje_kolacica');
-            postavljenje_kolacica($korisnicko_ime,$trajanje_kolacica,$zapamti_me);
+            //$trajanje_kolacica = $dat->dohvati('trajanje_kolacica');
+            postavljenje_kolacica($korisnicko_ime, $zapamti_me);
             $korisnik = new korisnik();
 
             $korisnik->set_podaci($id_korisnik, $tip_id, $ime, $prezime, $email, $korisnicko_ime);
             //stvori sesiju
-            session_start();
+            //session_start();
 
             $_SESSION['kino'] = $korisnik;
 

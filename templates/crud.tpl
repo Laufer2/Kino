@@ -19,7 +19,6 @@
             <li><a href="crud.php?tablica=moderatorlokacije">Moderatori lokacija</a></li>
             <li><a href="crud.php?tablica=zanrfilma">Zanr filma</a></li>
             <li><a href="crud.php?tablica=tagslika">Tag slike</a></li>
-            <li><a href="crud.php?tablica=tag">Tag</a></li>
             <li><a href="crud.php?tablica=slika">Slike</a></li>
             <li><a href="crud.php?tablica=filmosoba">Film osobe</a></li>
             <li><a href="crud.php?tablica=rezervacija">Rezervacije</a></li>

@@ -12,7 +12,6 @@ $(document).ready(function () {
         success : function (data) {
             data = JSON.parse(data);
             film(data);
-            dostupna_mjesta();
             if("poruka" in data){
                 $("#poruke").html(data.poruka);
                 $("#rezerviraj").prop('disabled', true);
@@ -55,25 +54,7 @@ $(document).ready(function () {
 
             $("#ukupno_mjesta").html(value.max_gledatelja);
 
-        });
-    }
-
-    function dostupna_mjesta(){
-        $.ajax({
-
-            url : "src/rezervacije/dostupna_mjesta.php",
-            type: "POST",
-            data : {
-                id : funkcija.getUrlVariable('id')
-            },
-
-            success : function (data) {
-                data = JSON.parse(data);
-                $("#dostupno_mjesta").html(data.mjesta);
-                if("poruka" in data){
-                    $("#poruke").html(data.poruka);
-                }
-            }
+            $("#dostupno_mjesta").html(value.ostalo);
 
         });
     }

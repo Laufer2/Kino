@@ -1,34 +1,34 @@
 <ul>
-    <li>Naslovnica</li>
+    <li><a href="index.php">Naslovnica</a></li>
     {if isset($Lurker)}
-        <li>Registracija</li>
-        <li>Prijava</li>
+        <li><a href="registracija.php">Registracija</a></li>
+        <li><a href="prijava.php">Prijava</a></li>
     {/if}
 
     {if isset($Lurker) || isset($Korisnik) || isset($Moderator) || isset($Admin)}
-        <li>O autoru</li>
-        <li>Dokumentacija</li>
+        <li><a href="o_autoru.html">O autoru</a></li>
+        <li><a href="dokumentacija.html">Dokumentacija</a></li>
     {/if}
 
     {if isset($Korisnik) || isset($Moderator) || isset($Admin)}
         <li><a href="rezervacije.php">Rezervacije</a></li>
-        <li>Slike</li>
-        <li>Lokacije kina</li>
+        <li><a href="slike.php">Slike</a></li>
+        <li><a href="lokacije.php">Lokacije kina</a></li>
         <li id="odjava" style="cursor: pointer">Odjava</li>
     {/if}
 
     {if isset($Moderator) || isset($Admin)}
-        <li>Filmovi</li>
-        <li>Rezervacije</li>
-        <li>Lokacije</li>
-        <li>App statistika</li>
+        <li><a href="filmovi.php">Filmovi</a></li>
+        <li><a href="potvrde.php">Potvrde rezervacija</a></li>
+        <li><a href="termini.php">Termini</a></li>
+        <li><a href="app_statistika.php">Aplikativna statistika</a></li>
     {/if}
 
     {if isset($Admin)}
-        <li>Postavke</li>
-        <li>Dnevnik rada</li>
-        <li>Statistika</li>
-        <li>CRUD tablica</li>
+        <li><a href="konfiguracija.php">Postavke</a></li>
+        <li><a href="dnevnik.php">Dnevnik</a></li>
+        <li><a href="statistika.php">Statistika</a></li>
+        <li><a href="crud.php">CRUD</a></li>
     {/if}
 
 </ul>

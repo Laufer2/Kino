@@ -3,9 +3,6 @@
 require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
-require_once '../klase/korisnik.php';
-
-session_start();
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -15,8 +12,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $aktivna_stranica = filter_input(INPUT_POST, 'aktivna_stranica');
     $id = filter_input(INPUT_POST, 'id');
     $akcija = filter_input(INPUT_POST, 'akcija');
-
-    $korisnik = $_SESSION['kino']->getIdKorisnik();
+    $tip = filter_input(INPUT_POST, 'tip');
+    $interval = filter_input(INPUT_POST, 'interval');
 
     $baza = new baza();
     $dat = new datoteka();
@@ -29,15 +26,24 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
 
+    if(!$interval){
+        $vrijeme = time();
+    }else{
+        $vrijeme = time() - ($interval * 60 * 60);
+    }
+
     if ($akcija == 5 && $pojam != ""){ // search
         $pojam = "%" . $pojam . "%";
-        $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
-                  JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija WHERE r.korisnik_id = $korisnik AND 
-                  (f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
-    }else{
-        $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
-                  JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija WHERE r.korisnik_id = $korisnik";
+        $upit = "SELECT * FROM log l JOIN korisnik k ON l.korisnik_id = k.id_korisnik WHERE l.vrijeme > $vrijeme AND 
+                  (k.korisnicko_ime LIKE '$pojam' OR l.zapis LIKE '$pojam')";
+    }else {
+        $upit = "SELECT * FROM log l JOIN korisnik k ON l.korisnik_id = k.id_korisnik WHERE l.vrijeme > $vrijeme";
     }
+    if ($tip < 4){
+        $upit .= " AND l.tip = $tip ";
+    }
+
+    $json['upit']= $upit;
 
     if(isset($tip_sorta) && $tip_sorta != "" ) {
         $upit .= " ORDER BY $stupac $tip_sorta";
@@ -48,10 +54,11 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $json['tip_sorta'] = "";
         $json['stupac'] = "";
     }
+
     $rezultat = $baza->selectdb($upit);
     $redovi = $rezultat->num_rows;
     if(!$redovi){
-        $poruka = 1;
+        $poruka = "Nema podataka";
     }
     if ($rezultat > $prikazi){
         $broj_stranica = ceil($redovi/$prikazi);
@@ -59,6 +66,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $broj_stranica = 0;
     }
 
+    //paginacija
     if($broj_stranica){
         $upit .= " LIMIT $prikazi OFFSET $offset";
     }
@@ -68,11 +76,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
 
             $polje = array(
-                "lokacija" => $red['naziv_lokacija'],
-                "film" => $red['naziv_film'],
-                "pocetak" => date("j.m.Y, H:i", $red['dostupan_do']),
-                "status" => $red['status'] == 0 ? "Nije potvrđena" : "Potvrđena",
-                "broj_rezervacija" => $red['broj_rezervacija'],
+                "id" => $red['id_log'],
+                "korisnik" => $red['korisnicko_ime'],
+                "vrijeme" => date("j.m.Y, H:i", $red['vrijeme']),
+                "ip_adresa" => $red['ip_adresa'],
+                "skripta" => $red['skripta'],
+                "zapis" => $red['zapis'],
             );
 
             array_push($json['podaci'],$polje);
@@ -82,12 +91,15 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $json['broj_stranica'] = $broj_stranica;
         $json['poruka'] = array('poruka'=>$poruka);
 
+        echo json_encode($json);
+
     }else{
 
         $poruka = 1;
 
         $json['poruka'] = array('poruka'=>$poruka);
-    }
 
-    echo json_encode($json);
+        echo json_encode($json);
+
+    }
 }

@@ -5,6 +5,7 @@ require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
 require_once '../serverske_poruke.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 session_start();
 
@@ -23,8 +24,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $broj = filter_input(INPUT_POST,'broj');
     $vrijeme = filter_input(INPUT_POST,'vrijeme');
 
-    //$korisnik = $_SESSION['kino']->getIdKorisnik();
-    $korisnik = 2;
+    $korisnik = $_SESSION['kino']->getIdKorisnik();
+    session_write_close();
+
+    dnevnik("Potvrde rezervacija", 3, 0);
 
     $baza = new baza();
     $dat = new datoteka();
@@ -55,7 +58,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         }
 
         $prva_lokacija = reset($json['lokacija']);
-        $lokacija = intval(reset($prva_lokacija));
+        $lokacija = intval($prva_lokacija);
     }
 
     //potvrde i odbijanja rezervacija

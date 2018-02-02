@@ -1,22 +1,21 @@
 <?php
-
-require_once '_header.php';
 require_once 'src/restrikcije.php';
+require_once '_header.php';
 
-
-$smarty->assign("Naslov_stranice", "Slike");
-$smarty->assign("slike", "da");
-
-$tip_korisnika = restrikcije($smarty);
+$smarty->assign('upload_slika','da');
 
 $smarty->display('head.tpl');
 
 $smarty->display('zaglavlje.tpl');
 
+$tip_korisnika = restrikcije($smarty);
+
+echo $tip_korisnika;
+
 $smarty->display('navigacija.tpl');
 
 if($tip_korisnika < 4){
-    $smarty->display('slike.tpl');
+    $smarty->display('upload_slika.tpl');
 }else{
     $smarty->display('zabrana.tpl');
 }

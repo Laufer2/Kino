@@ -29,8 +29,13 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         $lokacija = filter_input(INPUT_POST, 'lokacija');
         $korisnik = filter_input(INPUT_POST, 'korisnik');
-        $vrijeme = filter_input(INPUT_POST,'vrijeme');
         $svidjanje = filter_input(INPUT_POST,'svidjanje');
+        $datum1 = filter_input(INPUT_POST,'datum1');
+        $sati1 = filter_input(INPUT_POST,'sati1');
+        $minute1 = filter_input(INPUT_POST,'minute1');
+
+        $dat1 = strtotime($datum1);
+        $vrijeme = $dat1 + ($sati1*60*60) + ($minute1 * 60);
 
     }
 
@@ -57,10 +62,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
             while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
 
-                if($tablica == "korisnik" && $red['tip_id'] == 1){
-                    continue;
-                }
-
                 $polje = array(
                     "id" => $red[$db_id],
                     "naziv" => $red[$db_stupac]
@@ -77,9 +78,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $rezultat = $baza->selectdb($upit);
 
             if($rezultat->num_rows){
-                $poruka = 1;
+                $poruka = "Taj zapis već postoji";
             }else{
-
                 $upit = "INSERT INTO lajkovi VALUES ($korisnik, $lokacija, $svidjanje, $vrijeme)";
                 $rezultat = $baza->update($upit);
             }
@@ -101,11 +101,20 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit = "SELECT * FROM lajkovi WHERE lokacija_id = $idl AND korisnik_id = $idk";
             $rezultat = $baza->selectdb($upit);
             list($korisnik, $lokacija, $svidjanje, $vrijeme) = $rezultat->fetch_array();
+
+            $vrijeme = date("Y-m-d;H;i", $vrijeme);
+            $split = explode(";",$vrijeme);
+            $datum = $split[0];
+            $sati = $split[1];
+            $minute = $split[2];
+
             $polje = array(
                 "korisnik" => $korisnik,
                 "lokacija" => $lokacija,
                 "svidjanje" => $svidjanje,
-                "vrijeme" => $vrijeme,
+                "datum1" => $datum,
+                "sati1" => $sati,
+                "minute1" => $minute,
                 "idl" => $lokacija,
                 "idk" => $korisnik
             );

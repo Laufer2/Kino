@@ -4,6 +4,7 @@ require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 session_start();
 
@@ -17,6 +18,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $akcija = filter_input(INPUT_POST, 'akcija');
 
     $korisnik = $_SESSION['kino']->getIdKorisnik();
+    session_write_close();
+    dnevnik("Rezervacije", 3, 0);
 
     $baza = new baza();
     $dat = new datoteka();

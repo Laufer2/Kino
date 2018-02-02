@@ -10,14 +10,14 @@ class korisnik
     private $korisnicko_ime;
     private $prijavljen_od;
 
-    public function set_podaci($id_korisnika, $tip_id, $ime, $prezime, $email, $korisnicko_ime){
+    public function set_podaci($id_korisnika, $tip_id, $ime, $prezime, $email, $korisnicko_ime, $prijavljen_do){
         $this->id_korisnik = $id_korisnika;
         $this->tip_id = $tip_id;
         $this->ime = $ime;
         $this->prezime = $prezime;
         $this->email = $email;
         $this->korisnicko_ime = $korisnicko_ime;
-        $this->prijavljen_od = time();
+        $this->prijavljen_od = $prijavljen_do;
 
     }
 
@@ -35,5 +35,10 @@ class korisnik
     public function getTipId()
     {
         return $this->tip_id;
+    }
+
+    public function getPrijavljenOd()
+    {
+        return $this->prijavljen_od;
     }
 }

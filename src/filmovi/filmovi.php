@@ -37,6 +37,8 @@ if(isset($_POST['selectmenu'])){
     $scenaristi = $_POST['scenarist'];
     $zanrovi = $_POST['zanr'];
 
+    dnevnik("Filmovi", 3, 0);
+
     // film s istim nazivom?
     $upit = "SELECT * FROM film WHERE naziv_film = '$film' AND godina = $godina";
     $rezultat = $baza->selectdb($upit);

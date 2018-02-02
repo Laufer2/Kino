@@ -102,8 +102,12 @@ $(document).ready(function(){
         prikaz_forme += "<option value='1'>Sviđa mi se</option>";
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='vrijeme'>Vrijeme</label>";
-        prikaz_forme += "<input type='number' name='vrijeme' id='vrijeme' required><br/>";
+        prikaz_forme += "<label>Vrijeme</label><br/>";
+        prikaz_forme += "<label for='datum1'>Datum</label>";
+        prikaz_forme += "<input type='date' name='datum1' required>";
+        prikaz_forme += "<label for='sati1'>Vrijeme</label>";
+        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' required><span>:</span>";
+        prikaz_forme += "<input type='number' name='minute1' placeholder='min' required><br/>";
 
         prikaz_forme += "<input type='hidden' name='tablica' value='"+ tablice +"'>";
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";

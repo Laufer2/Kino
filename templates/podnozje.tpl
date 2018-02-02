@@ -56,7 +56,7 @@
     <script src="public/js/crud/rezervacija.js"></script>
 {/if}
 {if isset($rezervacije)}
-    <script src="public/js/rezervacije_korisnik.js"></script>
+    <script src="public/js/rezervacije.js"></script>
 {/if}
 {if isset($lokacije)}
     <script src="public/js/lokacije.js"></script>
@@ -78,6 +78,15 @@
 {/if}
 {if isset($slike)}
     <script src="public/js/slike.js"></script>
+{/if}
+{if isset($upload_slika)}
+    <script src="public/js/upload_slika.js"></script>
+{/if}
+{if isset($slika)}
+    <script src="public/js/crud/slika.js"></script>
+{/if}
+{if isset($app_statistika)}
+    <script src="public/js/app_statistika.js"></script>
 {/if}
 
 </body>

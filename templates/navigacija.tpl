@@ -14,6 +14,7 @@
         <li><a href="rezervacije.php">Rezervacije</a></li>
         <li><a href="slike.php">Slike</a></li>
         <li><a href="lokacije.php">Lokacije kina</a></li>
+        <li><a href="upload_slika.php">Upload slika</a></li>
         <li id="odjava" style="cursor: pointer">Odjava</li>
     {/if}
 

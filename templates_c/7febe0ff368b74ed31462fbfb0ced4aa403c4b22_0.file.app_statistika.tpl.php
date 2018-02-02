@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-30 17:45:43
+/* Smarty version 3.1.30, created on 2018-02-02 14:16:33
   from "C:\xampp\htdocs\kino\templates\app_statistika.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a70a1376ee8f7_22602067',
+  'unifunc' => 'content_5a7464b10517b2_67838137',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '7febe0ff368b74ed31462fbfb0ced4aa403c4b22' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\app_statistika.tpl',
-      1 => 1517318817,
+      1 => 1517577388,
       2 => 'file',
     ),
   ),
@@ -20,6 +20,46 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a70a1376ee8f7_22602067 (Smarty_Internal_Template $_smarty_tpl) {
-}
+function content_5a7464b10517b2_67838137 (Smarty_Internal_Template $_smarty_tpl) {
+?>
+<div id="container">
+
+    <div id="tablicni-podaci">
+
+        <div id="vremenski_intervali">
+            <select id="interval">
+                <option value="1">Zadnji sat</option>
+                <option value="24">Zadnji dan</option>
+                <option value="168">Zadnji tjedan</option>
+                <option value="720">Zadnji mjesec</option>
+                <option value="8760">Zadnja godina</option>
+                <option value="580000" selected>Od početka</option>
+            </select>
+        </div>
+
+        <div id="search"></div>
+
+        <div id="prikaz-tablice"></div>
+
+        <div id="paginacija"></div>
+
+        <div id="poruke"></div>
+
+    </div>
+
+    <button id="print">Print this page</button>
+
+
+    <div id="grafovi">
+
+        <canvas id="udio_lajkova"></canvas>
+
+        <canvas id="udio_nelajkova"></canvas>
+
+        <div id="legenda"></div>
+
+    </div>
+
+
+</div><?php }
 }

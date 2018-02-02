@@ -22,18 +22,14 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
 
     $dat = new datoteka();
     $trajanje_kolacica = $dat->dohvati('trajanje_kolacica');
+    $pomak = $dat->dohvati('pomak');
+    $max_nesupjesne_prijave = $dat->dohvati('neuspjesne_prijave');
 
     $upit = "SELECT id_korisnik, tip_id, lozinka, ime, prezime, email, aktivacijski_rok,
               neuspjesne_prijave, aktivacijski_kod, status_aktivacije FROM korisnik WHERE korisnicko_ime = '$korisnicko_ime';";
 
     $baza = new baza();
     $podaci = $baza->selectdb($upit);
-
-    $dat = new datoteka();
-    $pomak = $dat->dohvati('pomak');
-
-    $max_nesupjesne_prijave = $dat->dohvati('neuspjesne_prijave');
-
 
     if($podaci->num_rows == 0){
         posalji_poruku("Pogrešno korisničko ime.");
@@ -92,6 +88,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
             }
 
             //Log neuspješnu prijavu
+            dnevnik("Neuspješna prijava",1, $id_korisnik);
 
         }else{
 
@@ -103,16 +100,16 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
                 $baza->update($upit);
             }
 
-            //kreiranje cookija
-            //$trajanje_kolacica = $dat->dohvati('trajanje_kolacica');
             postavljenje_kolacica($korisnicko_ime, $zapamti_me);
             $korisnik = new korisnik();
+            $virtualno_vrijeme = time() + ($pomak * 60 * 60);
 
-            $korisnik->set_podaci($id_korisnik, $tip_id, $ime, $prezime, $email, $korisnicko_ime);
+            $korisnik->set_podaci($id_korisnik, $tip_id, $ime, $prezime, $email, $korisnicko_ime, $virtualno_vrijeme);
             //stvori sesiju
-            //session_start();
 
+            session_start();
             $_SESSION['kino'] = $korisnik;
+            session_write_close();
 
             /*
             $uri = $_SERVER["REQUEST_URI"];

@@ -4,8 +4,8 @@ require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
-session_start();
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -16,8 +16,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     //$id = filter_input(INPUT_POST, 'id');
     $akcija = filter_input(INPUT_POST, 'akcija');
 
-    //$korisnik = $_SESSION['kino']->getIdKorisnik();
-    $korisnik = 2;
+    dnevnik("Lokacije", 3, 0);
+
     $baza = new baza();
     $dat = new datoteka();
 
@@ -32,53 +32,44 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if ($akcija == 5 && $pojam != ""){ // search
 
         $pojam = "%" . $pojam . "%";
-        $upit = "SELECT * FROM lokacija JOIN adresa a ON lokacija.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
-                  JOIN grad g ON a.grad_id = g.id_grad JOIN lajkovi l ON lokacija.id_lokacija = l.lokacija_id WHERE 
-                  (g.naziv_grad = '$pojam' OR d.naziv_drzava = '$pojam' OR a.ulica = '$pojam' OR l2.naziv_lokacija)";
-        if(isset($stupac) && $stupac != "" ) {
-            $upit .= " ORDER BY $stupac $tip_sorta";
-            $json['tip_sorta'] = $tip_sorta;
-            $json['stupac'] = $stupac;
+        $upit = "SELECT * FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
+                  JOIN grad g ON a.grad_id = g.id_grad JOIN lajkovi l2 ON l.id_lokacija = l2.lokacija_id WHERE 
+                  (g.naziv_grad = '$pojam' OR d.naziv_drzava = '$pojam' OR a.ulica = '$pojam' OR l.naziv_lokacija)";
 
-        }else{
-            $json['tip_sorta'] = "";
-            $json['stupac'] = "";
-        }
-        $rezultat = $baza->selectdb($upit);
-        $redovi = $rezultat->num_rows;
-        if(!$redovi){
-            $poruka = 1;
-        }
-        if ($rezultat > $prikazi){
-            $broj_stranica = ceil($redovi/$prikazi);
-        }else{
-            $broj_stranica = 0;
-        }
-
-        //paginacija
-        if($broj_stranica){
-            $upit .= " LIMIT $prikazi OFFSET $offset";
-        }
     }else {
-        $broj_stranica = stranice_ispisa("lajkovi", $prikazi);
 
-        $upit = "SELECT * FROM lokacija JOIN adresa a ON lokacija.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
+        $upit = "SELECT * FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
                   JOIN grad g ON a.grad_id = g.id_grad";
-        if(isset($tip_sorta) && $tip_sorta != "" ) {
-            $upit .= " ORDER BY $stupac $tip_sorta";
-            $json['tip_sorta'] = $tip_sorta;
-            $json['stupac'] = $stupac;
-        }else{
-            $json['tip_sorta'] = "";
-            $json['stupac'] = "";
-        }
-
-        if($broj_stranica){
-            $upit .= " LIMIT $prikazi OFFSET $offset";
-        }
 
     }
+    if(isset($tip_sorta) && $tip_sorta != "" ) {
+        $upit .= " ORDER BY $stupac $tip_sorta";
+        $json['tip_sorta'] = $tip_sorta;
+        $json['stupac'] = $stupac;
+
+    }else{
+        $json['tip_sorta'] = "";
+        $json['stupac'] = "";
+    }
+
+    $rezultat = $baza->selectdb($upit);
+    $redovi = $rezultat->num_rows;
+    if(!$redovi){
+        $poruka = 1;
+    }
+    if ($rezultat > $prikazi){
+        $broj_stranica = ceil($redovi/$prikazi);
+    }else{
+        $broj_stranica = 0;
+    }
+
+    //paginacija
+    if($broj_stranica){
+        $upit .= " LIMIT $prikazi OFFSET $offset";
+    }
+
     $json['upit'] = $upit;
+
     if($rezultat = $baza->selectdb($upit)){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
@@ -87,7 +78,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 "id" => $red['id_lokacija'],
                 "lokacija" => $red['naziv_lokacija'],
                 "grad" => $red['naziv_grad'],
-                "ulica" => $red['ulica'] . " " . $red['broj'],
+                "ulica" => $red['ulica'] . " " . $red['broj'] . ", " . $red['postanski_broj'],
                 "drzava" => $red['naziv_drzava'],
             );
 

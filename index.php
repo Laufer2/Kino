@@ -1,5 +1,4 @@
 <?php
-require_once 'src/klase/korisnik.php';
 require_once 'src/restrikcije.php';
 require_once '_header.php';
 

@@ -3,14 +3,14 @@
 require_once '../klase/baza.php';
 require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
-session_start();
+
 
 function dnevnik($zapis, $tip, $id_korisnik){
-
+    session_start();
     $dat = new datoteka();
     $pomak = $dat->dohvati('pomak');
 
-    $korisnik = isset($_SESSION["Kino"]) ? $_SESSION["Kino"]->getIdKorisnik() : $id_korisnik;
+    $korisnik = isset($_SESSION["kino"]) ? $_SESSION["kino"]->getIdKorisnik() : $id_korisnik;
     $vrijeme = time()+($pomak * 60 * 60);
     $ip_adresa = $_SERVER["REMOTE_ADDR"];
 
@@ -19,6 +19,7 @@ function dnevnik($zapis, $tip, $id_korisnik){
     $skripta = substr($uri, $pos+1);
 
     $baza = new baza();
+
 
     $upit = "INSERT INTO log VALUES (default, $korisnik,$vrijeme,'$ip_adresa', '$skripta', $tip, '$zapis')";
 

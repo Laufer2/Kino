@@ -2,10 +2,17 @@
 
 require_once '../klase/baza.php';
 require_once '../klase/korisnik.php';
+require_once '../istek_sesije.php';
+
+/*
+if(istek_sesije()){
+    echo '<script>location.href = "prijava.php"</script>';
+    exit();
+};*/
+
 session_start();
 
-//$korisnik = $_SESSION['kino']->getIdKorisnik();
-$korisnik = 2;
+$korisnik = $_SESSION['kino']->getIdKorisnik();
 $baza = new baza();
 if(isset($_POST['selectmenu'])) {
 
@@ -32,6 +39,7 @@ if(isset($_POST['selectmenu'])) {
     }
 
     $json['filmovi'] = array();
+    dnevnik("Termini", 3, 0);
 
     $upit = "SELECT * FROM film";
     $rezultat = $baza->selectdb($upit);

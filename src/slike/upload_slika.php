@@ -3,6 +3,9 @@
 require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
+require_once '../klase/korisnik.php';
+
+session_start();
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -10,16 +13,14 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $stupac = filter_input(INPUT_POST, 'stupac');
     $tip_sorta = filter_input(INPUT_POST,'tip_sorta');
     $aktivna_stranica = filter_input(INPUT_POST, 'aktivna_stranica');
-    $id = filter_input(INPUT_POST, 'id');
     $akcija = filter_input(INPUT_POST, 'akcija');
-    $tip = filter_input(INPUT_POST, 'tip');
-    $interval = filter_input(INPUT_POST, 'interval');
 
     $baza = new baza();
     $dat = new datoteka();
 
+    $korisnik = $_SESSION['kino']->getIdKorisnik();
+
     $prikazi = $dat->dohvati('prikazi_po_stranici');
-    $pomak = $dat->dohvati('pomak');
 
     $poruka = $broj_stranica = 0;
     $json = array();
@@ -27,27 +28,23 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
 
-    //da se ne prikazuju zapisi iz "budućnosti
-    $trenutno_vrijeme = $vrijeme = time() + ($pomak * 60 * 60);
-
-    if(!$interval){
-        $vrijeme = time() + ($pomak * 60 * 60);
-    }else{
-        $vrijeme = time() + ($pomak * 60 * 60) - ($interval * 60 * 60);
-    }
-
     if ($akcija == 5 && $pojam != ""){ // search
+
         $pojam = "%" . $pojam . "%";
-        $upit = "SELECT * FROM log l JOIN korisnik k ON l.korisnik_id = k.id_korisnik WHERE l.vrijeme > $vrijeme AND l.vrijeme < $trenutno_vrijeme AND 
-                  (k.korisnicko_ime LIKE '$pojam' OR l.zapis LIKE '$pojam')";
+        $upit = "SELECT * FROM rezervacija r JOIN slika s ON r.id_rezervacija = s.rezervacija_id
+                  JOIN projekcija p ON r.projekcija_id = p.id_projekcija JOIN film f ON p.film_id = f.id_film
+                  JOIN lokacija l ON p.lokacija_id = l.id_lokacija
+                  WHERE  r.korisnik_id = $korisnik AND s.rezervacija_id != r.id_rezervacija AND r.status = 1 AND 
+                  (f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
+
     }else {
-        $upit = "SELECT * FROM log l JOIN korisnik k ON l.korisnik_id = k.id_korisnik WHERE l.vrijeme > $vrijeme AND l.vrijeme < $trenutno_vrijeme";
-    }
-    if ($tip < 4){
-        $upit .= " AND l.tip = $tip ";
+        $upit = "SELECT * FROM rezervacija r 
+                  JOIN projekcija p ON r.projekcija_id = p.id_projekcija JOIN film f ON p.film_id = f.id_film
+                  JOIN lokacija l ON p.lokacija_id = l.id_lokacija
+                  WHERE  r.korisnik_id = $korisnik  AND r.status = 1";
     }
 
-    if(isset($tip_sorta) && $tip_sorta != "" ) {
+    if(isset($stupac) && $stupac != "" ) {
         $upit .= " ORDER BY $stupac $tip_sorta";
         $json['tip_sorta'] = $tip_sorta;
         $json['stupac'] = $stupac;
@@ -62,6 +59,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if(!$redovi){
         $poruka = "Nema podataka";
     }
+
     if ($rezultat > $prikazi){
         $broj_stranica = ceil($redovi/$prikazi);
     }else{
@@ -73,17 +71,18 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $upit .= " LIMIT $prikazi OFFSET $offset";
     }
 
+    $json['upit']=$upit;
+
     if($rezultat = $baza->selectdb($upit)){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
 
             $polje = array(
-                "id" => $red['id_log'],
-                "korisnik" => $red['korisnicko_ime'],
-                "vrijeme" => date("j.m.Y, H:i", $red['vrijeme']),
-                "ip_adresa" => $red['ip_adresa'],
-                "skripta" => $red['skripta'],
-                "zapis" => $red['zapis'],
+                "id" => $red['id_rezervacija'],
+                "film" => $red['naziv_film'] . " (" . $red['godina'] . ") ",
+                "lokacija" => $red['naziv_lokacija'],
+                "broj_rezervacija" => $red['broj_rezervacija'],
+                "vrijeme" => date("d.m.Y, H:i", $red['dostupan_do'])
             );
 
             array_push($json['podaci'],$polje);
@@ -93,15 +92,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $json['broj_stranica'] = $broj_stranica;
         $json['poruka'] = array('poruka'=>$poruka);
 
-        echo json_encode($json);
-
     }else{
 
         $poruka = 1;
 
         $json['poruka'] = array('poruka'=>$poruka);
-
-        echo json_encode($json);
-
     }
+
+    echo json_encode($json);
 }

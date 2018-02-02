@@ -12,6 +12,9 @@ $svidja = filter_input(INPUT_POST,'svidja');
 $korisnik = $_SESSION['kino']->getIdKorisnik();
 
 $baza = new baza();
+$dat = new datoteka();
+$pomak = $dat->dohvati('pomak');
+$vrijeme = time() + ($pomak * 60 * 60);
 
 $upit = "SELECT svida_mi_se FROM lajkovi WHERE korisnik_id = $korisnik AND lokacija_id = $lokacija";
 
@@ -26,19 +29,15 @@ if($rezultat->num_rows){
         $upit = "DELETE FROM lajkovi WHERE korisnik_id = $korisnik AND lokacija_id = $lokacija";
         $rez = $baza->update($upit);
     }else{
-        $upit = "UPDATE lajkovi SET svida_mi_se = $svidja WHERE korisnik_id = $korisnik AND lokacija_id = $lokacija";
+
+        $upit = "UPDATE lajkovi SET svida_mi_se = $svidja, vrijeme = $vrijeme WHERE korisnik_id = $korisnik AND lokacija_id = $lokacija";
         $rez = $baza->update($upit);
     }
 
 }else{
 
-    $dat = new datoteka();
-    $pomak = $dat->dohvati('pomak');
-    $vrijeme = time() + ($pomak * 60 * 60);
-
     $upit = "INSERT INTO lajkovi VALUES ($korisnik, $lokacija, $svidja, $vrijeme)";
     $rez = $baza->update($upit);
-
 }
 
     $u = "SELECT COUNT(*) as lajk FROM lajkovi WHERE lokacija_id=$lokacija AND svida_mi_se = 1";

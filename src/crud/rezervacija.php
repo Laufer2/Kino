@@ -20,7 +20,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $prikazi = $dat->dohvati('prikazi_po_stranici');
 
-    $poruka = $broj_stranica = 0;
+    $poruka = $broj_stranica = $status = 0;
     $json = array();
     $json['podaci'] = array();
 
@@ -161,19 +161,31 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         }
 
     }
-    $json['upit']=$upit;
 
     if($rezultat = $baza->selectdb($upit)){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
 
+            switch ($red['status']){
+                case 0:
+                    $status = "Bez statusa";
+                    break;
+                case 1:
+                    $status = "Potvrđena";
+                    break;
+                case 2:
+                    $status = "Odbijena";
+            }
+
             $polje = array(
                 "id" => $red['id_rezervacija'],
                 "korisnik" => $red['korisnicko_ime'],
-                "status" => $red['status'],
+                "status" => $status,
                 "broj_rezervacija" => $red['broj_rezervacija'],
                 "id_projekcija" => $red['id_projekcija'],
-                "projekcija" => $red["naziv_film"] . " - " . date("j.m.Y, H:i", $red['dostupan_do']) . " - " . $red['naziv_lokacija']
+                "film" => $red["naziv_film"] . " (" . $red['godina'] . ") ",
+                "vrijeme" => date("d.m.Y, H:i", $red['dostupan_do']),
+                "lokacija" => $red['naziv_lokacija']
             );
 
             array_push($json['podaci'],$polje);

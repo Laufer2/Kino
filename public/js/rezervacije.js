@@ -2,7 +2,7 @@ $(document).ready( function(){
     "use strict";
 
     $.ajax({
-        url : 'src/lokacije/lokacije.php',
+        url : 'src/rezervacije/rezervacije.php',
         type : 'POST',
         data : {
             aktivna_stranica : 0,
@@ -18,7 +18,7 @@ $(document).ready( function(){
     });
 
     function search(akcija){
-        var prikaz_searcha = "<form method='post' action='src/lokacije/lokacije.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
+        var prikaz_searcha = "<form method='post' action='src/rezervacije/rezervacije.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
         prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
         prikaz_searcha += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
         prikaz_searcha += "<input type='submit' value='P'>";
@@ -36,31 +36,24 @@ $(document).ready( function(){
         prikaz_tablice += "<button class='silazno' data-stupac='l.naziv_lokacija'>&#709;</button>"; //DESC
         prikaz_tablice += "<button class='uzlazno' data-stupac='l.naziv_lokacija'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
-        prikaz_tablice += "<th>Ulica</th>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Grad";
-        prikaz_tablice += "<button class='silazno' data-stupac='g.naziv_grad'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='g.naziv_grad'>&#708;</button>"; //ASC
+        prikaz_tablice += "Film";
+        prikaz_tablice += "<button class='silazno' data-stupac='f.naziv_film'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='f.naziv_film'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
-        prikaz_tablice += "<th>Država</th>";
-        prikaz_tablice += "<th>Sviđanja</th>";
+        prikaz_tablice += "<th>Vrijeme</th>";
+        prikaz_tablice += "<th>Broj rezervacija</th>";
+        prikaz_tablice += "<th>Status rezervacije</th>";
         prikaz_tablice += "</tr>";
 
-        $.each(data.podaci, function (index, lokacija) {
+        $.each(data.podaci, function (index, rezervacija) {
 
             prikaz_tablice += "<tr>";
-            prikaz_tablice += "<td>"+ lokacija.lokacija +"</td>";
-            prikaz_tablice += "<td>"+ lokacija.ulica +"</td>";
-            prikaz_tablice += "<td>"+ lokacija.grad +"</td>";
-            prikaz_tablice += "<td>"+ lokacija.drzava +"</td>";
-            prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-svidja' data-id='"+ lokacija.id +"'" +
-                                ">Sviđa mi se&nbsp;(<span id='broj-svidja'>"+lokacija.lajkovi+"</span>)</button>";
-
-            prikaz_tablice += "<button class='gumb-ne-svidja' data-id='"+ lokacija.id +"'" +
-                                ">Ne sviđa mi se&nbsp;(<span id='broj-ne-svidja'>"+lokacija.ne_lajkovi+"</span>)</button>";
-
-            prikaz_tablice += "</td>";
+                prikaz_tablice += "<td>"+ rezervacija.lokacija +"</td>";
+                prikaz_tablice += "<td>"+ rezervacija.film +"</td>";
+                prikaz_tablice += "<td>"+ rezervacija.pocetak +"</td>";
+                prikaz_tablice += "<td>"+ rezervacija.broj_rezervacija +"</td>";
+                prikaz_tablice += "<td>"+ rezervacija.status +"</td>";
             prikaz_tablice += "</tr>";
 
         });
@@ -77,7 +70,7 @@ $(document).ready( function(){
         }
 
         $.ajax({
-            url: 'src/lokacije/lokacije.php',
+            url: 'src/rezervacije/rezervacije.php',
             type: 'POST',
             data : {
                 stupac : stupac,
@@ -94,26 +87,6 @@ $(document).ready( function(){
         });
     }
 
-    function lajkovi(id, svidja) {
-        //update broj-svidja
-        $.ajax({
-            url : 'src/lokacije/lajkovi.php',
-            type: "POST",
-            data : {
-                lokacija : id,
-                svidja : svidja
-            },
-
-            success: function (data) {
-                data = JSON.parse(data);
-                $("button[data-id='" + id + "'] > span[id='broj-svidja']").html(data.lajk);
-                $("button[data-id='" + id + "'] > span[id='broj-ne-svidja']").html(data.nelajk);
-
-
-            }
-        });
-    }
-
     $(document).on('click', '.broj-paginacija', function () {
         var pojam, akcija="";
         if($("#pojam").val() !== ""){
@@ -121,7 +94,7 @@ $(document).ready( function(){
             akcija = 5;
         }
         $.ajax({
-            url: "src/lokacije/lokacije.php",
+            url: "src/rezervacije/rezervacije.php",
             type: "POST",
             data: {
                 aktivna_stranica: $(this).attr("data-stranica"),
@@ -149,44 +122,6 @@ $(document).ready( function(){
 
     $(document).on('click', '.silazno', function () {
         sort('DESC', $(this).attr("data-stupac"));
-    });
-
-    $(document).on('click', '.gumb-svidja', function () {
-        lajkovi($(this).attr('data-id'),1);
-
-    });
-
-    $(document).on('click', '.gumb-ne-svidja', function () {
-        lajkovi($(this).attr('data-id'),0);
-    });
-
-    $(document).on('submit', '#novi_zapis', function(event) {
-
-        var forma = $("#novi_zapis");
-        event.preventDefault();
-
-        $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
-            data : forma.serialize(),
-
-            success: function (data) {
-                data = JSON.parse(data);
-                $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-
-                if(data.poruka['poruka']){
-                    $("#test").html("Dogodila se greška.");
-
-                }else{
-                    $("#test").html("");
-                    $("#forma").html("");
-                }
-
-                $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
-                $("#search").html(search(5));
-            }
-        });
-
     });
 
     $(document).on('submit', '#pretraga', function (event){

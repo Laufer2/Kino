@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-30 18:04:14
+/* Smarty version 3.1.30, created on 2018-02-02 17:30:32
   from "C:\xampp\htdocs\kino\templates\podnozje.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a70a58e14cdc8_72249750',
+  'unifunc' => 'content_5a74922863ff11_93303656',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4c05c20bdc18e68e4edbacdd4706ae1e3cb15542' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\podnozje.tpl',
-      1 => 1517331852,
+      1 => 1517588760,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a70a58e14cdc8_72249750 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a74922863ff11_93303656 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
 <?php echo '<script'; ?>
@@ -121,7 +121,7 @@ if (isset($_smarty_tpl->tpl_vars['rezervacija']->value)) {?>
 <?php }
 if (isset($_smarty_tpl->tpl_vars['rezervacije']->value)) {?>
     <?php echo '<script'; ?>
- src="public/js/rezervacije_korisnik.js"><?php echo '</script'; ?>
+ src="public/js/rezervacije.js"><?php echo '</script'; ?>
 >
 <?php }
 if (isset($_smarty_tpl->tpl_vars['lokacije']->value)) {?>
@@ -157,6 +157,21 @@ if (isset($_smarty_tpl->tpl_vars['dnevnik']->value)) {?>
 if (isset($_smarty_tpl->tpl_vars['slike']->value)) {?>
     <?php echo '<script'; ?>
  src="public/js/slike.js"><?php echo '</script'; ?>
+>
+<?php }
+if (isset($_smarty_tpl->tpl_vars['upload_slika']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/upload_slika.js"><?php echo '</script'; ?>
+>
+<?php }
+if (isset($_smarty_tpl->tpl_vars['slika']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/crud/slika.js"><?php echo '</script'; ?>
+>
+<?php }
+if (isset($_smarty_tpl->tpl_vars['app_statistika']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/app_statistika.js"><?php echo '</script'; ?>
 >
 <?php }?>
 

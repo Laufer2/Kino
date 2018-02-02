@@ -46,7 +46,21 @@ $(document).ready( function(){
         prikaz_tablice += "<button class='uzlazno' data-stupac='r.status'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Broj rezervacija</th>";
-        prikaz_tablice += "<th>Projekcija</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Film";
+        prikaz_tablice += "<button class='silazno' data-stupac='f.naziv_film'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='f.naziv_film'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Vrijeme";
+        prikaz_tablice += "<button class='silazno' data-stupac='p.dostupan_do'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='p.dostupan_do'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Lokacija";
+        prikaz_tablice += "<button class='silazno' data-stupac='l.naziv_lokacija'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='l.naziv_lokacija'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";
 
@@ -56,7 +70,9 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ rezervacija.korisnik +"</td>"
             prikaz_tablice += "<td>"+ rezervacija.status +"</td>"
             prikaz_tablice += "<td>"+ rezervacija.broj_rezervacija +"</td>";
-            prikaz_tablice += "<td>"+ rezervacija.projekcija+"</td>";
+            prikaz_tablice += "<td>"+ rezervacija.film+"</td>";
+            prikaz_tablice += "<td>"+ rezervacija.vrijeme+"</td>";
+            prikaz_tablice += "<td>"+ rezervacija.lokacija+"</td>";
 
             prikaz_tablice += "<td>";
             prikaz_tablice += "<button class='gumb-edit' data-id='"+ rezervacija.id +"' data-projek='"+ rezervacija.id_projekcija +"'>Uredi</button>";
@@ -73,7 +89,7 @@ $(document).ready( function(){
     function nacrtaj_formu(lista, akcija) {
 
         var prikaz_forme = "<form action='src/crud/rezervacija.php' ";
-        prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
+        prikaz_forme += "id='novi_zapis' method='post' enctype='multipart/form-data'>";
 
         prikaz_forme += "<label for='korisnik'>Korisnik</label>";
         // select za lokaciju

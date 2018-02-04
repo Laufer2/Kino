@@ -2,6 +2,8 @@
 
 require_once '../klase/baza.php';
 require_once '../serverske_poruke.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
+require_once '../statistike/evidencija.php';
 
 function kolacic($korisnicko_ime, $trajanje, $zapamti_me){
     if($zapamti_me == 1){
@@ -15,18 +17,20 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST'){
 
     $email = htmlspecialchars(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
 
-    $upit = "SELECT korisnicko_ime, email FROM korisnik WHERE email = '$email';";
+    $upit = "SELECT id_korisnik, korisnicko_ime FROM korisnik WHERE email = '$email';";
 
     $baza = new baza();
 
     $rezultat = $baza->selectdb($upit);
-    list($kor_ime,$em) = $rezultat->fetch_array();
+    list($id, $kor_ime) = $rezultat->fetch_array();
 
     if($rezultat->num_rows > 0){
 
         $nova_lozinka = generiraj_lozinku();
 
-        $upit = "UPDATE korisnik SET lozinka = '$nova_lozinka' WHERE email = '$email';";
+        $upit = "UPDATE korisnik SET lozinka = '$nova_lozinka' WHERE email = '$email'";
+        dnevnik("Nova lozinka", 1, $id);
+        upit(4);
 
         if($baza->update($upit)){
             $naslov = "Nova lozinka za Kino.org";
@@ -34,7 +38,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST'){
             $poruka = "Za vaš račun je generirana nova lozinka. <br><br>";
             $poruka .= "Korisničko ime: " . $kor_ime . "<br>";
             $poruka .= "Nova lozinka: " . $nova_lozinka;
-
+            dnevnik("Nova lozinka",1, $id);
             posalji_mail($email,$naslov,$poruka);
 
             posalji_poruku("Na vašu e-mail adresu poslana je nova lozinka." );

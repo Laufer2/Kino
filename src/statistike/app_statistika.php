@@ -3,6 +3,7 @@
 require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -30,18 +31,17 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
 
-    if(!$interval){
-        $vrijeme = time() + ($pomak * 60 * 60);
-    }else{
-        $vrijeme = time() + ($pomak * 60 * 60) - ($interval * 60 * 60);
-    }
+    $trenutno_vrijeme = time() + ($pomak * 60 * 60);
+
+    $vrijeme = time() + ($pomak * 60 * 60) - ($interval * 60 * 60);
 
 
     $upit = "SELECT l2.naziv_lokacija,
-              (SELECT count(*) FROM lajkovi WHERE lajkovi.lokacija_id = l.lokacija_id AND svida_mi_se = 1 AND vrijeme > $vrijeme) as broj_lajkova,
-              (SELECT count(*) FROM lajkovi WHERE lajkovi.lokacija_id = l.lokacija_id AND svida_mi_se = 0 AND vrijeme > $vrijeme) as broj_nelajkova
-              FROM lajkovi l JOIN lokacija l2 ON l.lokacija_id = l2.id_lokacija WHERE l.vrijeme > $vrijeme
+              (SELECT count(*) FROM lajkovi WHERE lajkovi.lokacija_id = l.lokacija_id AND svida_mi_se = 1 AND vrijeme >= $vrijeme AND vrijeme <= $trenutno_vrijeme) as broj_lajkova,
+              (SELECT count(*) FROM lajkovi WHERE lajkovi.lokacija_id = l.lokacija_id AND svida_mi_se = 0 AND vrijeme >= $vrijeme AND vrijeme <= $trenutno_vrijeme) as broj_nelajkova
+              FROM lajkovi l JOIN lokacija l2 ON l.lokacija_id = l2.id_lokacija WHERE l.vrijeme >= $vrijeme AND l.vrijeme <= $trenutno_vrijeme 
               GROUP BY l2.naziv_lokacija";
+    dnevnik($upit, 2, 0);
 
     $rezultat = $baza->selectdb($upit);
 

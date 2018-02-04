@@ -47,7 +47,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
                 break;
             }
             $upit = "INSERT INTO $tablica VALUES(default, '$naziv')";
+
             $rezultat = $baza->update($upit);
+            $json['upit2']=$upit;
 
             break;
         case 3: //dohvati jednog
@@ -60,12 +62,14 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
         case 4: // ažuriranje (update)
             $upit = "SELECT * FROM $tablica WHERE $db_stupac = '$naziv'";
+
             $rezultat = $baza->selectdb($upit);
 
             list($id_tablice) = $rezultat->fetch_array();
             if(!$rezultat->num_rows && $id_tablice != $id){
 
-                $upit = "UPDATE $tablica SET $db_stupac = '$naziv' WHERE $db_id = $id;";
+                $upit = "UPDATE $tablica SET $db_stupac = '$naziv' WHERE $db_id = $id";
+                dnevnik($upit, 2, 0);
                 $rezultat = $baza->update($upit);
 
                 break;
@@ -79,7 +83,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
     if($akcija == 5 && $pojam != ""){ //search
         $upit = "SELECT * FROM $tablica WHERE $db_stupac LIKE '%$pojam%'";
-        if(isset($stupac) && $stupac != "" ) { // sort
+        if(isset($tip_sorta) && $tip_sorta != "" ) { // sort
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;
@@ -122,7 +126,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }
-    $json['upit'] = $upit;
 
     if($rezultat = $baza->selectdb($upit)) {
 

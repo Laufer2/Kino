@@ -324,6 +324,7 @@ $(document).ready(function(){
 
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
                 $("#search").html(search(5));
+                $("#forma").html("");
             }
         });
 

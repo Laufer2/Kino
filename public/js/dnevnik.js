@@ -17,16 +17,19 @@ $(document).ready( function(){
             success: function (data) {
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-                $("#search").html(search(5));
+                $("#search").html(search(5,$("#tip").val(), $("#interval").val()));
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
+                $("#poruke").html(data.poruka);
             }
         });
     }
 
-    function search(akcija){
+    function search(akcija,tip,interval){
         var prikaz_searcha = "<form method='post' action='src/dnevnik_rada/dnevnik_prikaz.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
         prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
         prikaz_searcha += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
+        prikaz_searcha += "<input type='hidden' name='tip' value='"+ tip +"'>";
+        prikaz_searcha += "<input type='hidden' name='interval' value='"+ interval +"'>";
         prikaz_searcha += "<input type='submit' value='P'>";
         prikaz_searcha += "</form>";
 
@@ -60,10 +63,6 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ log.ip_adresa +"</td>";
             prikaz_tablice += "<td>"+ log.skripta +"</td>";
             prikaz_tablice += "<td>"+ log.zapis +"</td>";
-
-            prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-delete' data-id='"+ log.id +"'>Izbriši</button>";
-            prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
 
         });
@@ -154,11 +153,7 @@ $(document).ready( function(){
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
-            data : {
-                pojam : forma.serialize(),
-                interval : $("#interval").val(),
-                tip : $("#tip").val()
-            },
+            data : forma.serialize(),
 
             success: function (data) {
                 data = JSON.parse(data);
@@ -167,49 +162,10 @@ $(document).ready( function(){
 
                 if(data.poruka['poruka']){
                     $("#test").html("Nema podataka.");
-
+                }else{
+                    $("#test").html("");
                 }
                 $("#forma").html("");
-            }
-        });
-    });
-
-    $(document).on('click', '.gumb-delete', function(){
-        var id = $(this).attr("data-id");
-        $("#dialog-potvrda").dialog({
-            resizable: false,
-            height: "auto",
-            width: 400,
-            modal: true,
-            buttons: {
-                "Izbriši zapis": function() {
-                    //brisanje i refresh tablice
-
-                    $.ajax({
-                        url: 'src/dnevnik_rada/dnevnik_prikaz.php',
-                        type: 'POST',
-                        data: {
-                            id : id,
-                            akcija : 4,
-                            interval : $("#interval").val(),
-                            tip : $("#tip").val()
-                        },
-
-                        success: function (data) {
-                            data = JSON.parse(data);
-                            $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-                            $("#search").html(search(5));
-                            $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "",""));
-
-                        }
-                    });
-
-                    $( this ).dialog( "close" );
-
-                },
-                "Odustani": function() {
-                    $( this ).dialog( "close" );
-                }
             }
         });
     });

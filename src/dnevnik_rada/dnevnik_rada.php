@@ -4,9 +4,12 @@ require_once '../klase/baza.php';
 require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
 
+if(!isset($_SESSION['kino'])){
+    session_start();
+}
 
 function dnevnik($zapis, $tip, $id_korisnik){
-    session_start();
+
     $dat = new datoteka();
     $pomak = $dat->dohvati('pomak');
 
@@ -20,8 +23,7 @@ function dnevnik($zapis, $tip, $id_korisnik){
 
     $baza = new baza();
 
-
-    $upit = "INSERT INTO log VALUES (default, $korisnik,$vrijeme,'$ip_adresa', '$skripta', $tip, '$zapis')";
+    $upit = "INSERT INTO log VALUES (default, $korisnik, $vrijeme, '$ip_adresa', '$skripta', $tip, '$zapis')";
 
     if($rezultat = $baza->update($upit)){
         return true;

@@ -5,7 +5,7 @@ require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
-
+require_once '../statistike/evidencija.php';
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -17,6 +17,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $akcija = filter_input(INPUT_POST, 'akcija');
 
     dnevnik("Lokacije", 3, 0);
+    stranica(1);
 
     $baza = new baza();
     $dat = new datoteka();
@@ -40,6 +41,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         $upit = "SELECT * FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
                   JOIN grad g ON a.grad_id = g.id_grad";
+        dnevnik($upit, 2, 0);
 
     }
     if(isset($tip_sorta) && $tip_sorta != "" ) {

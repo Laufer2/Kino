@@ -146,7 +146,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         $upit = "SELECT * FROM adresa a JOIN lokacija l ON a.lokacija_id = l.id_lokacija 
                   JOIN grad g ON a.grad_id = g.id_grad JOIN drzava d ON a.drzava_id = d.id_drzava";
-        if(isset($stupac) && $stupac != "" ) {
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;

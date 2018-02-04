@@ -5,9 +5,12 @@ require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
+require_once '../statistike/evidencija.php';
 
-session_start();
-
+if(!isset($_SESSION))
+{
+    session_start();
+}
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $pojam = filter_input(INPUT_POST, 'pojam');
@@ -18,8 +21,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $akcija = filter_input(INPUT_POST, 'akcija');
 
     $korisnik = $_SESSION['kino']->getIdKorisnik();
-    session_write_close();
     dnevnik("Rezervacije", 3, 0);
+    stranica(3);
 
     $baza = new baza();
     $dat = new datoteka();
@@ -37,10 +40,13 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
                   JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija WHERE r.korisnik_id = $korisnik AND 
                   (f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
+
     }else{
         $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
                   JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija WHERE r.korisnik_id = $korisnik";
+        dnevnik($upit, 2, 0);
     }
+
 
     if(isset($tip_sorta) && $tip_sorta != "" ) {
         $upit .= " ORDER BY $stupac $tip_sorta";

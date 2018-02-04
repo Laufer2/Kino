@@ -107,9 +107,11 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
             $korisnik->set_podaci($id_korisnik, $tip_id, $ime, $prezime, $email, $korisnicko_ime, $virtualno_vrijeme);
             //stvori sesiju
 
-            session_start();
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
             $_SESSION['kino'] = $korisnik;
-            session_write_close();
 
             /*
             $uri = $_SERVER["REQUEST_URI"];

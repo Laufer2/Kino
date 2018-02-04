@@ -7,7 +7,10 @@ require_once '../klase/korisnik.php';
 require_once '../serverske_poruke.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
 
-session_start();
+if(!isset($_SESSION))
+{
+    session_start();
+}
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -25,7 +28,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $vrijeme = filter_input(INPUT_POST,'vrijeme');
 
     $korisnik = $_SESSION['kino']->getIdKorisnik();
-    session_write_close();
 
     dnevnik("Potvrde rezervacija", 3, 0);
 
@@ -45,6 +47,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $json['lokacija'] = array();
 
         $upit = "SELECT * FROM lokacija JOIN moderatorlokacije m ON lokacija.id_lokacija = m.lokacija_id WHERE m.korisnik_id = $korisnik";
+        dnevnik($upit, 2, 0);
 
         $rezultat = $baza->selectdb($upit);
 
@@ -70,10 +73,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         if($akcija) {
             $upit = "UPDATE rezervacija SET status = 1 WHERE id_rezervacija = $id";
+            dnevnik($upit, 2, 0);
             $poruka .= " - je potvrđena.";
             $json['poruka'] = "Korisnik je obaviješten o odobrenju rezervacije.";
         }else {
             $upit = "UPDATE rezervacija SET status = 2 WHERE id_rezervacija = $id";
+            upit(2);
             $poruka .= " - je odbijena.";
             $json['poruka'] = "Korisnik je obaviješten o odbijanju rezervacije.";
         }
@@ -98,6 +103,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                   FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija
                   JOIN film f ON p.film_id = f.id_film JOIN korisnik k ON r.korisnik_id = k.id_korisnik 
                   WHERE r.status = 0 AND p.lokacija_id = $lokacija";
+        dnevnik($upit, 2, 0);
+
 
     }
 

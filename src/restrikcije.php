@@ -17,7 +17,7 @@ function restrikcije($smarty){
     }
 
 
-    //print_r( $_SESSION['kino']);
+    //print_r( $_SESSION);
 /*
     $prijava = $_SESSION['kino']->getPrijavljenOd();
 

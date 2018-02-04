@@ -1,6 +1,7 @@
 <?php
 
 require_once '../klase/baza.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 $broj_rezervacija = filter_input(INPUT_POST,'broj_rezervacija');
 //$korisnik = $_SESSION['kino']->getIdKorisnik();
@@ -11,6 +12,7 @@ $json = array();
 $baza = new baza();
 
 $upit = "INSERT INTO rezervacija VALUES (default, $broj_rezervacija, default, $korisnik, $projekcija)";
+dnevnik($upit, 2, 0);
 
 $json['upit'] = $upit;
 

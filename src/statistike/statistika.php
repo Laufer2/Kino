@@ -3,6 +3,7 @@
 require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -10,10 +11,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $stupac = filter_input(INPUT_POST, 'stupac');
     $tip_sorta = filter_input(INPUT_POST,'tip_sorta');
     $aktivna_stranica = filter_input(INPUT_POST, 'aktivna_stranica');
-    $id = filter_input(INPUT_POST, 'id');
     $akcija = filter_input(INPUT_POST, 'akcija');
-    $tip = filter_input(INPUT_POST, 'tip');
+    $ispis = filter_input(INPUT_POST,'ispis');
     $interval = filter_input(INPUT_POST, 'interval');
+
 
     $baza = new baza();
     $dat = new datoteka();
@@ -23,31 +24,56 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $poruka = $broj_stranica = 0;
     $json = array();
+
     $json['podaci'] = array();
+    $json['graf'] = array();
+    dnevnik("Statistika", 3, 0);
 
     $offset = ($aktivna_stranica > 0 ? $prikazi*$aktivna_stranica : 0);
 
-    if(isset($id)){
-        $upit = "DELETE FROM log WHERE id_log = $id ";
-        $baza->update($upit);
-    }
-
-    //da se ne prikazuju zapisi iz "budućnosti
+    $trenutno_vrijeme = time() + ($pomak * 60 * 60);
 
     $vrijeme = time() + ($pomak * 60 * 60) - ($interval * 60 * 60);
-    $trenutno_vrijeme = time() + ($pomak * 60 * 60);
 
     if ($akcija == 5 && $pojam != ""){ // search
         $pojam = "%" . $pojam . "%";
         $upit = "SELECT * FROM log l JOIN korisnik k ON l.korisnik_id = k.id_korisnik WHERE l.vrijeme >= $vrijeme AND l.vrijeme <= $trenutno_vrijeme
                   AND (k.korisnicko_ime LIKE '$pojam' OR l.zapis LIKE '$pojam' OR l.skripta LIKE '$pojam')";
-    }else {
-        $upit = "SELECT * FROM log l JOIN korisnik k ON l.korisnik_id = k.id_korisnik WHERE l.vrijeme >= $vrijeme AND l.vrijeme <= $trenutno_vrijeme";
+    }else{
+        $upit = "SELECT s.naziv_stranica, FROM stranica s JOIN korisnikstranica k ON s.id_stranica = k.stranica_id 
+                  JOIN korisnik k2 ON k.korisnik_id = k2.id_korisnik";
     }
-    if ($tip < 4){
-        $upit .= " AND l.tip = $tip ";
+    dnevnik($upit, 2, 0);
+
+    $rezultat = $baza->selectdb($upit);
+
+    while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
+
+        $polje2 = array(
+            "lokacija" => $red['naziv_lokacija'],
+            "broj_lajkova" => $red['broj_lajkova'],
+            "broj_nelajkova" => $red['broj_nelajkova']
+        );
+        array_push($json['graf'],$polje2);
     }
-    $json['upit'] = $upit;
+
+    $broj_lajkova = $broj_nelajkova = 0;
+
+    foreach ($json['graf'] as $element) {
+        foreach ($element as $kljuc => $lajk) {
+            if ($kljuc == "broj_lajkova") {
+                $broj_lajkova += $lajk;
+            }
+            if ($kljuc == "broj_nelajkova") {
+                $broj_nelajkova += $lajk;
+            }
+        }
+    }
+
+    $json['ukupno_lajkova'] = $broj_lajkova;
+    $json['ukupno_nelajkova'] = $broj_nelajkova;
+
+
     if(isset($tip_sorta) && $tip_sorta != "" ) {
         $upit .= " ORDER BY $stupac $tip_sorta";
         $json['tip_sorta'] = $tip_sorta;
@@ -58,10 +84,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $json['stupac'] = "";
     }
 
-    $rezultat = $baza->selectdb($upit);
     $redovi = $rezultat->num_rows;
     if(!$redovi){
-        $poruka = "Nema podataka";
+        $poruka = 1;
     }
     if ($rezultat > $prikazi){
         $broj_stranica = ceil($redovi/$prikazi);
@@ -69,40 +94,35 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $broj_stranica = 0;
     }
 
-    //paginacija
-    if($broj_stranica){
+    if($broj_stranica && !isset($ispis)){
         $upit .= " LIMIT $prikazi OFFSET $offset";
     }
 
-    if($rezultat = $baza->selectdb($upit)){
+    $rezultat = $baza->selectdb($upit);
+    if($rezultat->num_rows){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
 
-            $polje = array(
-                "id" => $red['id_log'],
-                "korisnik" => $red['korisnicko_ime'],
-                "vrijeme" => date("j.m.Y, H:i", $red['vrijeme']),
-                "ip_adresa" => $red['ip_adresa'],
-                "skripta" => $red['skripta'],
-                "zapis" => $red['zapis'],
+            $polje1 = array(
+                "lokacija" => $red['naziv_lokacija'],
+                "broj_lajkova" => $red['broj_lajkova'],
+                "broj_nelajkova" => $red['broj_nelajkova']
             );
 
-            array_push($json['podaci'],$polje);
+            array_push($json['podaci'],$polje1);
+
         }
 
         $json['aktivna_stranica'] = intval($aktivna_stranica);
         $json['broj_stranica'] = $broj_stranica;
         $json['poruka'] = array('poruka'=>$poruka);
 
-        echo json_encode($json);
-
     }else{
 
-        $poruka = 1;
+        $poruka = "Nema podataka.";
 
         $json['poruka'] = $poruka;
-
-        echo json_encode($json);
-
     }
+
+    echo json_encode($json);
 }

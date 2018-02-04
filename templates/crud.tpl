@@ -12,7 +12,9 @@
             <li><a href="crud.php?tablica=tipuloga">Tip uloga</a></li>
             <li><a href="crud.php?tablica=tag">Oznaka</a></li>
             <li><a href="crud.php?tablica=stranica">Stranica</a></li>
+            <li><a href="crud.php?tablica=korisnikstranica">Korisnik stranica</a></li>
             <li><a href="crud.php?tablica=upit">Upit</a></li>
+            <li><a href="crud.php?tablica=korisnikupit">Korisnik upit</a></li>
             <li><a href="crud.php?tablica=adresa">Adresa</a></li>
             <li><a href="crud.php?tablica=film">Film</a></li>
             <li><a href="crud.php?tablica=projekcija">Projekcija</a></li>

@@ -1,13 +1,14 @@
 
 <script src="public/js/odjava.js"></script>
 <script src="public/js/funkcije.js"></script>
+
 {if isset($naslovnica_prijavljeni)}
     <script src="public/js/naslovnica_prijavljeni.js"></script>
 {/if}
 {if isset($Lurker)}
     <script src="public/js/naslovnica.js"></script>
 {/if}
-{if isset($korisnicko)}
+{if isset($registracija)}
     <script src="public/js/registracija_validacija.js"></script>
 {/if}
 {if isset($privatno)}
@@ -87,6 +88,12 @@
 {/if}
 {if isset($app_statistika)}
     <script src="public/js/app_statistika.js"></script>
+{/if}
+{if isset($korisnikstranica)}
+    <script src="public/js/crud/korisnik_stranica.js"></script>
+{/if}
+{if isset($korisnikupit)}
+    <script src="public/js/crud/korisnik_upit.js"></script>
 {/if}
 
 </body>

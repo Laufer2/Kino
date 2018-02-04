@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-29 22:00:07
+/* Smarty version 3.1.30, created on 2018-02-04 01:33:06
   from "C:\xampp\htdocs\kino\templates\dnevnik.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a6f8b57641494_55756941',
+  'unifunc' => 'content_5a7654c2148db8_69546261',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e244efe12d70f4d45a31ba53133e96ecb0b5a806' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\dnevnik.tpl',
-      1 => 1517259606,
+      1 => 1517704384,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a6f8b57641494_55756941 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a7654c2148db8_69546261 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -51,6 +51,7 @@ function content_5a6f8b57641494_55756941 (Smarty_Internal_Template $_smarty_tpl)
         <div id="prikaz-tablice"></div>
 
         <div id="paginacija"></div>
+        <div id="poruke"></div>
     </div>
 
     <div style="display: none;">

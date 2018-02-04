@@ -5,6 +5,8 @@ require_once 'src/restrikcije.php';
 $smarty->assign('Naslov_stranice',"Log");
 
 $smarty->assign('dnevnik', "da");
+$smarty->assign('jquery_ui', "da");
+
 
 $tip_korisnika = restrikcije($smarty);
 

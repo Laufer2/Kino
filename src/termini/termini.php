@@ -3,14 +3,18 @@
 require_once '../klase/baza.php';
 require_once '../klase/korisnik.php';
 require_once '../istek_sesije.php';
+require_once '../statistike/evidencija.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 /*
 if(istek_sesije()){
     echo '<script>location.href = "prijava.php"</script>';
     exit();
 };*/
-
-session_start();
+if(!isset($_SESSION))
+{
+    session_start();
+}
 
 $korisnik = $_SESSION['kino']->getIdKorisnik();
 $baza = new baza();
@@ -19,7 +23,6 @@ if(isset($_POST['selectmenu'])) {
     $json['lokacije'] = array();
 
     $upit = "SELECT * FROM lokacija l JOIN moderatorlokacije m ON l.id_lokacija = m.lokacija_id WHERE korisnik_id = $korisnik";
-
     $rezultat = $baza->selectdb($upit);
 
     if ($rezultat->num_rows > 1) {
@@ -42,6 +45,8 @@ if(isset($_POST['selectmenu'])) {
     dnevnik("Termini", 3, 0);
 
     $upit = "SELECT * FROM film";
+    dnevnik($upit, 2, 0);
+    stranica(5);
     $rezultat = $baza->selectdb($upit);
 
     while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
@@ -55,6 +60,7 @@ if(isset($_POST['selectmenu'])) {
 
     echo json_encode($json);
 }else{
+
 
     //termin
     $film = filter_input(INPUT_POST,'Film');
@@ -75,6 +81,7 @@ if(isset($_POST['selectmenu'])) {
     $pocetak = $dat2 + ($sati2*60*60) + ($minute2 * 60);
 
     $upit = "INSERT INTO projekcija VALUES (default, $lokacija, $film, $mjesta, $dostupan_od, $pocetak)";
+    upit(3);
     $baza->update($upit);
 
     echo json_encode(array("poruka"=>"Novi termin je kreiran"));

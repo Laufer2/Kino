@@ -2,6 +2,8 @@
 
 require_once '../klase/baza.php';
 require_once '../klase/datoteka.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
+require_once '../statistike/evidencija.php';
 
 $id = filter_input(INPUT_POST,'id');
 
@@ -14,6 +16,7 @@ $upit = "SELECT p.id_projekcija, p.dostupan_do, p.dostupan_od, p.max_gledatelja,
           (SELECT SUM(r.broj_rezervacija)  FROM rezervacija r WHERE r.status = 1 AND r.projekcija_id = p.id_projekcija) as ostalo
           FROM projekcija p JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija 
           WHERE  p.id_projekcija = $id";
+dnevnik($upit, 2, 0);
 
 $rezultat = $baza->selectdb($upit);
 
@@ -42,6 +45,7 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
     $polje['scenarist'] = array();
 
     $upit = "SELECT z.naziv_zanr FROM zanr z JOIN zanrfilma z2 ON z.id_zanr = z2.zanr_id  WHERE z2.film_id = $id_filma";
+    dnevnik($upit, 2, 0);
 
     $rez = $baza->selectdb($upit);
     while ($row = $rez->fetch_array(MYSQLI_ASSOC)) {
@@ -60,6 +64,7 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
         array_push($polje['redatelj'], $row['naziv_osoba']);
 
     }
+    $json['upit']=$upit;
 
     $upit = "SELECT o.naziv_osoba FROM osoba o JOIN filmosoba f ON o.id_osoba = f.osoba_id JOIN tipuloga t ON f.uloga_id = t.id_tipuloga 
                      WHERE f.film_id = $id_filma AND t.naziv_tipuloga = 'Glumac'";
@@ -97,6 +102,4 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
     array_push($json['projekcija'], $polje);
 }
 
-
 echo json_encode($json);
-

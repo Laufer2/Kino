@@ -19,7 +19,6 @@ if($tip_korisnika < 4){
 
     $smarty->display('lokacije.tpl');
 
-
 }else{
 
     $smarty->display('zabrana.tpl');
@@ -27,3 +26,4 @@ if($tip_korisnika < 4){
 }
 
 $smarty->display('podnozje.tpl');
+

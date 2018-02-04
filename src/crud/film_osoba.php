@@ -66,6 +66,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     switch ($akcija){
         case 1://kreiranje
             $upit = "SELECT * FROM filmosoba WHERE osoba_id = $osoba AND film_id = $film AND uloga_id = $uloga";
+            dnevnik($upit, 2, 0);
             $rezultat = $baza->selectdb($upit);
 
             if($rezultat->num_rows){
@@ -80,6 +81,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         case 3: // brisanje
             $upit = "DELETE FROM filmosoba WHERE osoba_id = $ido AND film_id = $idf AND uloga_id = $idu";
+            dnevnik($upit, 2, 0);
             $rezultat = $baza->update($upit);
             break;
 
@@ -93,6 +95,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $upit = "SELECT * FROM filmosoba f JOIN film f2 ON f.film_id = f2.id_film JOIN osoba o ON f.osoba_id = o.id_osoba 
                   JOIN tipuloga t ON f.uloga_id = t.id_tipuloga
                   WHERE f2.naziv_film LIKE '$pojam' OR o.naziv_osoba LIKE '$pojam' OR t.naziv_tipuloga LIKE '$pojam'";
+        dnevnik($upit, 2, 0);
         if(isset($stupac) && $stupac != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;

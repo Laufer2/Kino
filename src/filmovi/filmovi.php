@@ -2,11 +2,14 @@
 
 require_once '../klase/baza.php';
 require_once '../klase/korisnik.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
+require_once '../statistike/evidencija.php';
 
 $baza = new baza();
 
 if(isset($_POST['selectmenu'])){
     $tablica = filter_input(INPUT_POST, 'tablica');
+    stranica(4);
 
     $json['zanr'] = array();
 
@@ -50,10 +53,13 @@ if(isset($_POST['selectmenu'])){
     }else{
 
         $upit = "INSERT INTO film VALUES (default, '$film', '$trajanje','$sadrzaj','$godina')";
+        upit(1);
         $rezultat = $baza->update($upit);
     }
 
     $upit = "SELECT id_film FROM film WHERE naziv_film = '$film' AND godina = $godina";
+
+
     $rezultat = $baza->selectdb($upit);
     list($id_film)=$rezultat->fetch_array();
 

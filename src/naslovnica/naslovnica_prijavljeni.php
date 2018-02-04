@@ -3,6 +3,7 @@
 require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 $baza = new baza();
 
@@ -56,6 +57,8 @@ if(isset($_POST['izbornik'])) { // padajući izbornik lokacija
         $broj_stranica = stranice_ispisa("projekcija", $prikazi);
 
         $upit = "SELECT * FROM projekcija p JOIN film f ON p.film_id = f.id_film WHERE NOT p.dostupan_do < $virtualno_vrijeme AND p.lokacija_id = $id";
+        dnevnik($upit, 2, 0);
+        stranica(1);
     }
 
     if(isset($tip_sorta) && $tip_sorta != "" ) {
@@ -84,7 +87,6 @@ if(isset($_POST['izbornik'])) { // padajući izbornik lokacija
         $upit .= " LIMIT $prikazi OFFSET $offset";
     }
 
-    $json['upit'] = $upit;
     if($rezultat = $baza->selectdb($upit)) {
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {

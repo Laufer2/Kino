@@ -257,6 +257,3 @@ $(document).ready( function () {
     }
 
 });
-
-
-

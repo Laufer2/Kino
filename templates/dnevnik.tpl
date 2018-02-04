@@ -27,6 +27,7 @@
         <div id="prikaz-tablice"></div>
 
         <div id="paginacija"></div>
+        <div id="poruke"></div>
     </div>
 
     <div style="display: none;">

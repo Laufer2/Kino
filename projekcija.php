@@ -1,8 +1,6 @@
 <?php
-
 require_once '_header.php';
 require_once 'src/restrikcije.php';
-
 
 $smarty->assign('proj', 'da');
 

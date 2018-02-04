@@ -3,8 +3,13 @@
 require_once '../klase/baza.php';
 require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
+require_once '../statistike/evidencija.php';
 
-session_start();
+if(!isset($_SESSION))
+{
+    session_start();
+}
 
 $lokacija = filter_input(INPUT_POST,'lokacija');
 $svidja = filter_input(INPUT_POST,'svidja');
@@ -17,6 +22,7 @@ $pomak = $dat->dohvati('pomak');
 $vrijeme = time() + ($pomak * 60 * 60);
 
 $upit = "SELECT svida_mi_se FROM lajkovi WHERE korisnik_id = $korisnik AND lokacija_id = $lokacija";
+dnevnik($upit, 2, 0);
 
 $rezultat = $baza->selectdb($upit);
 
@@ -27,16 +33,20 @@ if($rezultat->num_rows){
 
     if($svida_mi_se == $svidja){
         $upit = "DELETE FROM lajkovi WHERE korisnik_id = $korisnik AND lokacija_id = $lokacija";
+        dnevnik($upit, 2, 0);
         $rez = $baza->update($upit);
     }else{
 
         $upit = "UPDATE lajkovi SET svida_mi_se = $svidja, vrijeme = $vrijeme WHERE korisnik_id = $korisnik AND lokacija_id = $lokacija";
+        dnevnik($upit, 2, 0);
         $rez = $baza->update($upit);
     }
 
 }else{
 
     $upit = "INSERT INTO lajkovi VALUES ($korisnik, $lokacija, $svidja, $vrijeme)";
+    upit(5);
+    dnevnik($upit, 2, 0);
     $rez = $baza->update($upit);
 }
 

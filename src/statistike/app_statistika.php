@@ -35,7 +35,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $vrijeme = time() + ($pomak * 60 * 60) - ($interval * 60 * 60);
 
-
     $upit = "SELECT l2.naziv_lokacija,
               (SELECT count(*) FROM lajkovi WHERE lajkovi.lokacija_id = l.lokacija_id AND svida_mi_se = 1 AND vrijeme >= $vrijeme AND vrijeme <= $trenutno_vrijeme) as broj_lajkova,
               (SELECT count(*) FROM lajkovi WHERE lajkovi.lokacija_id = l.lokacija_id AND svida_mi_se = 0 AND vrijeme >= $vrijeme AND vrijeme <= $trenutno_vrijeme) as broj_nelajkova

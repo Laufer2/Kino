@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-12 19:44:58
+/* Smarty version 3.1.30, created on 2018-02-05 20:04:32
   from "C:\xampp\htdocs\kino\templates\forma_za_prijavu.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a59022aa2ffe7_63214744',
+  'unifunc' => 'content_5a78aac097f4d1_37048069',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3fe741776069cd3feaffa058980ccab743907c9c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\forma_za_prijavu.tpl',
-      1 => 1515782657,
+      1 => 1517857468,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,10 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a59022aa2ffe7_63214744 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a78aac097f4d1_37048069 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
+<div id="container">
+
 
 <form method="post" id="prijava" name="prijava" action="src/prijava/prijava_obrada.php" enctype="application/x-www-form-urlencoded">
 

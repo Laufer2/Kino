@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-04 00:35:08
+/* Smarty version 3.1.30, created on 2018-02-04 20:28:08
   from "C:\xampp\htdocs\kino\templates\podnozje.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a76472ca2e867_24435360',
+  'unifunc' => 'content_5a775ec89ac5e9_89593900',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4c05c20bdc18e68e4edbacdd4706ae1e3cb15542' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\podnozje.tpl',
-      1 => 1517700907,
+      1 => 1517772487,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a76472ca2e867_24435360 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a775ec89ac5e9_89593900 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
 <?php echo '<script'; ?>
@@ -183,6 +183,11 @@ if (isset($_smarty_tpl->tpl_vars['korisnikstranica']->value)) {?>
 if (isset($_smarty_tpl->tpl_vars['korisnikupit']->value)) {?>
     <?php echo '<script'; ?>
  src="public/js/crud/korisnik_upit.js"><?php echo '</script'; ?>
+>
+<?php }
+if (isset($_smarty_tpl->tpl_vars['statistika']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/statistika.js"><?php echo '</script'; ?>
 >
 <?php }?>
 

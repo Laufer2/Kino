@@ -95,6 +95,9 @@
 {if isset($korisnikupit)}
     <script src="public/js/crud/korisnik_upit.js"></script>
 {/if}
+{if isset($statistika)}
+    <script src="public/js/statistika.js"></script>
+{/if}
 
 </body>
 </html>

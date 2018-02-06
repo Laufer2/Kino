@@ -6,90 +6,89 @@ $(document).ready( function () {
     function pocetna() {
 
         $.ajax({
-            url : 'src/statistike/app_statistika.php',
+            url : 'src/statistike/statistika.php',
             type : 'POST',
             data : {
                 aktivna_stranica : 0,
-                interval : $("#interval").val()
+                interval : $("#interval").val(),
+                tip : $("#tip").val(),
+                pojam : $("#pojam").val()
             },
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#prikaz-tablice").html(nacrtaj_tablicu(data));
+                var tip = parseInt($("#tip").val());
+                var pojam = $("#pojam").val();
+                if(typeof pojam === "undefined" || pojam === ""){
+
+                    if(tip === 1){
+
+                        $("#prikaz-tablice").html(nacrtaj_tablicu_stranica(data));
+                        $("#search").html(search(5,$("#tip").val(), $("#interval").val()));
+
+                    }else {
+
+                        $("#prikaz-tablice").html(nacrtaj_tablicu_upit(data));
+                        $("#search").html(search(5, $("#tip").val(), $("#interval").val()));
+
+                    }
+
+                } else {
+                    $("#prikaz-tablice").html(nacrtaj_tablicu_korisnik(data));
+                }
+
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
 
+                $("#poruke").html("");
                 $("#poruke").html(data.poruka);
 
                 $("#legenda").html("");
 
-                var platno1 = document.getElementById("udio_lajkova");
+                var platno1 = document.getElementById("grafovi_statistika");
 
                 platno1.width = 400;
                 platno1.height = 400;
 
-                var platno2 = document.getElementById("udio_nelajkova");
-
-                platno2.width = 400;
-                platno2.height = 400;
-
                 var grafLajkova = new graf({
                     boje : ["BlueViolet","Brown","BurlyWood","CadetBlue","Coral","CornflowerBlue",
                         "Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGrey","DarkGreen",
-                        "DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen",
-                        "DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue",
-                        "DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod",
-                        "Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender",
-                        "LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow",
-                        "LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray",
-                        "LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine",
-                        "MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise",
-                        "MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab",
-                        "Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff",
-                        "Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen",
-                        "SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal",
-                        "Thistle","Tomato","Turquoise","Violet","Wheat","Yellow","YellowGreen"]
+                        "DarkKhaki","DarkMagenta","DarkOliveGreen"]
                 });
 
-                grafLajkova.crtaj(data.graf, data.ukupno_lajkova, data.ukupno_nelajkova, platno1, platno2);
+                grafLajkova.crtaj(data.graf, data.ukupna_posjecenost, platno1);
 
             }
         });
     }
 
-    function nacrtaj_tablicu(data) {
+    function nacrtaj_tablicu_stranica(data) {
 
         var prikaz_tablice = "<table class='tablica'>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Lokacija";
-        prikaz_tablice += "<button class='silazno' data-stupac='l2.naziv_lokacija'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='l2.naziv_lokacija'>&#708;</button>"; //ASC
+        prikaz_tablice += "Stranica";
+        prikaz_tablice += "<button class='silazno' data-stupac='s.naziv_stranica'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='s.naziv_stranica'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Sviđa mi se (ukupno)";
-        prikaz_tablice += "<button class='silazno' data-stupac='broj_lajkova'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='broj_lajkova'>&#708;</button>"; //ASC
+        prikaz_tablice += "Korisnik";
+        prikaz_tablice += "<button class='silazno' data-stupac='k.korisnicko_ime'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='k.korisnicko_ime'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Ne sviđa mi se (ukupno)";
-        prikaz_tablice += "<button class='silazno' data-stupac='broj_nelajkova'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='broj_nelajkova'>&#708;</button>"; //ASC
+        prikaz_tablice += "Vrijeme";
+        prikaz_tablice += "<button class='silazno' data-stupac='vrijeme'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='vrijeme'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "</tr>";
 
         $.each(data.podaci, function (index, log) {
 
             prikaz_tablice += "<tr>";
-            prikaz_tablice += "<td>"+ log.lokacija +"</td>";
-            prikaz_tablice += "<td>";
-            prikaz_tablice += log.broj_lajkova;
-            prikaz_tablice += " (" + data.ukupno_lajkova + ") ";
-            prikaz_tablice += "</td>";
 
-            prikaz_tablice += "<td>";
-            prikaz_tablice += log.broj_nelajkova;
-            prikaz_tablice += " (" + data.ukupno_nelajkova + ") ";
-            prikaz_tablice += "</td>";
+            prikaz_tablice += "<td>"+ log.stranica +"</td>";
+            prikaz_tablice += "<td>"+ log.korisnik +"</td>";
+            prikaz_tablice += "<td>"+ log.vrijeme +"</td>";
 
             prikaz_tablice += "</tr>";
 
@@ -97,6 +96,103 @@ $(document).ready( function () {
 
         prikaz_tablice += "</table>";
         return prikaz_tablice;
+    }
+
+    function nacrtaj_tablicu_upit(data) {
+
+        var prikaz_tablice = "<table class='tablica'>";
+        prikaz_tablice += "<tr>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Upit";
+        prikaz_tablice += "<button class='silazno' data-stupac='s.naziv_upit'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='s.naziv_upit'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Korisnik";
+        prikaz_tablice += "<button class='silazno' data-stupac='k.korisnicko_ime'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='k.korisnicko_ime'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Vrijeme";
+        prikaz_tablice += "<button class='silazno' data-stupac='vrijeme'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='vrijeme'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
+        prikaz_tablice += "</tr>";
+
+        $.each(data.podaci, function (index, log) {
+
+            prikaz_tablice += "<tr>";
+
+            prikaz_tablice += "<td>"+ log.upit +"</td>";
+            prikaz_tablice += "<td>"+ log.korisnik +"</td>";
+            prikaz_tablice += "<td>"+ log.vrijeme +"</td>";
+
+            prikaz_tablice += "</tr>";
+
+        });
+
+        prikaz_tablice += "</table>";
+        return prikaz_tablice;
+    }
+
+    function nacrtaj_tablicu_korisnik(data) {
+        var tip = parseInt($("#tip").val());
+
+        var prikaz_tablice = "<table class='tablica'>";
+        prikaz_tablice += "<tr>";
+        if(tip === 1){
+            prikaz_tablice += "<th>";
+            prikaz_tablice += "Stranica";
+            prikaz_tablice += "<button class='silazno' data-stupac='s.naziv_stranica'>&#709;</button>"; //DESC
+            prikaz_tablice += "<button class='uzlazno' data-stupac='s.naziv_stranica'>&#708;</button>"; //ASC
+            prikaz_tablice += "</th>";
+        }else {
+            prikaz_tablice += "<th>";
+            prikaz_tablice += "Upit";
+            prikaz_tablice += "<button class='silazno' data-stupac='u.naziv_upit'>&#709;</button>"; //DESC
+            prikaz_tablice += "<button class='uzlazno' data-stupac='u.naziv_upit'>&#708;</button>"; //ASC
+            prikaz_tablice += "</th>";
+        }
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Posjete";
+        prikaz_tablice += "<button class='silazno' data-stupac='posjecenost'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='posjecenost'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Ukupni udio";
+        prikaz_tablice += "</th>";
+        prikaz_tablice += "</tr>";
+
+        $.each(data.graf, function (index, log) {
+
+            prikaz_tablice += "<tr>";
+
+            if(tip === 1){
+                prikaz_tablice += "<td>"+ log.stranica +"</td>";
+            } else {
+                prikaz_tablice += "<td>"+ log.upit +"</td>";
+            }
+
+            prikaz_tablice += "<td>"+ log.posjecenost +"</td>";
+            prikaz_tablice += "<td>"+ log.udio +"</td>";
+
+            prikaz_tablice += "</tr>";
+
+        });
+
+        prikaz_tablice += "</table>";
+        return prikaz_tablice;
+    }
+
+    function search(akcija,tip,interval){
+        var prikaz_searcha = "<form method='post' action='src/statistike/statistika.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
+        prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
+        prikaz_searcha += "<input type='hidden' name='tip' value='"+ tip +"'>";
+        prikaz_searcha += "<input type='hidden' name='interval' value='"+ interval +"'>";
+        prikaz_searcha += "<input type='submit' value='P'>";
+        prikaz_searcha += "</form>";
+
+        return prikaz_searcha;
     }
 
     function sort(tip_sorta, stupac){
@@ -107,19 +203,25 @@ $(document).ready( function () {
         }
 
         $.ajax({
-            url: 'src/statistike/app_statistika.php',
+            url: 'src/statistike/statistika.php',
             type: 'POST',
             data : {
                 stupac : stupac,
                 tip_sorta : tip_sorta,
                 pojam : pojam,
-                akcija : akcija,
-                interval: $("#interval").val()
+                interval: $("#interval").val(),
+                tip : $("#tip").val()
             },
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#prikaz-tablice").html(nacrtaj_tablicu(data));
+                var tip = parseInt($("#tip").val());
+                if(tip === 1){
+                    $("#prikaz-tablice").html(nacrtaj_tablicu_stranica(data));
+                }else{
+                    $("#prikaz-tablice").html(nacrtaj_tablicu_upit(data));
+                }
+
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
             }
         });
@@ -132,7 +234,7 @@ $(document).ready( function () {
             akcija = 5;
         }
         $.ajax({
-            url: "src/statistike/app_statistika.php",
+            url: "src/statistike/statistika.php",
             type: "POST",
             data: {
                 aktivna_stranica: $(this).attr("data-stranica"),
@@ -140,12 +242,18 @@ $(document).ready( function () {
                 stupac: $(this).attr("data-stupac"),
                 pojam: pojam,
                 akcija: akcija,
-                interval : $("#interval").val()
+                interval : $("#interval").val(),
+                tip : $("#tip").val()
             },
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#prikaz-tablice").html(nacrtaj_tablicu(data));
+                var tip = parseInt($("#tip").val());
+                if(tip === 1){
+                    $("#prikaz-tablice").html(nacrtaj_tablicu_stranica(data));
+                }else{
+                    $("#prikaz-tablice").html(nacrtaj_tablicu_upit(data));
+                }
                 if(data.stupac.length > 0){
                     $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
                 }else{
@@ -171,78 +279,105 @@ $(document).ready( function () {
         pocetna();
     });
 
+    $(document).on('change', '#tip', function () {
+        pocetna();
+    });
+
+    $(document).on('submit', '#pretraga', function (event){
+
+        var forma = $("#pretraga");
+        event.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data : forma.serialize(),
+
+            success: function (data) {
+                data = JSON.parse(data);
+                var pojam = $("#pojam").val();
+                var tip = parseInt($("#tip").val());
+
+                if( pojam === ""){
+                    if( tip === 1){
+                        $("#prikaz-tablice").html(nacrtaj_tablicu_stranica(data));
+                    }else{
+                        $("#prikaz-tablice").html(nacrtaj_tablicu_upit(data));
+                    }
+
+                }else{
+                    $("#prikaz-tablice").html(nacrtaj_tablicu_korisnik(data));
+                }
+
+                $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
+                $("#poruke").html("");
+                $("#poruke").html(data.poruka);
+                $("#legenda").html("");
+
+                var platno1 = document.getElementById("grafovi_statistika");
+
+                platno1.width = 400;
+                platno1.height = 400;
+
+                var grafLajkova = new graf({
+                    boje : ["BlueViolet","Brown","BurlyWood","CadetBlue","Coral","CornflowerBlue",
+                        "Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGrey","DarkGreen",
+                        "DarkKhaki","DarkMagenta","DarkOliveGreen"]
+                });
+
+                grafLajkova.crtaj(data.graf, data.ukupna_posjecenost, platno1);
+            }
+        });
+    });
+
     var graf = function (opcije) {
 
         this.boje = opcije.boje;
 
-        this.crtaj = function (datal, ukupno1, ukupno2, platno1, platno2) {
+        this.crtaj = function (datal, ukupno1, platno1) {
 
             var pocetni_kut1 = 0;
-            var pocetni_kut2 = 0;
-            var broj1, broj2, udio1, udio2;
+            var broj1, udio1;
             var ctx1 = platno1.getContext("2d");
-            var ctx2 = platno2.getContext("2d");
 
             for(var i=0; i<datal.length; i++) {
 
-                broj1 = datal[i]["broj_lajkova"];
-                broj2 = datal[i]["broj_nelajkova"];
+                broj1 = datal[i]["posjecenost"];
 
                 udio1 = 2 * Math.PI * broj1/ukupno1;
-                udio2 = 2 * Math.PI * broj2/ukupno2;
 
                 var polumjer = Math.min(platno1.width/2, platno1.height/2);
 
-                if(broj1 > 0){
+                nacrtaj_udio(
+                    ctx1,
+                    platno1.width/2,
+                    platno1.height/2,
+                    polumjer,
+                    pocetni_kut1,
+                    pocetni_kut1+udio1,
+                    this.boje[i]
+                );
 
-                    nacrtaj_udio(
-                        ctx1,
-                        platno1.width/2,
-                        platno2.height/2,
-                        polumjer,
-                        pocetni_kut1,
-                        pocetni_kut1+udio1,
-                        this.boje[i]
-                    );
+                var oznakax1 = platno1.width/2 + (50 + polumjer / 2) * Math.cos(pocetni_kut1 + udio1/2);
+                var oznakay1 = platno1.height/2 + (50 + polumjer / 2) * Math.sin(pocetni_kut1+ udio1/2);
 
-                    var oznakax1 = platno1.width/2 + (50 + polumjer / 2) * Math.cos(pocetni_kut1 + udio1/2);
-                    var oznakay1= platno1.height/2 + (50 + polumjer / 2) * Math.sin(pocetni_kut1+ udio1/2);
+                var oznaka_postotak1 = Math.round( 100 * broj1 / ukupno1);
+                ctx1.fillStyle = "white";
+                ctx1.font = "bold 20px Arial";
+                ctx1.fillText(oznaka_postotak1 + "%", oznakax1, oznakay1);
 
-                    var oznaka_postotak1 = Math.round( 100 * broj1 / ukupno1);
-                    ctx1.fillStyle = "white";
-                    ctx1.font = "bold 20px Arial";
-                    ctx1.fillText(oznaka_postotak1 + "%", oznakax1, oznakay1);
+                pocetni_kut1 += udio1;
 
-                    pocetni_kut1 += udio1;
-                }
-                if(broj2 > 0){
-                    nacrtaj_udio(
-                        ctx2,
-                        platno2.width/2,
-                        platno2.height/2,
-                        polumjer,
-                        pocetni_kut2,
-                        pocetni_kut2+udio2,
-                        this.boje[i]
-                    );
-
-                    var oznakax2 = platno2.width/2 + (50 + polumjer / 2) * Math.cos(pocetni_kut2 + udio2/2);
-                    var oznakay2 = platno1.height/2 + (50 + polumjer / 2) * Math.sin(pocetni_kut2+ udio2/2);
-
-                    var oznaka_postotak2 = Math.round( 100 * broj2 / ukupno2);
-                    ctx2.fillStyle = "white";
-                    ctx2.font = "bold 20px Arial";
-                    ctx2.fillText(oznaka_postotak2 + "%", oznakax2, oznakay2);
-
-                    pocetni_kut2 += udio2;
-                }
-
+                var tip = parseInt($("#tip").val());
                 var prikaz_legende = "<span style='display:inline-block;width:20px;background-color:"+ this.boje[i] +";'>&nbsp;</span>&nbsp;";
-                prikaz_legende +=  datal[i]["lokacija"] + "<br/>";
+                if(tip === 1){
+                    prikaz_legende +=  datal[i]["stranica"] + "<br/>";
+                } else {
+                    prikaz_legende +=  datal[i]["upit"] + "<br/>";
+                }
+
                 $("#legenda").append(prikaz_legende);
-
             }
-
         };
     };
 

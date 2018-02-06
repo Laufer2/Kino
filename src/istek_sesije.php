@@ -9,8 +9,9 @@ function istek_sesije(){
     $trajanje_sesije = $dat->dohvati('trajanje_sesije');
     $pomak = $dat->dohvati('pomak');
     $virtualno_vrijeme = time() + ($pomak * 60 * 60);
-
-    session_start();
+    if(!isset($_SESSION)) {
+        session_start();
+    }
     if(isset($_SESSION['kino']) && $trajanje_sesije > 0){
 
         $prijava = $_SESSION['kino']->getPrijavljenOd();

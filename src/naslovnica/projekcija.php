@@ -28,7 +28,7 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
         "naziv" => $red['naziv_film'],
         "trajanje" => $red['trajanje'],
         "sadrzaj" => $red['sadrzaj'],
-        "max_gledatelja" => $red['max_gledatelja'],
+        "max_gledatelja" => intval($red['max_gledatelja']),
         "dostupan_od" => date("d.m.Y, H:i", $red['dostupan_od']),
         "pocetak" => date("d.m.Y, H:i", $red['dostupan_do']),
         "ostalo" => ($red['max_gledatelja'] - $red['ostalo'])
@@ -64,7 +64,6 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
         array_push($polje['redatelj'], $row['naziv_osoba']);
 
     }
-    $json['upit']=$upit;
 
     $upit = "SELECT o.naziv_osoba FROM osoba o JOIN filmosoba f ON o.id_osoba = f.osoba_id JOIN tipuloga t ON f.uloga_id = t.id_tipuloga 
                      WHERE f.film_id = $id_filma AND t.naziv_tipuloga = 'Glumac'";
@@ -90,12 +89,20 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
     }
 
     //provjera dostupnih mjesta - odobrene rezervacije
+    $upit = "SELECT max_gledatelja, (SELECT count(*) from rezervacija r WHERE r.projekcija_id =p.id_projekcija) 
+              FROM projekcija p";
+    $rez = $baza->selectdb($upit);
+    list($broj) = $rez->fetch_array();
+
+    $json['broj'] = $broj;
+
+
 
     $pomak = $dat->dohvati('pomak');
     $virtualno_vrijeme = time() + ($pomak * 60 * 60);
     if( $dotupan_od > $virtualno_vrijeme){
 
-        $json['poruka'] = "Rezervacijama možete pristupiti tek " .date("d.m.Y, H:i", $red['dostupan_do']);
+        $json['poruka'] = "Rezervacijama možete pristupiti tek " .date("d.m.Y, H:i", $red['dostupan_od']);
 
     }
 

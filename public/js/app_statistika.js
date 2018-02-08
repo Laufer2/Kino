@@ -214,6 +214,9 @@ $(document).ready( function () {
                     ctx1.fillText(oznaka_postotak1 + "%", oznakax1, oznakay1);
 
                     pocetni_kut1 += udio1;
+                    ctx1.fillStyle = "gray";
+                    ctx1.font = "16px Tahoma";
+                    ctx1.fillText("Sviđa mi se",0,20);
                 }
                 if(broj2 > 0){
                     nacrtaj_udio(
@@ -235,6 +238,9 @@ $(document).ready( function () {
                     ctx2.fillText(oznaka_postotak2 + "%", oznakax2, oznakay2);
 
                     pocetni_kut2 += udio2;
+                    ctx2.fillStyle = "gray";
+                    ctx2.font = "16px Tahoma";
+                    ctx2.fillText("Ne sviđa mi se",0,20);
                 }
 
                 var prikaz_legende = "<span style='display:inline-block;width:20px;background-color:"+ this.boje[i] +";'>&nbsp;</span>&nbsp;";

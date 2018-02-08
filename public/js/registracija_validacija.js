@@ -30,7 +30,7 @@ $( document ).ready( function() {
         if($(this).val().length !== 0){
             if ($(this).val().length < 4) {
                 polje_validacija[2] = 0;
-                $("#korisnicko_ime_poruka").html("Min 4 znaka u korisnickom imenu.");
+                $("#korisnicko_ime_poruka").html("Min 4 znaka u korisničkom imenu.");
             } else {
                 polje_validacija[2] = 1;
 
@@ -44,7 +44,7 @@ $( document ).ready( function() {
                     success: function (data) {
                         var polje = JSON.parse(data);
                         if (polje["broj_redova"] > 0) {
-                            $("#korisnicko_ime_poruka").html("Zauzeto korisnicko ime.");
+                            $("#korisnicko_ime_poruka").html("Zauzeto korisničko ime.");
                             polje_validacija[1] = 0;
                         } else {
                             $("#korisnicko_ime_poruka").html("OK");
@@ -52,7 +52,7 @@ $( document ).ready( function() {
                         }
                     },
                     error: function () {
-                        $("#korisnicko_ime_poruka").html("Greska prilikom provjere korisnickog imena.");
+                        $("#korisnicko_ime_poruka").html("Greška prilikom provjere korisničkog imena.");
                         $("input[type='submit']").css("display", "none");
                     }
                 });
@@ -68,7 +68,7 @@ $( document ).ready( function() {
 
             if(!regex.test(email)){
                 polje_validacija[0] = 0;
-                $("#email_poruka").html("Nevazeca struktura e-mail adrese.");
+                $("#email_poruka").html("Nevažeća struktura e-mail adrese.");
                 vazeci_email = false;
             }else{
                 polje_validacija[0] = 1;

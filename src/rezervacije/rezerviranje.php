@@ -3,9 +3,12 @@
 require_once '../klase/baza.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
 
+if(!isset($_SESSION)){
+    session_start();
+}
+
 $broj_rezervacija = filter_input(INPUT_POST,'broj_rezervacija');
-//$korisnik = $_SESSION['kino']->getIdKorisnik();
-$korisnik = 2;
+$korisnik = $_SESSION['kino']->getIdKorisnik();
 $projekcija = filter_input(INPUT_POST,'projekcija');
 
 $json = array();
@@ -18,7 +21,7 @@ $json['upit'] = $upit;
 
 if($rezultati = $baza->update($upit)){
 
-    $json['poruka'] = "Poslan je zahtjev za ". $broj_rezervacija . " rezervacije. Primit ćete mail kad rezervacije budu odobrene.";
+    $json['poruka'] = "Poslan je zahtjev za ". $broj_rezervacija . " rezervacije. Primit ćete mail kad rezervacije budu obrađene.";
 
 }else{
 

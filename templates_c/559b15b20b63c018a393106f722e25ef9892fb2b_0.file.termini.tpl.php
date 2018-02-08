@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-01-28 21:46:06
+/* Smarty version 3.1.30, created on 2018-02-08 19:20:40
   from "C:\xampp\htdocs\kino\templates\termini.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a6e368ede2ba3_30841043',
+  'unifunc' => 'content_5a7c94f8460398_05156772',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '559b15b20b63c018a393106f722e25ef9892fb2b' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\termini.tpl',
-      1 => 1517172364,
+      1 => 1518113998,
       2 => 'file',
     ),
   ),
@@ -20,58 +20,57 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a6e368ede2ba3_30841043 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a7c94f8460398_05156772 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
-    <div id="container">
+    <div id="prikaz-forme">
 
-        <form id='novi-termin' method="post" action="src/termini/termini.php" enctype="application/x-www-form-urlencoded">
+        <div id="forma">
 
-            <div id="termini-lokacije"></div>
+            <form id='novi-termin' method="post" action="src/termini/termini.php" enctype="application/x-www-form-urlencoded">
 
-            <div id="termini-filmovi"></div>
+                <div id="termini-lokacije"></div>
 
-            <fieldset>
+                <div id="termini-filmovi"></div>
 
-                <legend>Dostupan od</legend>
-                <label for="datum">Datum</label>
-                <input type="date" name="datum1" id="datum" required>
+                <fieldset>
 
-                <label for="sati">Vrijeme</label>
-                <input type="number" name="sati1" id="sati" placeholder="sati" required><span> : </span>
+                    <legend>Dostupan za rezervacije od</legend>
+                    <label for="datum">Datum</label><br/>
+                    <input type="date" name="datum1" id="datum" required><br>
 
-                <input type="number" name="minute1" id="minute" placeholder="min" required><br/>
+                    <label for="sati">Vrijeme</label><br>
+                    <input type="number" name="sati1" id="sati" placeholder="sati" max="23" required>
 
-            </fieldset>
+                    <input type="number" name="minute1" id="minute" placeholder="min" max="60" required><br/>
 
-            <fieldset>
+                </fieldset>
 
-                <legend>Dostupan do</legend>
-                <label for="datum">Datum</label>
-                <input type="date" name="datum2" id="datum" required>
+                <fieldset>
 
-                <label for="sati">Vrijeme</label>
-                <input type="number" name="sati2" id="sati" placeholder="sati" required><span> : </span>
+                    <legend>Dostupan za rezervacije do</legend>
+                    <label for="datum">Datum</label><br>
+                    <input type="date" name="datum2" id="datum" required><br>
 
-                <input type="number" name="minute2" id="minute" placeholder="min" required><br/>
+                    <label for="sati">Vrijeme</label><br>
+                    <input type="number" name="sati2" id="sati" placeholder="sati" min="0" max="23" required>
 
-            </fieldset>
+                    <input type="number" name="minute2" id="minute" placeholder="min" min="0" max="60" required><br/>
 
-            <label for="mjesta">Broj rezervacija</label>
-            <input type="number" name="mjesta" id="mjesta" required><br/>
+                </fieldset>
 
-            <input type="submit" value="Kreiraj novi film">
+                <label for="mjesta">Maksimalan broj rezervacija</label>
+                <input type="number" name="mjesta" id="mjesta" required><br/>
 
-        </form>
+                <input type="submit" value="Kreiraj novi termin">
 
-        <div id="poruke">
+            </form>
+
+            <div id="poruke"></div>
 
         </div>
-
     </div>
-
-
 </div>
 
 <?php }

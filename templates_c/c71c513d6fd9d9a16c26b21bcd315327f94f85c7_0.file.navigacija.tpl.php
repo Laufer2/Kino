@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-05 20:06:53
+/* Smarty version 3.1.30, created on 2018-02-08 12:57:24
   from "C:\xampp\htdocs\kino\templates\navigacija.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a78ab4de1f370_19887937',
+  'unifunc' => 'content_5a7c3b24c5af23_72872069',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'c71c513d6fd9d9a16c26b21bcd315327f94f85c7' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\navigacija.tpl',
-      1 => 1517857612,
+      1 => 1518091035,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a78ab4de1f370_19887937 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a7c3b24c5af23_72872069 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <nav id="navigacija">
 
@@ -32,8 +32,8 @@ function content_5a78ab4de1f370_19887937 (Smarty_Internal_Template $_smarty_tpl)
         <?php }?>
 
         <?php if (isset($_smarty_tpl->tpl_vars['Lurker']->value) || isset($_smarty_tpl->tpl_vars['Korisnik']->value) || isset($_smarty_tpl->tpl_vars['Moderator']->value) || isset($_smarty_tpl->tpl_vars['Admin']->value)) {?>
-            <li><a href="o_autoru.html">O autoru</a></li>
-            <li><a href="dokumentacija.html">Dokumentacija</a></li>
+            <li><a href="o_autoru.php">O autoru</a></li>
+            <li><a href="dokumentacija.php">Dokumentacija</a></li>
         <?php }?>
 
         <?php if (isset($_smarty_tpl->tpl_vars['Korisnik']->value) || isset($_smarty_tpl->tpl_vars['Moderator']->value) || isset($_smarty_tpl->tpl_vars['Admin']->value)) {?>

@@ -25,7 +25,7 @@ function upit($id){
 function upis($tablica, $id){
 
     if(!isset($_SESSION['kino'])){
-        session_start();
+        @session_start();
     }
 
     $dat = new datoteka();
@@ -35,7 +35,6 @@ function upis($tablica, $id){
     $vrijeme = time() + ($pomak * 60 * 60);
 
     $korisnik = $_SESSION['kino']->getIdKorisnik();
-    session_write_close();
 
     $upit = "INSERT INTO $tablica VALUES ($korisnik, $id, $vrijeme)";
     $baza->update($upit);

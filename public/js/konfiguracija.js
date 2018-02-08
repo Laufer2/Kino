@@ -90,7 +90,7 @@ $(document).ready( function () {
                 if("parametar" in data){
                     $('[name='+ postavi +']', forma).val(data.parametar);
                 }
-                $("#poruke").html(data.poruka);
+                $("#poruke").html(data.poruka).css("display", "block").css("background-color","#4CAF50");
             }
         });
     }

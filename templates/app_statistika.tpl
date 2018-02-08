@@ -22,19 +22,21 @@
         <div id="poruke"></div>
 
     </div>
-
-    <button id="print">Print this page</button>
-
+    <div>
+        <button id="print">Print this page</button>
+    </div>
 
     <div id="grafovi">
 
-        <canvas id="udio_lajkova"></canvas>
 
-        <canvas id="udio_nelajkova"></canvas>
+        <div id="graf1">
+            <canvas id="udio_lajkova"></canvas>
+            <canvas id="udio_nelajkova"></canvas>
 
-        <div id="legenda"></div>
+            <div id="legenda"></div>
+
+        </div>
 
     </div>
-
 
 </div>

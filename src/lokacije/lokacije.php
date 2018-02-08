@@ -33,17 +33,24 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if ($akcija == 5 && $pojam != ""){ // search
 
         $pojam = "%" . $pojam . "%";
-        $upit = "SELECT * FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
-                  JOIN grad g ON a.grad_id = g.id_grad JOIN lajkovi l2 ON l.id_lokacija = l2.lokacija_id WHERE 
-                  (g.naziv_grad = '$pojam' OR d.naziv_drzava = '$pojam' OR a.ulica = '$pojam' OR l.naziv_lokacija)";
+        $upit = "SELECT g.naziv_grad, l.naziv_lokacija, d.naziv_drzava, a.ulica, a.broj, a.postanski_broj, l.id_lokacija,
+                  (SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=l.id_lokacija AND svida_mi_se = 1) as lajkovi,
+                  (SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=l.id_lokacija AND svida_mi_se = 0) as ne_lajkovi
+                  FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
+                  JOIN grad g ON a.grad_id = g.id_grad WHERE 
+                  (g.naziv_grad LIKE '$pojam' OR d.naziv_drzava LIKE '$pojam' OR a.ulica LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
 
     }else {
 
-        $upit = "SELECT * FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
+        $upit = "SELECT g.naziv_grad, l.naziv_lokacija, d.naziv_drzava, a.ulica, a.broj, a.postanski_broj, l.id_lokacija,
+                  (SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=l.id_lokacija AND svida_mi_se = 1) as lajkovi,
+                  (SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=l.id_lokacija AND svida_mi_se = 0) as ne_lajkovi
+                  FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
                   JOIN grad g ON a.grad_id = g.id_grad";
         dnevnik($upit, 2, 0);
 
     }
+
     if(isset($tip_sorta) && $tip_sorta != "" ) {
         $upit .= " ORDER BY $stupac $tip_sorta";
         $json['tip_sorta'] = $tip_sorta;
@@ -82,22 +89,11 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 "grad" => $red['naziv_grad'],
                 "ulica" => $red['ulica'] . " " . $red['broj'] . ", " . $red['postanski_broj'],
                 "drzava" => $red['naziv_drzava'],
+                "lajkovi" => $red['lajkovi'],
+                "ne_lajkovi" => $red['ne_lajkovi']
             );
 
-            $lokacija = $red['id_lokacija'];
-
-            // podupiti
-
-            $u = "SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=$lokacija AND svida_mi_se = 1";
-            $rez = $baza->selectdb($u);
-            $polje['lajkovi'] = $rez->fetch_array(MYSQLI_NUM);
-
-            $u = "SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=$lokacija AND svida_mi_se = 0";
-            $rez = $baza->selectdb($u);
-            $polje['ne_lajkovi'] = $rez->fetch_array(MYSQLI_NUM);
-
             array_push($json['podaci'],$polje);
-
         }
 
         $json['aktivna_stranica'] = intval($aktivna_stranica);

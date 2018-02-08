@@ -13,7 +13,7 @@ $(document).ready( function(){
             data = JSON.parse(data);
             $("#prikaz-tablice").html(nacrtaj_tablicu(data));
             $("#search").html(search(5));
-            $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
+            $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
         }
     });
 
@@ -27,62 +27,11 @@ $(document).ready( function(){
         return prikaz_searcha;
     }
 
-    function paginacija(aktivna_stranica, broj_stranica, tip_sorta, stupac) {
-
-        var paginacija = "";
-        if(broj_stranica > 0) {
-
-            var broj, pocetak = 0;
-
-            paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
-                "data-stranica='0' data-tip_sorta='" + tip_sorta + "' data-stupac='" + stupac + "'> |< &nbsp;</span>";
-
-            if (aktivna_stranica > 2) {
-                paginacija += "<span class='prednje'>&nbsp; ... &nbsp;</span>"; // na početku
-            } else {
-                $(".prednje").css("display: none;");
-            }
-
-            var max = aktivna_stranica + 3;
-            if (max > broj_stranica) {
-                max = broj_stranica;
-            }
-
-            if (aktivna_stranica < 3) {
-                pocetak = 0;
-            } else {
-                pocetak = aktivna_stranica - 2;
-            }
-
-            for (var i = pocetak; i < max; i++) {
-                broj = i + 1;
-                if (i === aktivna_stranica) {
-                    paginacija += "<span class='broj-paginacija' style='cursor: pointer; color: red' " +
-                        "data-stranica='" + i + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>" + broj + " </span>";
-                    continue;
-                }
-                paginacija += "<span class='broj-paginacija' style='cursor: pointer' " +
-                    "data-stranica='" + i + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>" + broj + " </span>";
-            }
-
-            if ((aktivna_stranica + 3) < broj_stranica) {
-                paginacija += "<span class='zadnje'>&nbsp; ... &nbsp;</span>"; // na kraju
-            } else {
-                $(".zadnje").css("display: none;");
-            }
-
-            var zadnja = broj_stranica - 1;
-            paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
-                "data-stranica='" + zadnja + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>&nbsp;>| </span>";
-        }
-        return paginacija;
-    }
-
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
@@ -105,14 +54,14 @@ $(document).ready( function(){
         $.each(data.podaci, function (index, projekcija) {
 
             prikaz_tablice += "<tr>";
-            prikaz_tablice += "<td>"+ projekcija.film +"</td>"
-            prikaz_tablice += "<td>"+ projekcija.max_gledatelja +"</td>"
+            prikaz_tablice += "<td>"+ projekcija.film +"</td>";
+            prikaz_tablice += "<td>"+ projekcija.max_gledatelja +"</td>";
             prikaz_tablice += "<td>"+ projekcija.dostupan_od +"</td>";
             prikaz_tablice += "<td>"+ projekcija.dostupan_do +"</td>";
             prikaz_tablice += "<td>"+ projekcija.lokacija +"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-edit' data-id='"+ projekcija.id +"'>Uredi</button>";
+            prikaz_tablice += "<a href='#forma'><button class='gumb-edit' data-id='"+ projekcija.id +"'>Uredi</button></a>";
             prikaz_tablice += "<button class='gumb-delete' data-id='"+ projekcija.id +"'>Izbriši</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
@@ -193,7 +142,7 @@ $(document).ready( function(){
             success: function (data) {
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-                $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
+                $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
             }
         });
     }
@@ -219,9 +168,9 @@ $(document).ready( function(){
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                 if(data.stupac.length > 0){
-                    $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
+                    $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
                 }else{
-                    $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
+                    $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
                 }
 
             }
@@ -250,7 +199,7 @@ $(document).ready( function(){
             success: function (data) {
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-                $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
+                $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if(data.poruka['poruka']){
                     $("#test").html("Nema podataka.");
@@ -284,7 +233,7 @@ $(document).ready( function(){
                             data = JSON.parse(data);
                             $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                             $("#search").html(search(5));
-                            $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica, "",""));
+                            $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "",""));
 
                         }
                     });
@@ -373,7 +322,7 @@ $(document).ready( function(){
                     $("#forma").html("");
                 }
 
-                $("#paginacija").html(paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
+                $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
                 $("#search").html(search(5));
             }
         });

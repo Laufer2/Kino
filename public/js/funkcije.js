@@ -33,8 +33,8 @@ var funkcija ={
 
             var broj, pocetak = 0;
 
-            paginacija = "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
-                "data-stranica='0' data-tip_sorta='" + tip_sorta + "' data-stupac='" + stupac + "'> |< &nbsp;</span>";
+            paginacija = "<span class='jump-to-first broj-paginacija'" +
+                " data-stranica='0' data-tip_sorta='" + tip_sorta + "' data-stupac='" + stupac + "'>|<</span>";
 
             if (aktivna_stranica > 2) {
                 paginacija += "<span class='prednje'>&nbsp; ... &nbsp;</span>"; // na početku
@@ -56,23 +56,23 @@ var funkcija ={
             for (var i = pocetak; i < max; i++) {
                 broj = i + 1;
                 if (i === aktivna_stranica) {
-                    paginacija += "<span class='broj-paginacija' style='cursor: pointer; color: red' " +
-                        "data-stranica='" + i + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>" + broj + " </span>";
+                    paginacija += "<div class='broj-container'><span class='broj-paginacija' id='aktivan'" +
+                        " data-stranica='" + i + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>" + broj + "</span></div>";
                     continue;
                 }
-                paginacija += "<span class='broj-paginacija' style='cursor: pointer' " +
-                    "data-stranica='" + i + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>" + broj + " </span>";
+                paginacija += "<span class='broj-paginacija' " +
+                    "data-stranica='" + i + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>" + broj + "</span>";
             }
 
             if ((aktivna_stranica + 3) < broj_stranica) {
-                paginacija += "<span class='zadnje'>&nbsp; ... &nbsp;</span>"; // na kraju
+                paginacija += "<span class='zadnje '>&nbsp; ... &nbsp;</span>"; // na kraju
             } else {
                 $(".zadnje").css("display: none;");
             }
 
             var zadnja = broj_stranica - 1;
-            paginacija += "<span class='jump-to-first broj-paginacija' style='cursor: pointer' " +
-                "data-stranica='" + zadnja + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>&nbsp;>| </span>";
+            paginacija += "<span class='jump-to-first broj-paginacija' " +
+                "data-stranica='" + zadnja + "' data-stupac='" + stupac + "' data-tip_sorta='" + tip_sorta + "'>>|</span>";
 
         }
         return paginacija;

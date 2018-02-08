@@ -100,7 +100,7 @@ if(isset($_POST['izbornik'])) { // padajući izbornik lokacija
                 "id" => $red['id_projekcija'],
                 "naziv" => $red['naziv_film'],
                 "trajanje" => $red['trajanje'],
-                "pocetak" => date("F j, Y, H:i", $red['dostupan_do'])
+                "pocetak" => date("d.m.Y, H:i", $red['dostupan_do'])
             );
 
             $id_filma = $red['id_film'];

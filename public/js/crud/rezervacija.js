@@ -45,7 +45,7 @@ $(document).ready( function(){
         prikaz_tablice += "<button class='silazno' data-stupac='r.status'>&#709;</button>"; //DESC
         prikaz_tablice += "<button class='uzlazno' data-stupac='r.status'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
-        prikaz_tablice += "<th>Broj rezervacija</th>";
+        prikaz_tablice += "<th>Br rez</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Film";
         prikaz_tablice += "<button class='silazno' data-stupac='f.naziv_film'>&#709;</button>"; //DESC

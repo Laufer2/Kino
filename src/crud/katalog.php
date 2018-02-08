@@ -49,7 +49,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             $upit = "INSERT INTO $tablica VALUES(default, '$naziv')";
 
             $rezultat = $baza->update($upit);
-            $json['upit2']=$upit;
 
             break;
         case 3: //dohvati jednog
@@ -69,12 +68,11 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             if(!$rezultat->num_rows && $id_tablice != $id){
 
                 $upit = "UPDATE $tablica SET $db_stupac = '$naziv' WHERE $db_id = $id";
-                dnevnik($upit, 2, 0);
                 $rezultat = $baza->update($upit);
 
                 break;
             }else{
-                $poruka = 1;
+                $poruka = "Zapis s tim imenom već postoji.";
             }
 
     }
@@ -96,7 +94,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
         $redovi = $rezultat->num_rows;
 
         if(!$redovi){
-            $poruka = 1;
+            $poruka = "Nema podataka";
         }
 
         if ($rezultat > $prikazi){
@@ -141,14 +139,14 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
         $json['aktivna_stranica'] = intval($aktivna_stranica);
         $json['broj_stranica'] = $broj_stranica;
         $json['tablica'] = $tablica;
-        $json['poruka'] = array('poruka'=>$poruka);
+        $json['poruka'] = $poruka;
 
         echo json_encode($json);
 
     }else{
-        $poruka = 1;
+        $poruka = "Pogreška. Pokušajte ponovo.";
 
-        $json['poruka'] = array('poruka'=>$poruka);
+        $json['poruka'] =$poruka;
 
         echo json_encode($json);
     }

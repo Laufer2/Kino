@@ -21,12 +21,13 @@ $(document).ready( function(){
 
             success: function (data) {
                 data = JSON.parse(data);
+                $("#poruke").css("display","none");
                 $("#lokacije-potvrde").html(padajuci_izbornik(data.lokacija));
                 $("#search").html(search(5, data.lok));
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
                 if("poruka" in data){
-                    $("#poruke").html(data.poruka);
+                    $("#poruke").html(data.poruka).css("display","block").css("background-color","#4CAF50");
                 }
             }
         });
@@ -72,12 +73,10 @@ $(document).ready( function(){
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Korisnik";
-        prikaz_tablice += "<button class='silazno' data-stupac='k.korisnicko_ime'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='k.korisnicko_ime'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
-        prikaz_tablice += "<th>Broj rezervacija</th>";
-        prikaz_tablice += "<th>Max rezervacija</th>";
-        prikaz_tablice += "<th>Dostupna mjesta</th>";
+        prikaz_tablice += "<th>Broj rez.</th>";
+        prikaz_tablice += "<th>Dostupno</th>";
+        prikaz_tablice += "<th>Ukupno</th>";
         prikaz_tablice += "<th>Akcije</th>";
         prikaz_tablice += "</tr>";
 
@@ -88,9 +87,8 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ rezervacija.vrijeme +"</td>";
             prikaz_tablice += "<td>"+ rezervacija.korisnik +"</td>";
             prikaz_tablice += "<td>"+ rezervacija.broj_rezervacija +"</td>";
-            prikaz_tablice += "<td>"+ rezervacija.max +"</td>";
             prikaz_tablice += "<td>"+ rezervacija.ostalo +"</td>";
-            prikaz_tablice += "<td></td>";
+            prikaz_tablice += "<td>"+ rezervacija.max +"</td>";
             prikaz_tablice += "<td>";
 
             if(parseInt(rezervacija.ostalo) < parseInt(rezervacija.broj_rezervacija)){
@@ -235,7 +233,7 @@ $(document).ready( function(){
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#poruke").html();
+                $("#poruke").css("display","none");
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                 $("#search").html(search(5, id));
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
@@ -255,12 +253,11 @@ $(document).ready( function(){
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#poruke").html();
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if("poruka" in data) {
-                    $("#poruke").html(data.poruka);
+                    $("#poruke").html(data.poruka).css("display","block").css("background-color","#4CAF50");
                 }
 
             }

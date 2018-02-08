@@ -163,7 +163,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $broj_stranica = stranice_ispisa("projekcija", $prikazi);
 
         $upit = "SELECT * FROM projekcija p JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija";
-        dnevnik($upit, 2, 0);
         if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;

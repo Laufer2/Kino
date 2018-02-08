@@ -5,20 +5,15 @@
     </div>
 
     <div id="iznad-tablice">
-        <div id="search">
 
-        </div>
-        <div id="prikaz-tablice">
+        <div id="search"></div>
 
-        </div>
+        <div id="prikaz-tablice"></div>
 
-        <div id="paginacija">
-
-        </div>
-    </div>
-
-    <div id="test">
+        <div id="paginacija"></div>
 
     </div>
+
+    <div id="test"></div>
 
 </div>

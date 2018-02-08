@@ -12,16 +12,14 @@ body{
 
 header{
     text-align: center;
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bold;
     color: #ffffff;
 
     background-color: hsl(250, 10%, 10%);
-    background-size: 200px;
-    background-repeat: no-repeat;
 
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 
     width: 100%;
 }
@@ -49,7 +47,7 @@ nav#navigacija{
     text-transform: uppercase;
     background-color: #1b9bff;
 
-    border-top-style: dotted;
+    border-top-style: solid;
     border-color: #000000;
     border-width: 1px;
     padding: 10px 20px;
@@ -77,10 +75,277 @@ nav#navigacija{
 
 #container{
     display: inline-block;
-    width: 75%;
+    width: 80%;
     color:#444;
     padding: 5px;
-    padding-bottom: 115px;
-    margin-top: 10px;
-    min-height: 575px;
 }
+
+.dijagrami{
+    width : 95%;
+}
+
+/* tablica */
+
+table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+    font-size: 18px;
+}
+
+/* CRUD gumbi*/
+
+button{
+    border: none;
+    color: white;
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.gumb-delete{
+    background-color: #d9534f;
+}
+
+.gumb-edit{
+    background-color: #269abc;
+}
+
+#gumb-csv{
+    background-color: #269abc;
+    float: right;
+    margin: 5px;
+
+}
+
+#gumb-kreiraj{
+    background-color: #286090;
+    float: right;
+    margin: 5px;
+}
+
+.gumb-svidja, .gumb-potvrdi{
+    background-color: #4CAF50;
+    margin-right: 3px;
+}
+
+.gumb-ne-svidja, .gumb-odbij, #print{
+    background-color: #d9534f;
+}
+
+.gumb-potvrdi, .gumb-odbij{
+    padding: 10px;
+}
+
+.gumb-potvrdi:disabled{
+    background-color: #999999;
+}
+
+#print{
+    float: right;
+}
+
+#dohvati-pomak{
+    background-color: #269abc;
+    width: 80%;
+}
+
+input[type='submit']{
+    border: none;
+    color: white;
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #286090;
+}
+
+input[disabled]{
+
+    background-color: #999999;
+}
+
+.silazno{
+    float: right;
+    background-color: #286090;
+    padding: 5% 8%;
+    border: 1px solid #ddd;
+}
+
+.uzlazno{
+    float: right;
+    background-color: #286090;
+    padding: 5% 8%;
+    border: 1px solid #ddd;
+}
+
+/* paginacija */
+#paginacija{
+    margin-top: 15px;
+}
+
+.broj-paginacija{
+    cursor: pointer;
+    width: 30px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 2px 2px 2px 2px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+}
+
+.broj-container{
+    display: inline;
+    //text-align: center;
+}
+
+#prikaz-tablice{
+    margin-top: 5px;
+}
+
+#aktivan{
+    color: white;
+    background-color: #286090;
+    border: none;
+}
+
+#iznad-tablice{
+    margin: 15px;
+}
+
+/* search box*/
+#pretraga{
+    display: inline;
+}
+
+form#pretraga > input[type='submit']{
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    width: auto;
+}
+
+#search{
+    display: inline;
+}
+
+#pojam{
+    font-size: 18px;
+    padding: 11px;
+    width: 25%;
+}
+
+.dijalog, .dijalog-status-racuna, .forma-natpis{
+    display: none;
+}
+#grafovi{
+    margin-top: 20px;
+}
+#graf1{
+    text-align: left;
+    width: 90%;
+    margin: 0 auto;
+}
+
+
+/* forma dodaj novi - crud*/
+
+.forma-natpis{
+    text-align: center;
+    font-size: 22px;
+}
+
+#prikaz-forme, #grafovi{
+    text-align: center;
+}
+
+#forma, #test{
+    width: 50%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+label{
+    font-size: 20px;
+}
+
+input, textarea, select{
+    font-size: 16px;
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 80%
+}
+
+.oznaka-katalog{
+    font-size: 20px;
+}
+
+form#novi_zapis > input[type='text'], form#novi_zapis > input[type='number'], #novi_zapis > textarea {
+    font-size: 20px;
+    padding: 5px;
+}
+
+#novi_zapis, #csv_forma{
+    margin-top: 15px;
+}
+
+input:focus, textarea:focus {
+    box-shadow: 0 0 25px hsla(209, 89%, 58%, 0.6);
+}
+
+input[type=checkbox]{
+    width: 20px;
+}
+
+#poruke, #test{
+    display: none;
+    font-size: 18px;
+    background-color: #d9534f;
+    color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 70%;
+}
+
+/*rezerviranje*/
+
+#rezerviranje > #broj_rezervacija{
+    font-size : 18px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#lokacije-naslovnica{
+    text-align: center;
+    margin-top: 2%;
+}
+
+#lokacije{
+    padding: 20px;
+    font-size: 20px;
+}
+
+.reg-poruka{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#zaboravljena-lozinka{
+    cursor: pointer;
+}
+
+
+
+
+

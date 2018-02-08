@@ -57,7 +57,7 @@ $(document).ready(function(){
         $.each(data.podaci, function (index, vrijednost) {
 
             prikaz_tablice += "<tr>";
-            prikaz_tablice += "<td>"+ vrijednost.korisnik +"</td>"
+            prikaz_tablice += "<td>"+ vrijednost.korisnik +"</td>";
             prikaz_tablice += "<td>"+ vrijednost.lokacija +"</td>";
             prikaz_tablice += "<td>"+ vrijednost.svidjanje +"</td>";
             prikaz_tablice += "<td>"+ vrijednost.vrijeme +"</td>";

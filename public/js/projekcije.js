@@ -12,10 +12,11 @@ $(document).ready(function () {
         success : function (data) {
             data = JSON.parse(data);
             film(data);
-            if("poruka" in data){
-                $("#poruke").html(data.poruka);
+            if(data.poruka){
+                $("#poruke").append(data.poruka).css("display", "block");
                 $("#rezerviraj").prop('disabled', true);
             }
+
         }
 
     });
@@ -24,7 +25,7 @@ $(document).ready(function () {
 
         $.each(data.projekcija, function (index, value) {
 
-            $("#naziv_filma").html(value.naziv);
+            $("#naziv_filma").append(value.naziv);
 
             $.each(value.zanr, function(ind, val){
                 $("#zanrovi").append("<span>"+val+"&nbsp;</span>");
@@ -42,19 +43,23 @@ $(document).ready(function () {
                 $("#zanrovi").append("<span>"+val+"&nbsp;</span>");
             });
 
-            $("#trajanje").html(value.trajanje + " min");
+            $("#trajanje").append(value.trajanje + " min");
 
-            $("#sadrzaj").html(value.sadrzaj);
+            $("#sadrzaj").append(value.sadrzaj);
 
-            $("#lokacija").html(value.lokacija);
+            $("#lokacija").append(value.lokacija);
 
-            $("#pocetak").html(value.pocetak);
+            $("#pocetak").append(value.pocetak);
 
-            $("#dostupan_od").html(value.dostupan_od);
+            $("#dostupan_od").append(value.dostupan_od);
 
-            $("#ukupno_mjesta").html(value.max_gledatelja);
+            $("#ukupno_mjesta").append(value.max_gledatelja);
 
-            $("#dostupno_mjesta").html(value.ostalo);
+            $("#dostupno_mjesta").append(value.ostalo);
+            if(value.ostalo === 0){
+                $("#poruke").append("Nema dostupnih mjesta za rezervaciju.").css("display", "block");
+                $("#rezerviraj").prop('disabled', true);
+            }
 
         });
     }
@@ -74,11 +79,9 @@ $(document).ready(function () {
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#poruke").html(data.poruka);
+                $("#poruke").append(data.poruka).css("display","block").css("background-color", "#4CAF50");
             }
             });
         }
-
     });
-
 });

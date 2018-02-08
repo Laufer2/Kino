@@ -1,52 +1,51 @@
 <div id="container">
 
-    <div id="container">
+    <div id="prikaz-forme">
 
-        <form id='novi-termin' method="post" action="src/termini/termini.php" enctype="application/x-www-form-urlencoded">
+        <div id="forma">
 
-            <div id="termini-lokacije"></div>
+            <form id='novi-termin' method="post" action="src/termini/termini.php" enctype="application/x-www-form-urlencoded">
 
-            <div id="termini-filmovi"></div>
+                <div id="termini-lokacije"></div>
 
-            <fieldset>
+                <div id="termini-filmovi"></div>
 
-                <legend>Dostupan od</legend>
-                <label for="datum">Datum</label>
-                <input type="date" name="datum1" id="datum" required>
+                <fieldset>
 
-                <label for="sati">Vrijeme</label>
-                <input type="number" name="sati1" id="sati" placeholder="sati" required><span> : </span>
+                    <legend>Dostupan za rezervacije od</legend>
+                    <label for="datum">Datum</label><br/>
+                    <input type="date" name="datum1" id="datum" required><br>
 
-                <input type="number" name="minute1" id="minute" placeholder="min" required><br/>
+                    <label for="sati">Vrijeme</label><br>
+                    <input type="number" name="sati1" id="sati" placeholder="sati" max="23" required>
 
-            </fieldset>
+                    <input type="number" name="minute1" id="minute" placeholder="min" max="60" required><br/>
 
-            <fieldset>
+                </fieldset>
 
-                <legend>Dostupan do</legend>
-                <label for="datum">Datum</label>
-                <input type="date" name="datum2" id="datum" required>
+                <fieldset>
 
-                <label for="sati">Vrijeme</label>
-                <input type="number" name="sati2" id="sati" placeholder="sati" required><span> : </span>
+                    <legend>Dostupan za rezervacije do</legend>
+                    <label for="datum">Datum</label><br>
+                    <input type="date" name="datum2" id="datum" required><br>
 
-                <input type="number" name="minute2" id="minute" placeholder="min" required><br/>
+                    <label for="sati">Vrijeme</label><br>
+                    <input type="number" name="sati2" id="sati" placeholder="sati" min="0" max="23" required>
 
-            </fieldset>
+                    <input type="number" name="minute2" id="minute" placeholder="min" min="0" max="60" required><br/>
 
-            <label for="mjesta">Broj rezervacija</label>
-            <input type="number" name="mjesta" id="mjesta" required><br/>
+                </fieldset>
 
-            <input type="submit" value="Kreiraj novi film">
+                <label for="mjesta">Maksimalan broj rezervacija</label>
+                <input type="number" name="mjesta" id="mjesta" required><br/>
 
-        </form>
+                <input type="submit" value="Kreiraj novi termin">
 
-        <div id="poruke">
+            </form>
+
+            <div id="poruke"></div>
 
         </div>
-
     </div>
-
-
 </div>
 

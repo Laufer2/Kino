@@ -27,7 +27,7 @@ $(document).ready(function() {
             success: function (data) {
                 var poruka = JSON.parse(data);
                 if(poruka['redirect'] === 0){
-                    $("#poruke").html(poruka['poruka']);
+                    $("#poruke").html(poruka['poruka']).css("display","block");
                 }else{
                     window.location.replace(decodeURIComponent(poruka.redirect));
                 }
@@ -48,7 +48,7 @@ $(document).ready(function() {
         var forma = $("#nova_lozinka");
         event.preventDefault();
 
-        $("#poruke").html("Slanje e-maila...");
+        $("#poruke").html("Slanje e-maila...").css("display", "block");
 
         $.ajax({
             url: "src/prijava/zaboravljena_lozinka.php",
@@ -58,12 +58,8 @@ $(document).ready(function() {
 
             success: function (data) {
                 var poruka = JSON.parse(data);
-                $("#poruke").html(poruka['poruka']);
+                $("#poruke").html(poruka['poruka']).css("display","block");
             }
-
-
         });
-
     });
-
 });

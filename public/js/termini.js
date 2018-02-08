@@ -16,8 +16,8 @@ $(document).ready( function () {
     });
 
     function padajuci_izbornik(data, tip){
-        var padajuci = "<label>"+ tip +"&nbsp;</label>";
-        padajuci += "<select name='"+ tip +"'>";
+        var padajuci = "<label>"+ tip +"&nbsp;</label><br/>";
+        padajuci += "<select name='"+ tip +"' required>";
         padajuci += "<option selected>Odaberite...</option>";
 
         $.each(data, function (index, value) {
@@ -41,7 +41,7 @@ $(document).ready( function () {
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#poruke").html(data.poruka);
+                $("#poruke").html(data.poruka).css("display","block").css("background-color", "#4CAF50");
             }
         });
 

@@ -28,8 +28,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
     $dat = new datoteka();
 
     $poruka = $broj_stranica = 0;
-    $db_stupac = "naziv_" . $tablica;
-    $db_id = "id_" . $tablica;
+    $id_db = "id_" . $tablica;
+    $db_id = $tablica . "_id";
 
     $prikazi = $dat->dohvati('prikazi_po_stranici');
 
@@ -38,7 +38,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
     switch ($akcija){
         case 1: //brisanje (delete)
-            $upit = "DELETE FROM $tablica WHERE $db_id = $id;";
+            $upit = "DELETE FROM $tablica WHERE $id_db = $id;";
             $baza->update($upit);
 
             $upit = "DELETE FROM filmosoba WHERE $db_id = $id;";
@@ -46,7 +46,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
             $upit = "DELETE FROM zanrfilma WHERE $db_id = $id;";
             $baza->update($upit);
-
+            $json['upit'] = $upit;
             break;
         case 2: // kreiranje novog (insert)
             //provjera da li postoji adresa za navedenu lokaciju
@@ -63,7 +63,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
 
             break;
         case 3: //dohvati jednog
-            $upit = "SELECT * FROM $tablica WHERE $db_id = $id";
+            $upit = "SELECT * FROM $tablica WHERE $id_db = $id";
             $rezultat = $baza->update($upit);
             list($id, $naziv, $trajanje, $sadrzaj, $godina) = $rezultat->fetch_array();
             $polje = array("id" => $id, "naziv" => $naziv, "trajanje"=> $trajanje, "sadrzaj" => $sadrzaj, "godina"=>$godina);
@@ -78,7 +78,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             $json['id_filma'] = $id_filma;
             $json['id'] = $id;
             if(!$rezultat->num_rows || $id_filma == $id){
-                $upit = "UPDATE $tablica SET $db_stupac = '$naziv', trajanje = $trajanje, sadrzaj = '$sadrzaj', godina = $godina WHERE $db_id = $id;";
+                $upit = "UPDATE $tablica SET $db_stupac = '$naziv', trajanje = $trajanje, sadrzaj = '$sadrzaj', godina = $godina WHERE $id_db = $id;";
                 $rezultat = $baza->update($upit);
                 break;
             }else{
@@ -121,10 +121,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
         $broj_stranica = stranice_ispisa($tablica, $prikazi);
 
         $upit = "SELECT * FROM $tablica";
-        if(isset($stupac) && $stupac != "" ) { // sortirani prikaz
-            $upit .= " ORDER BY $db_stupac $tip_sorta";
+        if(isset($tip_sorta) && $tip_sorta != "" ) { // sortirani prikaz
+            $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
-            $json['stupac'] = $db_stupac;
+            $json['stupac'] = $stupac;
         }else{
             $json['tip_sorta'] = "";
             $json['stupac'] = "";
@@ -134,15 +134,14 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'GET') {
             $upit .= " LIMIT $prikazi OFFSET $offset";
         }
     }
-    $json['upit'] = $upit;
 
     if($rezultat = $baza->selectdb($upit)) {
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
 
             $polje = array(
-                "id" => $red[$db_id],
-                "naziv" => $red[$db_stupac],
+                "id" => $red['id_film'],
+                "naziv" => $red['naziv_film'],
                 "trajanje" => $red['trajanje'],
                 "sadrzaj" => $red['sadrzaj'],
                 "godina" => $red['godina']

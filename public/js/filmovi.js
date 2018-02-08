@@ -19,8 +19,7 @@ $(document).ready( function () {
     }
 
     function padajuci_izbornik(data){
-        var padajuci = "<label>Zanr&nbsp;</label>";
-        padajuci += "<select name='zanr[]'>";
+        var padajuci = "<select name='zanr[]'>";
         padajuci += "<option selected>Odaberite...</option>";
 
         $.each(data, function (index, value) {
@@ -38,20 +37,17 @@ $(document).ready( function () {
     });
 
     $(document).on('click', '#novi-redatelj', function () {
-        var redatelj = "<label>Redatelj</label>";
-        redatelj += "<input type='text' name='redatelj[]'><br/>";
+        var redatelj = "<input type='text' name='redatelj[]'><br/>";
         $("#redatelji").append(redatelj);
     });
 
     $(document).on('click', '#novi-glumac', function () {
-        var glumac = "<label>Glavni glumci</label>";
-        glumac += "<input type='text' name='glumac[]'><br/>";
+        var glumac = "<input type='text' name='glumac[]'><br/>";
         $("#glumci").append(glumac);
     });
 
     $(document).on('click', '#novi-scenarist', function () {
-        var scenarist = "<label>Scenarist</label>";
-        scenarist += "<input type='type' name='scenarist[]'><br/>";
+        var scenarist = "<input type='type' name='scenarist[]'><br/>";
         $("#scenaristi").append(scenarist);
     });
 

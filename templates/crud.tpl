@@ -29,29 +29,25 @@
     </div>
 
     <div id="iznad-tablice">
-        <div id="search">
 
-        </div>
-        <div id="prikaz-tablice">
+        <div id="search"></div>
 
-        </div>
-
-        <div id="paginacija">
-
-        </div>
-    </div>
-
-    <div style="display: none;">
-        <div id="dialog-potvrda" title="Obrisati red iz tablice?">
-            <p>Zapis će se zauvijek izbrisati iz tablice. Jeste li sigurni?</p>
-        </div>
-    </div>
-
-    <div id="forma">
+        <div id="prikaz-tablice"></div>
 
     </div>
 
-    <div style="display: none;">
+    <div id="paginacija"></div>
+
+    <div id="prikaz-forme">
+        <div class="forma-natpis">
+            <h2>Forma za unos</h2>
+        </div>
+
+        <div id="forma"></div>
+        <div id="test"></div>
+    </div>
+
+    <div class="dijalog-status-racuna" style="">
         <select id="meni-statusa" title="Status korisničkog računa">
             <option value='0'>Neaktiviran</option>
             <option value='1'>Aktiviran</option>
@@ -59,8 +55,10 @@
         </select>
     </div>
 
-    <div id="test">
-
+    <div class="dijalog">
+        <div id="dialog-potvrda" title="Obrisati red iz tablice?">
+            <p>Zapis će se zauvijek izbrisati iz tablice. Jeste li sigurni?</p>
+        </div>
     </div>
 
 </div>

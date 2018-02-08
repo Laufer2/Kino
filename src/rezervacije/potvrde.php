@@ -6,6 +6,7 @@ require_once '../klase/datoteka.php';
 require_once '../klase/korisnik.php';
 require_once '../serverske_poruke.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
+require_once '../statistike/evidencija.php';
 
 if(!isset($_SESSION))
 {
@@ -104,7 +105,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                   JOIN film f ON p.film_id = f.id_film JOIN korisnik k ON r.korisnik_id = k.id_korisnik 
                   WHERE r.status = 0 AND p.lokacija_id = $lokacija";
         dnevnik($upit, 2, 0);
-
 
     }
 

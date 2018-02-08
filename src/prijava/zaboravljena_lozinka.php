@@ -3,7 +3,6 @@
 require_once '../klase/baza.php';
 require_once '../serverske_poruke.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
-require_once '../statistike/evidencija.php';
 
 function kolacic($korisnicko_ime, $trajanje, $zapamti_me){
     if($zapamti_me == 1){
@@ -30,7 +29,6 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST'){
 
         $upit = "UPDATE korisnik SET lozinka = '$nova_lozinka' WHERE email = '$email'";
         dnevnik("Nova lozinka", 1, $id);
-        upit(4);
 
         if($baza->update($upit)){
             $naslov = "Nova lozinka za Kino.org";
@@ -48,7 +46,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST'){
 
     }else{
 
-        posalji_poruku("Ne postoji korisnik s tom e-mail adresom." .$email. "eee");
+        posalji_poruku("Ne postoji korisnik s tom e-mail adresom.");
 
     }
 }

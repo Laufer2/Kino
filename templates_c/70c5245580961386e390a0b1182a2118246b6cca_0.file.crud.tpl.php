@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-04 00:34:26
+/* Smarty version 3.1.30, created on 2018-02-08 21:29:56
   from "C:\xampp\htdocs\kino\templates\crud.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a76470235eaa8_39806471',
+  'unifunc' => 'content_5a7cb344f41ba5_38514496',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '70c5245580961386e390a0b1182a2118246b6cca' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\crud.tpl',
-      1 => 1517700864,
+      1 => 1518121796,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a76470235eaa8_39806471 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a7cb344f41ba5_38514496 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -53,29 +53,25 @@ function content_5a76470235eaa8_39806471 (Smarty_Internal_Template $_smarty_tpl)
     </div>
 
     <div id="iznad-tablice">
-        <div id="search">
 
-        </div>
-        <div id="prikaz-tablice">
+        <div id="search"></div>
 
-        </div>
-
-        <div id="paginacija">
-
-        </div>
-    </div>
-
-    <div style="display: none;">
-        <div id="dialog-potvrda" title="Obrisati red iz tablice?">
-            <p>Zapis će se zauvijek izbrisati iz tablice. Jeste li sigurni?</p>
-        </div>
-    </div>
-
-    <div id="forma">
+        <div id="prikaz-tablice"></div>
 
     </div>
 
-    <div style="display: none;">
+    <div id="paginacija"></div>
+
+    <div id="prikaz-forme">
+        <div class="forma-natpis">
+            <h2>Forma za unos</h2>
+        </div>
+
+        <div id="forma"></div>
+        <div id="test"></div>
+    </div>
+
+    <div class="dijalog-status-racuna" style="">
         <select id="meni-statusa" title="Status korisničkog računa">
             <option value='0'>Neaktiviran</option>
             <option value='1'>Aktiviran</option>
@@ -83,8 +79,10 @@ function content_5a76470235eaa8_39806471 (Smarty_Internal_Template $_smarty_tpl)
         </select>
     </div>
 
-    <div id="test">
-
+    <div class="dijalog">
+        <div id="dialog-potvrda" title="Obrisati red iz tablice?">
+            <p>Zapis će se zauvijek izbrisati iz tablice. Jeste li sigurni?</p>
+        </div>
     </div>
 
 </div><?php }

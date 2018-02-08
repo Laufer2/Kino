@@ -61,7 +61,7 @@ $(document).ready(function(){
 
             prikaz_tablice += "<tr>";
             prikaz_tablice += "<td>"+ vrijednost.upit +"</td>";
-            prikaz_tablice += "<td>"+ vrijednost.korisnik +"</td>"
+            prikaz_tablice += "<td>"+ vrijednost.korisnik +"</td>";
             prikaz_tablice += "<td>"+ vrijednost.vrijeme +"</td>";
 
             prikaz_tablice += "<td>";

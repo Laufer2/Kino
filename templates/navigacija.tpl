@@ -8,8 +8,8 @@
         {/if}
 
         {if isset($Lurker) || isset($Korisnik) || isset($Moderator) || isset($Admin)}
-            <li><a href="o_autoru.html">O autoru</a></li>
-            <li><a href="dokumentacija.html">Dokumentacija</a></li>
+            <li><a href="o_autoru.php">O autoru</a></li>
+            <li><a href="dokumentacija.php">Dokumentacija</a></li>
         {/if}
 
         {if isset($Korisnik) || isset($Moderator) || isset($Admin)}

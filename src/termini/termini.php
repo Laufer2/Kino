@@ -25,7 +25,7 @@ if(isset($_POST['selectmenu'])) {
     $upit = "SELECT * FROM lokacija l JOIN moderatorlokacije m ON l.id_lokacija = m.lokacija_id WHERE korisnik_id = $korisnik";
     $rezultat = $baza->selectdb($upit);
 
-    if ($rezultat->num_rows > 1) {
+    if ($rezultat->num_rows) {
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
 
             $polje = array(

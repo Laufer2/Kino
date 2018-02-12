@@ -58,7 +58,7 @@ if(isset($_POST['selectmenu'])){
     }
 
     $upit = "SELECT id_film FROM film WHERE naziv_film = '$film' AND godina = $godina";
-
+    dnevnik(mysql_escape_string($upit),2,0);
 
     $rezultat = $baza->selectdb($upit);
     list($id_film)=$rezultat->fetch_array();

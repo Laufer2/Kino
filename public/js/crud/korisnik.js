@@ -30,9 +30,9 @@ $(document).ready( function(){
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica tablica-korisnik'>";
         prikaz_tablice += "<tr>";
@@ -42,17 +42,17 @@ $(document).ready( function(){
         prikaz_tablice += "<button class='uzlazno' data-stupac='k.korisnicko_ime'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Tip korisnika";
+        prikaz_tablice += "Tip";
         prikaz_tablice += "<button class='silazno' data-stupac='t.naziv_tipkorisnika'>&#709;</button>"; //DESC
         prikaz_tablice += "<button class='uzlazno' data-stupac='t.naziv_tipkorisnika'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Ime</th>";
         prikaz_tablice += "<th>Prezime</th>";
         prikaz_tablice += "<th>E-mail</th>";
-        prikaz_tablice += "<th>Status aktivacije</th>";
+        prikaz_tablice += "<th>Status</th>";
         prikaz_tablice += "<th>Neuspješne prijave</th>";
         prikaz_tablice += "<th>Lozinka(sha1)</th>";
-        prikaz_tablice += "<th>Aktivacijski rok</th>";
+        prikaz_tablice += "<th>Akt rok</th>";
         //prikaz_tablice += "<th>Aktivacijski kod</th>";
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";
@@ -72,9 +72,9 @@ $(document).ready( function(){
             //prikaz_tablice += "<td>"+ korisnik.akt_kod +"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-edit' data-id='"+ korisnik.id +"'>Uredi</button>";
+            prikaz_tablice += "<a href='#forma'><button class='gumb-edit' data-id='"+ korisnik.id +"'>Uredi</button></a>";
             prikaz_tablice += "<button class='gumb-delete' data-id='"+ korisnik.id +"'>Izbriši</button>";
-            prikaz_tablice += "<button class='gumb-block' data-id='"+ korisnik.id +"'>Zaključaj</button>";
+            prikaz_tablice += "<button class='gumb-block' data-id='"+ korisnik.id +"'>Status</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
 
@@ -114,7 +114,7 @@ $(document).ready( function(){
         prikaz_forme += "<br/>";
 
         prikaz_forme += "<label for='lozinka'>Lozinka</label><br>";
-        prikaz_forme += "<input type='text' name='lozinka' id='lozinka' required><br/>";
+        prikaz_forme += "<input type='password' name='lozinka' id='lozinka' required><br/>";
 
         prikaz_forme += "<label for='status'>Status aktivacije</label><br>";
         prikaz_forme += "<select name='status' id='status'>";

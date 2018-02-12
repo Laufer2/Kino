@@ -101,6 +101,5 @@
 {if isset($korisnicke_slike)}
     <script src="public/js/korisnicke_slike.js"></script>
 {/if}
-
 </body>
 </html>

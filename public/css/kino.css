@@ -16,7 +16,7 @@ header{
     font-weight: bold;
     color: #ffffff;
 
-    background-color: hsl(250, 10%, 10%);
+    background-color:  #286090;
 
     padding-top: 5px;
     padding-bottom: 5px;
@@ -45,7 +45,7 @@ nav#navigacija{
     color: #ffffff;
     text-decoration: none;
     text-transform: uppercase;
-    background-color: #1b9bff;
+    background-color:  #286090;
 
     border-top-style: solid;
     border-color: #000000;
@@ -367,23 +367,40 @@ input[type=checkbox]{
     float: right;
 }
 
-#linkovi-tablice > ul {
+/*CRUD naslovnica*/
+
+#linkovi-tablice > ul{
+    display: flex;
+    flex-wrap: wrap;
     list-style: none;
     line-height: 1;
     margin: 0;
     padding: 0;
 }
 
-#linkovi-tablice > ul li a {
-    display: inline;
-    float: right;
-    color: #ffffff;
-    text-decoration: none;
-    text-transform: uppercase;
-    background-color: #7b1baf;
+#crud-linkovi > li {
+    background-color: #f1f1f1;
+    width: 15%;
+    margin: 10px;
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+}
 
-    border: solid #000000 1px;
-    padding: 10px 20px;
+#crud-linkovi > li > a{
+    text-decoration: none;
+    color: #286090;
+}
+
+.lista-slika{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.slikice{
+    width: 300px;
+    height: 200px;
+    margin: 10px;
 }
 
 .print{

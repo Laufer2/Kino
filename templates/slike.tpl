@@ -2,20 +2,17 @@
 
     <div id="iznad-tablice">
         <div id="search">
-
-        </div>
-        <div id="prikaz-tablice">
-
-        </div>
-
-        <div id="paginacija">
-
+            <form method='post' action='src/slike/pregled_slika.php' id='pretraga' enctype='application/x-www-form-urlencoded'>
+                <input type='text' name='pojam' id='pojam' placeholder="oznaka">
+                <input type='submit' value='P'>
+            </form>
         </div>
     </div>
 
-    <div id="forma">
+    <div class="lista-slika">
 
     </div>
 
+    <div id="test"></div>
 
 </div>

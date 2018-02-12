@@ -53,8 +53,6 @@ $(document).ready( function(){
         prikaz_tablice += "<th>";
         prikaz_tablice += "Naziv slike";
         prikaz_tablice += "</th>";
-        prikaz_tablice += "<th>Opis</th>";
-        prikaz_tablice += "<th>Izvor</th>";
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";
 
@@ -67,8 +65,9 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ slika.naziv +"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-edit' data-id='"+ slika.id +"'>Uredi</button>";
-            prikaz_tablice += "<button class='gumb-delete' data-id='"+ slika.id +"'>Izbriši</button>";
+            prikaz_tablice += "<a href='#forma'><button class='gumb-edit' data-id='"+ slika.id +"' " +
+                "data-rezervacija='"+ slika.rezervacija +"'>Uredi</button></a>";
+            prikaz_tablice += "<button class='gumb-delete' data-id='"+ slika.id +"' data-naziv= '"+ slika.naziv +"'>Izbriši</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
 
@@ -83,7 +82,7 @@ $(document).ready( function(){
         var prikaz_forme = "<form action='src/crud/slika.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='multipart/form-data'>";
 
-        prikaz_forme += "<label for='rezervacija'>Rezervacija</label>";
+        prikaz_forme += "<label for='rezervacija'>Rezervacija</label><br/>";
 
         prikaz_forme += "<select name='rezervacija' id='rezervacija'>";
         $.each(lista.rezervacija, function (index, val) {
@@ -92,14 +91,8 @@ $(document).ready( function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='naziv'>Slika</label>";
+        prikaz_forme += "<label for='naziv'>Slika</label><br/>";
         prikaz_forme += "<input type='file' name='naziv' id='naziv' required><br/>";
-
-        prikaz_forme += "<label for='opis'>Opis slike</label>";
-        prikaz_forme += "<textarea cols='20' rows='3' name='opis' id='opis' required></textarea><br/>";
-
-        prikaz_forme += "<label for='izvor'>Izvor</label>";
-        prikaz_forme += "<input type='text' name='izvor' id='izvor' required><br/>";
 
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
         prikaz_forme += "<input type='hidden' name='id'>";
@@ -190,9 +183,10 @@ $(document).ready( function(){
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Nema podataka.");
+                    $("#test").html("Nema podataka.").css("display","block");
 
                 }
+                $("#test").html("").css("display","none");
                 $("#forma").html("");
             }
         });
@@ -200,6 +194,7 @@ $(document).ready( function(){
 
     $(document).on('click', '.gumb-delete', function(){
         var id = $(this).attr("data-id");
+        var naziv = $(this).attr("data-naziv");
         $("#dialog-potvrda").dialog({
             resizable: false,
             height: "auto",
@@ -214,6 +209,7 @@ $(document).ready( function(){
                         type: 'POST',
                         data: {
                             id : id,
+                            naziv : naziv,
                             akcija : 3
                         },
 
@@ -222,8 +218,7 @@ $(document).ready( function(){
                             $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                             $("#search").html(search(5));
                             $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "",""));
-
-                        }
+                                                    }
                     });
 
                     $( this ).dialog( "close" );
@@ -238,7 +233,7 @@ $(document).ready( function(){
 
     $(document).on('click', '.gumb-edit', function() {
         var id = $(this).attr("data-id");
-        var projek = $(this).attr("data-projek");
+        var rezerv = $(this).attr("data-rezervacija");
 
         $.ajax({
             url: 'src/crud/slika.php',
@@ -247,7 +242,7 @@ $(document).ready( function(){
                 id: id,
                 akcija: 4,
                 selectmenu : 1,
-                id_projekcija : projek
+                id_rezervacija : rezerv
             },
 
             success: function (data) {
@@ -255,6 +250,8 @@ $(document).ready( function(){
                 $("#forma").html( nacrtaj_formu(lista, 2));
 
                 var forma = $("#novi_zapis");
+
+                $("#naziv").prop('disabled', true);
 
                 $.each(lista.podaci, function(index, value){
                     $.each(value,function (ind, val) {
@@ -288,23 +285,28 @@ $(document).ready( function(){
 
     $(document).on('submit', '#novi_zapis', function(event) {
 
-        var forma = $("#novi_zapis");
+        var forma = $(this);
+        var file = new FormData(forma[0]);
+
         event.preventDefault();
 
         $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
-            data : forma.serialize(),
+            url : $(this).attr("action"),
+            type : $(this).attr("method"),
+            data : file,
+            cache: false,
+            contentType: false,
+            processData: false,
 
             success: function (data) {
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Dogodila se greška.");
+                    $("#test").html("Nema podataka.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").html("").css("display","none");
                     $("#forma").html("");
                 }
 
@@ -312,7 +314,5 @@ $(document).ready( function(){
                 $("#search").html(search(5));
             }
         });
-
     });
-
 });

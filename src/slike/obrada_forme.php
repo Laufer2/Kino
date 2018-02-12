@@ -28,6 +28,7 @@ if($_FILES['slika']['error'] !== UPLOAD_ERR_NO_FILE) {
             exit();
         }
     }
+
     $rezervacija = $_POST['id'];
     $oznake= $_POST['oznaka'];
 
@@ -39,29 +40,32 @@ if($_FILES['slika']['error'] !== UPLOAD_ERR_NO_FILE) {
     $upit = "SELECT id_slika FROM slika WHERE naziv_slika = '$ime'";
     $rez = $baza->selectdb($upit);
     list($id_slika) = $rez->fetch_array();
-    dnevnik("Upload slike",1,0);
+    dnevnik("Upload slike", 1, 0);
 
-    foreach ($oznake as $oznaka){
-        $upit = "SELECT id_tag FROM tag WHERE naziv_tag = '$oznaka'";
-        $rezultat = $baza->selectdb($upit);
+    foreach ($oznake as $oznaka) {
 
-        if($rezultat->num_rows === 0){
-
-            $upit = "INSERT INTO tag VALUES (default, '$oznaka')";
-            $baza->update($upit);
-
+        if ($oznaka !== "") {
             $upit = "SELECT id_tag FROM tag WHERE naziv_tag = '$oznaka'";
-            $rez = $baza->selectdb($upit);
-            list($id_tag) = $rez->fetch_array();
+            $rezultat = $baza->selectdb($upit);
 
-        }else{
-            list($id_tag) = $rezultat->fetch_array();
+            if ($rezultat->num_rows === 0) {
+
+                $upit = "INSERT INTO tag VALUES (default, '$oznaka')";
+                $baza->update($upit);
+
+                $upit = "SELECT id_tag FROM tag WHERE naziv_tag = '$oznaka'";
+                $rez = $baza->selectdb($upit);
+                list($id_tag) = $rez->fetch_array();
+
+            } else {
+                list($id_tag) = $rezultat->fetch_array();
+            }
+
+            $upit = "INSERT INTO tagslika VALUES ($id_slika, $id_tag)";
+            $baza->update($upit);
         }
-
-        $upit = "INSERT INTO tagslika VALUES ($id_slika, $id_tag)";
-        $baza->update($upit);
-        dnevnik($upit, 2,0);
     }
+
 
     echo json_encode(array("poruka" => "Slika uspješno dodana."));
 }else{

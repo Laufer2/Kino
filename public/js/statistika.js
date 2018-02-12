@@ -414,26 +414,5 @@ $(document).ready( function () {
         ctx.fill();
     }
 
-    $(document).on('submit',"#gen_pdf", function(event){
-
-        event.preventDefault();
-
-        $.ajax({
-
-            url : "src/statistike/statistika.php",
-            type : "POST",
-            data : {
-                pdf : 1,
-                aktivna_stranica : $("#aktivan").attr("data-stranica"),
-                interval : $("#interval").val(),
-                tip : $("#tip").val(),
-                pojam : $("#pojam").val(),
-                stupac : $("#aktivan").attr("data-stupac"),
-                tip_sorta : $("#aktivan").attr("data-tip_sorta")
-            }
-
-        });
-
-    });
 
 });

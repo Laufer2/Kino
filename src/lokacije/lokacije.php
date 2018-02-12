@@ -39,7 +39,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                   FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
                   JOIN grad g ON a.grad_id = g.id_grad WHERE 
                   (g.naziv_grad LIKE '$pojam' OR d.naziv_drzava LIKE '$pojam' OR a.ulica LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
-
+        dnevnik($upit, 2, 0);
     }else {
 
         $upit = "SELECT g.naziv_grad, l.naziv_lokacija, d.naziv_drzava, a.ulica, a.broj, a.postanski_broj, l.id_lokacija,

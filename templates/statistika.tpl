@@ -32,10 +32,6 @@
 
     </div>
 
-    <form method="post" action="src/statistike/statistika.php" id="gen_pdf" enctype="application/x-www-form-urlencoded">
-        <input type="submit" value="PDF">
-    </form>
-
     <div>
         <button class="print">Ispis</button>
     </div>

@@ -48,7 +48,6 @@ class baza{
             self::prekini($veza);
             return $rezultat;
         }else{
-            echo "Pogreška: ". $veza->error;
             self::prekini($veza);
             return $rezultat;
         }

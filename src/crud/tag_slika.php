@@ -90,48 +90,38 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $pojam = "%" . $pojam . "%";
         $upit = "SELECT * FROM tagslika t JOIN slika s ON t.slika_id = s.id_slika JOIN tag t2 ON t.tag_id = t2.id_tag
                   WHERE s.naziv_slika LIKE '$pojam' OR t2.naziv_tag LIKE '$pojam'";
-        if(isset($stupac) && $stupac != "" ) {
-            $upit .= " ORDER BY $stupac $tip_sorta";
-            $json['tip_sorta'] = $tip_sorta;
-            $json['stupac'] = $stupac;
 
-        }else{
-            $json['tip_sorta'] = "";
-            $json['stupac'] = "";
-        }
-        $rezultat = $baza->selectdb($upit);
-        $redovi = $rezultat->num_rows;
-        if(!$redovi){
-            $poruka = 1;
-        }
-        if ($rezultat > $prikazi){
-            $broj_stranica = ceil($redovi/$prikazi);
-        }else{
-            $broj_stranica = 0;
-        }
-
-        //paginacija
-        if($broj_stranica){
-            $upit .= " LIMIT $prikazi OFFSET $offset";
-        }
     }else {
         $broj_stranica = stranice_ispisa("tagslika", $prikazi);
 
         $upit = "SELECT * FROM tagslika t JOIN slika s ON t.slika_id = s.id_slika JOIN tag t2 ON t.tag_id = t2.id_tag";
-        if(isset($stupac) && $stupac != "" ) {
-            $upit .= " ORDER BY $stupac $tip_sorta";
-            $json['tip_sorta'] = $tip_sorta;
-            $json['stupac'] = $stupac;
 
-        }else{
-            $json['tip_sorta'] = "";
-            $json['stupac'] = "";
-        }
-
-        if($broj_stranica){
-            $upit .= " LIMIT $prikazi OFFSET $offset";
-        }
     }
+    if(isset($tip_sorta) && $tip_sorta != "" ) {
+        $upit .= " ORDER BY $stupac $tip_sorta";
+        $json['tip_sorta'] = $tip_sorta;
+        $json['stupac'] = $stupac;
+
+    }else{
+        $json['tip_sorta'] = "";
+        $json['stupac'] = "";
+    }
+    $rezultat = $baza->selectdb($upit);
+    $redovi = $rezultat->num_rows;
+    if(!$redovi){
+        $poruka = 1;
+    }
+    if ($rezultat > $prikazi){
+        $broj_stranica = ceil($redovi/$prikazi);
+    }else{
+        $broj_stranica = 0;
+    }
+
+    //paginacija
+    if($broj_stranica){
+        $upit .= " LIMIT $prikazi OFFSET $offset";
+    }
+
     $json['upit'] = $upit;
 
     if($rezultat = $baza->selectdb($upit)){
@@ -141,8 +131,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $polje = array(
                 "idt" => $red['tag_id'],
                 "ids" => $red['slika_id'],
-                "tag" => $red['naziv_zanr'],
-                "slika" => $red['naziv_film'],
+                "tag" => $red['naziv_tag'],
+                "slika" => $red['naziv_slika'],
 
             );
 

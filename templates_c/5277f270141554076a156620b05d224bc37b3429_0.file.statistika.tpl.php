@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-11 13:30:21
+/* Smarty version 3.1.30, created on 2018-02-12 13:33:24
   from "C:\xampp\htdocs\kino\templates\statistika.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a80375d544fe8_77501273',
+  'unifunc' => 'content_5a81899437e7f1_12337360',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5277f270141554076a156620b05d224bc37b3429' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\statistika.tpl',
-      1 => 1518352205,
+      1 => 1518438608,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a80375d544fe8_77501273 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a81899437e7f1_12337360 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -55,10 +55,6 @@ function content_5a80375d544fe8_77501273 (Smarty_Internal_Template $_smarty_tpl)
         <div id="poruke"></div>
 
     </div>
-
-    <form method="post" action="src/statistike/statistika.php" id="gen_pdf" enctype="application/x-www-form-urlencoded">
-        <input type="submit" value="PDF">
-    </form>
 
     <div>
         <button class="print">Ispis</button>

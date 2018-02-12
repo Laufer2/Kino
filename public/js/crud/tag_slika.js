@@ -46,8 +46,8 @@ $(document).ready(function(){
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Tag";
-        prikaz_tablice += "<button class='silazno' data-stupac='t.naziv_tag'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='t.naziv_tag'>&#708;</button>"; //ASC
+        prikaz_tablice += "<button class='silazno' data-stupac='t2.naziv_tag'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='t2.naziv_tag'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";
@@ -73,7 +73,7 @@ $(document).ready(function(){
         var prikaz_forme = "<form action='src/crud/tag_slika.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='slika'>Slika</label>";
+        prikaz_forme += "<label for='slika'>Slika</label><br/>";
 
         prikaz_forme += "<select name='slika' id='slika'>";
         $.each(lista.slika, function (index, val) {
@@ -82,7 +82,7 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='tag'>Tag</label>";
+        prikaz_forme += "<label for='tag'>Tag</label><br/>";
 
         prikaz_forme += "<select name='tag' id='tag'>";
         $.each(lista.tag, function (index, val) {
@@ -151,9 +151,9 @@ $(document).ready(function(){
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Nema podataka.");
+                    $("#test").html("Nema podataka.").css("display","block");
                 }else{
-                    $("#test").html("");
+                    $("#test").html("").css("display","none");
                 }
                 $("#forma").html("");
             }
@@ -268,7 +268,7 @@ $(document).ready(function(){
                     $("#test").html("Taj zapis već postoji.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").html("").css("display","none");
                     $("#forma").html("");
                 }
 

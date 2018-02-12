@@ -305,7 +305,7 @@ $(document).ready(function(){
                     $( this ).dialog( "close" );
                 }
             }
-        });
+        })
     });
 
     //kod zaustavljanja redirecta, podaci iz forme se moraju poslati preko data varijable u ajax-u

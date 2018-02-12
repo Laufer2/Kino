@@ -24,6 +24,8 @@ $(document).ready( function () {
                 }else if(data.projekcije){
                     $("#poruke").html("").css("display","none");
                     $("#termini-filmovi").html(padajuci_izbornik(data.projekcije, "Projekcija"));
+                    $("#prikaz-tablice").html("");
+                    $("#search").html("");
 
                 }else{
                     if(parseInt(data.poruka)){

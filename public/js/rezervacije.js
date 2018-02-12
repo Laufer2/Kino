@@ -76,7 +76,7 @@ $(document).ready( function(){
         prikaz_forme += "<label>Slika&nbsp;</label>";
         prikaz_forme += "<input type='file' name='slika' id='slika' accept='image/x-png,image/gif,image/jpeg' title='Dopuštene samo slike' required><br/>";
         prikaz_forme += "<label>Oznaka&nbsp;</label><br>";
-        prikaz_forme += "<div id='oznaka'><input type='text' name='oznaka[]' id='oznaka'>";
+        prikaz_forme += "<div id='oznaka'><input type='text' name='oznaka[]' id='oznaka' required>";
         prikaz_forme += "<button type='button' class='gumb-plus' id='nova-oznaka'>+</button><br/></div>";
 
         prikaz_forme += "<input type='hidden' name='id' value='"+ id +"'>";
@@ -185,8 +185,6 @@ $(document).ready( function(){
     });
 
     $(document).on('submit', '#upload_slike', function(event){
-
-        event.preventDefault();
 
         var forma = $(this);
         var file = new FormData(forma[0]);

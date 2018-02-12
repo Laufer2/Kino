@@ -95,7 +95,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     }else{
 
         $poruka = 1;
-
         $json['poruka'] = array('poruka'=>$poruka);
     }
 

@@ -13,24 +13,22 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $id = filter_input(INPUT_POST, 'id');
     $akcija = filter_input(INPUT_POST, 'akcija');
     $selectmenu = filter_input(INPUT_POST,'selectmenu');
-    $id_projekcija = filter_input(INPUT_POST,'id_projekcija');
+    $id_rezervacija = filter_input(INPUT_POST,'id_rezervacija');
 
     $baza = new baza();
     $dat = new datoteka();
 
     $prikazi = $dat->dohvati('prikazi_po_stranici');
 
-    $poruka = $broj_stranica = $izvor = 0;
+    $poruka = $broj_stranica = 0;
     $json = array();
     $json['podaci'] = array();
 
     //novi zapis
-    if($akcija < 3) {
+    if($akcija < 4) {
 
         $rezervacija = filter_input(INPUT_POST, 'rezervacija');
-        $naziv = filter_input(INPUT_POST, 'naziv'); // slika - obrada uploada slike
-        $izvor = filter_input(INPUT_POST, 'izvor');
-        $opis = filter_input(INPUT_POST, 'opis');
+        $naziv = filter_input(INPUT_POST, 'naziv');  // slika - obrada uploada slike
     }
 
     // padajući meniji za vanjske ključeve
@@ -52,43 +50,78 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
             array_push($json['rezervacija'], $polje);
         }
-
     }
 
     switch ($akcija){
         case 1://kreiranje
 
-            $upit = "INSERT INTO rezervacija VALUES (default, $naziv ,$izvor, $opis, $projekcija)";
+            $dir = "../slike/uploads/";
+            $datoteka = $dir . basename($_FILES["naziv"]["name"]);
+
+            if($_FILES['naziv']['error'] !== UPLOAD_ERR_NO_FILE) {
+
+                //promjena imena slike
+                if (file_exists($datoteka)) {
+
+                    $json['datoteka'] = "postoji";
+
+                    $tmp = explode(".", $_FILES["naziv"]["name"]);
+
+                    $ime = round(microtime(true)) . '.' . end($tmp);
+
+                    if (!move_uploaded_file($_FILES["naziv"]["tmp_name"], $dir . $ime)) {
+                        echo json_encode(array("poruka" => "Slika nije dodana. Pokušajte ponovo.."));
+                        exit();
+                    }
+
+                } else {
+                    if (move_uploaded_file($_FILES["naziv"]["tmp_name"], $datoteka)) {
+                        $ime = basename($_FILES["naziv"]["name"]);
+
+                    } else {
+                        echo json_encode(array("poruka" => "Slika nije dodana. Pokušajte ponovo."));
+                        exit();
+                    }
+                }
+            }else{
+                echo json_encode(array("poruka" => "Pogreška prilikom dodavanje slike. Pokušajte ponovo."));
+                exit();
+            }
+
+            $upit = "INSERT INTO slika VALUES (default, '$ime' , $rezervacija)";
             $rezultat = $baza->update($upit);
-            $json['upit'] = $upit;
+
             break;
 
         case 2:// ažuriranje
 
-            $upit = "UPDATE rezervacija SET ";
+            $upit = "UPDATE slika SET rezervacija_id = $rezervacija WHERE id_slika = $id";
             $rezultat = $baza->update($upit);
             break;
 
         case 3: // brisanje
+
+            $dir = "../slike/uploads/";
+            $datoteka = $dir . $naziv;
+            if(file_exists($datoteka)){ // brisanje slike s diska
+                chmod($datoteka, 0777);
+                @unlink($datoteka);
+            }
             $upit = "DELETE FROM slika WHERE id_slika = $id";
             $rezultat = $baza->update($upit);
-
-            // izbrisati sliku sa diska
             break;
 
         case 4: //dohvati jednoga za ažuriranje  -- poseno za projekciju
-            $upit = "SELECT * FROM slika WHERE id_slika = $id";
+            $upit = "SELECT * FROM slika WHERE id_slika = $id AND rezervacija_id = $id_rezervacija";
             $rezultat = $baza->selectdb($upit);
 
-            list($id, $naziv_slika, $izvor, $opis, $rezervacija ) = $rezultat->fetch_array();
+            list($id, $naziv_slika, $rezervacija ) = $rezultat->fetch_array();
             $polje = array(
                 "id" => $id,
-                "opis" => $opis,
-                "naziv" => $naziv_slika,
-                "izvor" => $izvor,
                 "rezervacija" => $rezervacija
             );
 
+            array_push($json['podaci'],$polje);
             echo json_encode($json);
             exit();
     }
@@ -101,7 +134,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $upit = "SELECT * FROM slika s JOIN rezervacija r ON s.rezervacija_id = r.id_rezervacija 
                   JOIN projekcija p ON r.projekcija_id = p.id_projekcija JOIN film f ON p.film_id = f.id_film
                   JOIN lokacija l ON p.lokacija_id = l.id_lokacija JOIN korisnik k ON r.korisnik_id = k.id_korisnik
-                  WHERE k.korisnicko_ime LIKE '$pojam' OR f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam'";
+                  WHERE k.korisnicko_ime LIKE '$pojam' OR f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam' 
+                  OR s.naziv_slika LIKE '$pojam'";
 
     }else {
         $broj_stranica = stranice_ispisa("rezervacija", $prikazi);
@@ -144,11 +178,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
             $polje = array(
                 "id" => $red['id_slika'],
+                "rezervacija" => $red['rezervacija_id'],
                 "korisnik" => $red['korisnicko_ime'],
                 "naziv" => $red['naziv_slika'],
-                "izvor" => $red['izvor'],
-                "opis" => $red['opis'],
-                "film" => $red["naziv_film"] . " (" . $red['godina'] . ") ",
+                "film" => $red["naziv_film"] . " (" . $red['godina'] . ") - " . date("d.m.Y, H:i", $red['dostupan_do']),
                 "lokacija" => $red['naziv_lokacija']
             );
 

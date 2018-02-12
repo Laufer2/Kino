@@ -24,17 +24,17 @@
 
                 <div id="redatelji">
                     <label>Redatelj</label><br/>
-                    <input type="text" name="redatelj[]" required><button type="button" id="novi-redatelj">+</button><br/>
+                    <input type="text" name="redatelj[]" required><button type="button" class="gumb-plus" id="novi-redatelj">+</button><br/>
                 </div>
 
                 <div id="glumci">
                     <label>Glavni glumci</label><br/>
-                    <input type="text" name="glumac[]" required><button type="button" id="novi-glumac">+</button><br/>
+                    <input type="text" name="glumac[]" required><button type="button" class='gumb-plus' id="novi-glumac">+</button><br/>
                 </div>
 
                 <div id="scenaristi">
                     <label>Scenarist</label><br/>
-                    <input type="text" name="scenarist[]" required><button type="button" id="novi-scenarist">+</button><br/>
+                    <input type="text" name="scenarist[]" required><button type="button" class="gumb-plus" id="novi-scenarist">+</button><br/>
                 </div>
 
                 <input type="submit" value="Kreiraj novi film">

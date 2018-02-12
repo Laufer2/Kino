@@ -36,29 +36,32 @@ $(document).ready( function(){
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Film";
+        prikaz_tablice += "Lokacija";
         prikaz_tablice += "<button class='silazno' data-stupac='l.naziv_lokacija'>&#709;</button>"; //DESC
         prikaz_tablice += "<button class='uzlazno' data-stupac='l.naziv_lokacija'>&#708;</button>"; //ASC
+        prikaz_tablice += "</th>";
+        prikaz_tablice += "<th>";
+        prikaz_tablice += "Film";
+        prikaz_tablice += "<button class='silazno' data-stupac='f.naziv_film'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='f.naziv_film'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Max gledatelja</th>";
         prikaz_tablice += "<th>Dostupan od</th>";
         prikaz_tablice += "<th>Dostupan do</th>";
-        prikaz_tablice += "<th>";
-        prikaz_tablice += "Lokacija";
-        prikaz_tablice += "<button class='silazno' data-stupac='g.naziv_grad'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='g.naziv_grad'>&#708;</button>"; //ASC
-        prikaz_tablice += "</th>";
+
+
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";
 
         $.each(data.podaci, function (index, projekcija) {
 
             prikaz_tablice += "<tr>";
+            prikaz_tablice += "<td>"+ projekcija.lokacija +"</td>";
             prikaz_tablice += "<td>"+ projekcija.film +"</td>";
             prikaz_tablice += "<td>"+ projekcija.max_gledatelja +"</td>";
             prikaz_tablice += "<td>"+ projekcija.dostupan_od +"</td>";
             prikaz_tablice += "<td>"+ projekcija.dostupan_do +"</td>";
-            prikaz_tablice += "<td>"+ projekcija.lokacija +"</td>";
+
 
             prikaz_tablice += "<td>";
             prikaz_tablice += "<a href='#forma'><button class='gumb-edit' data-id='"+ projekcija.id +"'>Uredi</button></a>";
@@ -77,7 +80,16 @@ $(document).ready( function(){
         var prikaz_forme = "<form action='src/crud/projekcija.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='film'>Film</label>";
+
+        prikaz_forme += "<label for='lokacija'>Lokacija</label><br>";
+        prikaz_forme += "<select name='lokacija' id='lokacija'>";
+        $.each(lista.lokacija, function (index, val) {
+
+            prikaz_forme += "<option value='"+ val.id +"'>"+ val.naziv +"</option>";
+        });
+
+        prikaz_forme += "</select><br/>";
+        prikaz_forme += "<label for='film'>Film</label><br>";
         // select za lokaciju
 
         prikaz_forme += "<select name='film' id='film'>";
@@ -87,31 +99,27 @@ $(document).ready( function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='max_gledatelja'>Max gledatelja</label>";
+        prikaz_forme += "<label for='max_gledatelja'>Max gledatelja</label><br>";
         prikaz_forme += "<input type='number' name='max_gledatelja' id='max_gledatelja 'required><br/>";
 
         //dostupan od
-        prikaz_forme += "<label>Dostupan od</label><br/>";
-        prikaz_forme += "<label for='datum1'>Datum</label>";
-        prikaz_forme += "<input type='date' name='datum1' required>";
-        prikaz_forme += "<label for='sati1'>Vrijeme</label>";
-        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' required><span>:</span>";
-        prikaz_forme += "<input type='number' name='minute1' placeholder='min' required><br/>";
+        prikaz_forme += "<fieldset>";
+        prikaz_forme += "<legend>Dostupan za rezervacije od</legend>";
+        prikaz_forme += "<label for='datum1'>Datum</label><br>";
+        prikaz_forme += "<input type='date' name='datum1' required><br>";
+        prikaz_forme += "<label for='sati1'>Vrijeme</label><br>";
+        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' min='0' max='23' required>";
+        prikaz_forme += "<input type='number' name='minute1' placeholder='min' min='0' max='60' required><br/>";
+        prikaz_forme += "</fieldset>";
 
-        prikaz_forme += "<label>Dostupan do</label><br/>";
-        prikaz_forme += "<label for='datum2'>Datum</label>";
-        prikaz_forme += "<input type='date' name='datum2' required>";
-        prikaz_forme += "<label for='sati2'>Vrijeme</label>";
-        prikaz_forme += "<input type='number' name='sati2' placeholder='sati' required><span>:</span>";
-        prikaz_forme += "<input type='number' name='minute2' placeholder='min' required><br/>";
-
-        prikaz_forme += "<label for='lokacija'>Lokacija</label>";
-
-        prikaz_forme += "<select name='lokacija' id='lokacija'>";
-        $.each(lista.lokacija, function (index, val) {
-
-            prikaz_forme += "<option value='"+ val.id +"'>"+ val.naziv +"</option>";
-        });
+        prikaz_forme += "<fieldset>";
+        prikaz_forme += "<legend>Dostupan za rezervacije do</legend>";
+        prikaz_forme += "<label for='datum2'>Datum</label><br>";
+        prikaz_forme += "<input type='date' name='datum2' required><br>";
+        prikaz_forme += "<label for='sati2'>Vrijeme</label><br>";
+        prikaz_forme += "<input type='number' name='sati2' placeholder='sati' min='0' max='23' required><br>";
+        prikaz_forme += "<input type='number' name='minute2' placeholder='min' min='0' max='60' required><br/>";
+        prikaz_forme += "</fieldset>";
 
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
         prikaz_forme += "<input type='hidden' name='id'>";

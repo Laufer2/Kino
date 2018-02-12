@@ -32,7 +32,7 @@
                     <label for="sati">Vrijeme</label><br>
                     <input type="number" name="sati2" id="sati" placeholder="sati" min="0" max="23" required>
 
-                    <input type="number" name="minute2" id="minute" placeholder="min" min="0" max="60" required><br/>
+                    <input type="number" name="minute2" id="minute" placeholder="min" min="0" max="59" required><br/>
 
                 </fieldset>
 

@@ -54,6 +54,6 @@ echo '</table>' ;
 
 $uri = $_SERVER["REQUEST_URI"];
 $pos = strrpos($uri, "/");
-$dir = $_SERVER["SERVER_NAME"] . substr($uri, 0, $pos + 1);
+$dir = $_SERVER["HTTP_HOST"] . substr($uri, 0, $pos - 11);
 
 echo $dir;

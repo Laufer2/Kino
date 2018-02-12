@@ -1,7 +1,10 @@
-
-<script src="public/js/odjava.js"></script>
-<script src="public/js/funkcije.js"></script>
-
+{if isset($privatno)}
+    <script src="../public/js/funkcije.js"></script>
+    <script src="../public/js/korisnici.js"></script>
+{else}
+    <script src="public/js/funkcije.js"></script>
+    <script src="public/js/odjava.js"></script>
+{/if}
 {if isset($naslovnica_prijavljeni)}
     <script src="public/js/naslovnica_prijavljeni.js"></script>
 {/if}
@@ -10,9 +13,6 @@
 {/if}
 {if isset($registracija)}
     <script src="public/js/registracija_validacija.js"></script>
-{/if}
-{if isset($privatno)}
-    <script src="../public/js/korisnici.js"></script>
 {/if}
 {if isset($novi_aktivacijski_link)}
     <script src="public/js/novi_akt_link.js"></script>
@@ -97,6 +97,9 @@
 {/if}
 {if isset($statistika)}
     <script src="public/js/statistika.js"></script>
+{/if}
+{if isset($korisnicke_slike)}
+    <script src="public/js/korisnicke_slike.js"></script>
 {/if}
 
 </body>

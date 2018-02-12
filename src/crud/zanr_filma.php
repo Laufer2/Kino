@@ -90,7 +90,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $pojam = "%" . $pojam . "%";
         $upit = "SELECT * FROM zanrfilma z JOIN film f ON z.film_id = f.id_film JOIN zanr z2 ON z.zanr_id = z2.id_zanr
                   WHERE f.naziv_film LIKE '$pojam' OR z2.naziv_zanr LIKE '$pojam'";
-        if(isset($stupac) && $stupac != "" ) {
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;

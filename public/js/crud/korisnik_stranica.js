@@ -33,9 +33,9 @@ $(document).ready(function(){
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
@@ -80,7 +80,7 @@ $(document).ready(function(){
         var prikaz_forme = "<form action='src/crud/korisnik_stranica.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='stranica'>Stranica </label>";
+        prikaz_forme += "<label for='stranica'>Stranica </label><br>";
 
         prikaz_forme += "<select name='stranica' id='stranica'>";
         $.each(lista.stranica, function (index, val) {
@@ -90,7 +90,7 @@ $(document).ready(function(){
 
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='korisnik'>Korisnik </label>";
+        prikaz_forme += "<label for='korisnik'>Korisnik </label><br>";
 
         prikaz_forme += "<select name='korisnik' id='korisnik'>";
         $.each(lista.korisnik, function (index, val) {
@@ -99,12 +99,11 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label>Vrijeme</label><br/>";
-        prikaz_forme += "<label for='datum1'>Datum</label>";
-        prikaz_forme += "<input type='date' name='datum1' required>";
-        prikaz_forme += "<label for='sati1'>Vrijeme</label>";
-        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' required><span>:</span>";
-        prikaz_forme += "<input type='number' name='minute1' placeholder='min' required><br/>";
+        prikaz_forme += "<label for='datum1'>Datum</label><br>";
+        prikaz_forme += "<input type='date' name='datum1' required><br>";
+        prikaz_forme += "<label for='sati1'>Vrijeme</label><br>";
+        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' min='0' max='23' required>";
+        prikaz_forme += "<input type='number' name='minute1' placeholder='min' min='0' max='60' required><br/>";
 
         prikaz_forme += "<input type='hidden' name='tablica' value='"+ tablice +"'>";
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
@@ -116,6 +115,7 @@ $(document).ready(function(){
     }
 
     function sort(tip_sorta, stupac){
+        $("#test").css("display","none");
         var pojam, akcija="";
         if($("#pojam").val() !== ""){
             pojam = $("#pojam").val();
@@ -150,6 +150,7 @@ $(document).ready(function(){
     });
 
     $(document).on('submit', '#pretraga', function (event){
+        $("#test").css("display","none");
 
         var forma = $("#pretraga");
         event.preventDefault();
@@ -165,9 +166,9 @@ $(document).ready(function(){
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Nema podataka.");
+                    $("#test").html("Nema podataka.").css("display","block");
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                 }
                 $("#forma").html("");
             }
@@ -224,6 +225,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.gumb-delete', function(){
+        $("#test").css("display","none");
         var idl = $(this).attr("data-idl");
         var idk = $(this).attr("data-idk");
         var vrijeme = $(this).attr("data-vrijeme");
@@ -281,10 +283,10 @@ $(document).ready(function(){
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Taj zapis već postoji.");
+                    $("#test").html("Taj zapis već postoji.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                     $("#forma").html("");
                 }
 

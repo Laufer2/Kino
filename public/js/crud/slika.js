@@ -65,8 +65,6 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ slika.film +"</td>";
             prikaz_tablice += "<td>"+ slika.lokacija +"</td>";
             prikaz_tablice += "<td>"+ slika.naziv +"</td>";
-            prikaz_tablice += "<td>"+ slika.opis +"</td>";
-            prikaz_tablice += "<td>"+ slika.izvor+"</td>";
 
             prikaz_tablice += "<td>";
             prikaz_tablice += "<button class='gumb-edit' data-id='"+ slika.id +"'>Uredi</button>";

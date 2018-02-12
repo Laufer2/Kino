@@ -5,7 +5,6 @@ $(document).ready(function(){
         url: "src/crud/film.php",
         type: "GET",
         data:{
-            tablica : funkcija.getUrlVariable("tablica"),
             aktivna_stranica : 0,
             akcija : 10
         },
@@ -33,19 +32,17 @@ $(document).ready(function(){
 
     function nacrtaj_tablicu(data) {
 
-        var tablica = data.tablica;
-
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>Id</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Film";
-        prikaz_tablice += "<button class='silazno' data-stupac='naziv_"+tablica+"'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='naziv_"+tablica+"'>&#708;</button>"; //ASC
+        prikaz_tablice += "<button class='silazno' data-stupac='naziv_film'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='naziv_film'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Godina</th>";
         prikaz_tablice += "<th>";
@@ -67,7 +64,7 @@ $(document).ready(function(){
             prikaz_tablice += "<td>"+ vrijednost.sadrzaj +"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-edit' data-id='"+ vrijednost.id +"'>Uredi</button>";
+            prikaz_tablice += "<a href='#forma'><button class='gumb-edit' data-id='"+ vrijednost.id +"'>Uredi</button></a>";
             prikaz_tablice += "<button class='gumb-delete' data-id='"+ vrijednost.id +"'>Izbriši</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
@@ -79,7 +76,6 @@ $(document).ready(function(){
     }
 
     function nacrtaj_formu(akcija, id) {
-        var tablica = funkcija.getUrlVariable("tablica");
         var prikaz_forme = "<form action='src/crud/film.php' ";
         prikaz_forme += "id='novi_zapis' method='get' enctype='application/x-www-form-urlencoded'>";
 
@@ -95,7 +91,6 @@ $(document).ready(function(){
         prikaz_forme += "<label for='sadrzaj'>Sadržaj</label><br>";
         prikaz_forme += "<textarea cols='20' rows='3' name='sadrzaj' id='sadrzaj' required></textarea><br/>";
 
-        prikaz_forme += "<input type='hidden' name='tablica' value='"+ tablica +"'>";
         prikaz_forme += "<input type='hidden' name='akcija' value='"+akcija+"'>";
         prikaz_forme += "<input type='hidden' name='id' value='"+id+"'>";
 
@@ -107,7 +102,6 @@ $(document).ready(function(){
 
     function sort(tip_sorta, stupac){
         var pojam, akcija="";
-        var tablica = funkcija.getUrlVariable("tablica");
         if($("#pojam").val() !== ""){
             pojam = $("#pojam").val();
             akcija = 5;
@@ -117,7 +111,6 @@ $(document).ready(function(){
             url: 'src/crud/film.php',
             type: 'GET',
             data : {
-                tablica : tablica,
                 stupac : stupac,
                 tip_sorta : tip_sorta,
                 pojam : pojam,
@@ -156,9 +149,9 @@ $(document).ready(function(){
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Nema podataka.");
+                    $("#test").html("Nema podataka.").css("display","block");
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                 }
                 $("#forma").html("");
             }
@@ -212,7 +205,6 @@ $(document).ready(function(){
             url: 'src/crud/film.php',
             type: 'GET',
             data: {
-                tablica: funkcija.getUrlVariable("tablica"),
                 id: id,
                 akcija: 3
             },
@@ -246,7 +238,6 @@ $(document).ready(function(){
                         url: 'src/crud/film.php',
                         type: 'GET',
                         data: {
-                            tablica : funkcija.getUrlVariable("tablica"),
                             id : id,
                             akcija : 1
                         },
@@ -285,10 +276,10 @@ $(document).ready(function(){
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Zapis s tim imenom već postoji.");
+                    $("#test").html("Zapis s tim imenom već postoji.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                     $("#forma").html("");
                 }
 

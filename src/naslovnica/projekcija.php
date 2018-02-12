@@ -89,13 +89,12 @@ while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)) {
     }
 
     //provjera dostupnih mjesta - odobrene rezervacije
-    $upit = "SELECT max_gledatelja, (SELECT count(*) from rezervacija r WHERE r.projekcija_id =p.id_projekcija) 
+    $upit = "SELECT max_gledatelja, (SELECT count(*) from rezervacija r WHERE r.projekcija_id = p.id_projekcija) 
               FROM projekcija p";
     $rez = $baza->selectdb($upit);
     list($broj) = $rez->fetch_array();
 
     $json['broj'] = $broj;
-
 
 
     $pomak = $dat->dohvati('pomak');

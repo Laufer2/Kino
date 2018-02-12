@@ -3,12 +3,7 @@ require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
-require_once '../istek_sesije.php';
 require_once '../statistike/evidencija.php';
-if(istek_sesije()){
-    //header("Location: http://localhost:8000/kino/prijava.php");
-    exit();
-}
 
 $baza = new baza();
 

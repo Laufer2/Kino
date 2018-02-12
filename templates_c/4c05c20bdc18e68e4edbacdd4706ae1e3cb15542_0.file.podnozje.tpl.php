@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-04 20:28:08
+/* Smarty version 3.1.30, created on 2018-02-12 01:31:10
   from "C:\xampp\htdocs\kino\templates\podnozje.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a775ec89ac5e9_89593900',
+  'unifunc' => 'content_5a80e04e95e2a2_84733247',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4c05c20bdc18e68e4edbacdd4706ae1e3cb15542' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\podnozje.tpl',
-      1 => 1517772487,
+      1 => 1518393609,
       2 => 'file',
     ),
   ),
@@ -20,17 +20,23 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a775ec89ac5e9_89593900 (Smarty_Internal_Template $_smarty_tpl) {
-?>
-
-<?php echo '<script'; ?>
- src="public/js/odjava.js"><?php echo '</script'; ?>
+function content_5a80e04e95e2a2_84733247 (Smarty_Internal_Template $_smarty_tpl) {
+if (isset($_smarty_tpl->tpl_vars['privatno']->value)) {?>
+    <?php echo '<script'; ?>
+ src="../public/js/funkcije.js"><?php echo '</script'; ?>
 >
-<?php echo '<script'; ?>
+    <?php echo '<script'; ?>
+ src="../public/js/korisnici.js"><?php echo '</script'; ?>
+>
+<?php } else { ?>
+    <?php echo '<script'; ?>
  src="public/js/funkcije.js"><?php echo '</script'; ?>
 >
-
-<?php if (isset($_smarty_tpl->tpl_vars['naslovnica_prijavljeni']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/odjava.js"><?php echo '</script'; ?>
+>
+<?php }
+if (isset($_smarty_tpl->tpl_vars['naslovnica_prijavljeni']->value)) {?>
     <?php echo '<script'; ?>
  src="public/js/naslovnica_prijavljeni.js"><?php echo '</script'; ?>
 >
@@ -43,11 +49,6 @@ if (isset($_smarty_tpl->tpl_vars['Lurker']->value)) {?>
 if (isset($_smarty_tpl->tpl_vars['registracija']->value)) {?>
     <?php echo '<script'; ?>
  src="public/js/registracija_validacija.js"><?php echo '</script'; ?>
->
-<?php }
-if (isset($_smarty_tpl->tpl_vars['privatno']->value)) {?>
-    <?php echo '<script'; ?>
- src="../public/js/korisnici.js"><?php echo '</script'; ?>
 >
 <?php }
 if (isset($_smarty_tpl->tpl_vars['novi_aktivacijski_link']->value)) {?>
@@ -188,6 +189,11 @@ if (isset($_smarty_tpl->tpl_vars['korisnikupit']->value)) {?>
 if (isset($_smarty_tpl->tpl_vars['statistika']->value)) {?>
     <?php echo '<script'; ?>
  src="public/js/statistika.js"><?php echo '</script'; ?>
+>
+<?php }
+if (isset($_smarty_tpl->tpl_vars['korisnicke_slike']->value)) {?>
+    <?php echo '<script'; ?>
+ src="public/js/korisnicke_slike.js"><?php echo '</script'; ?>
 >
 <?php }?>
 

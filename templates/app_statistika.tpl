@@ -1,3 +1,4 @@
+
 <div id="container">
 
     <div id="tablicni-podaci">
@@ -23,14 +24,16 @@
 
     </div>
     <div>
-        <button id="print">Print this page</button>
+        <button class="print">Ispis</button>
     </div>
 
     <div id="grafovi">
 
 
         <div id="graf1">
+
             <canvas id="udio_lajkova"></canvas>
+
             <canvas id="udio_nelajkova"></canvas>
 
             <div id="legenda"></div>

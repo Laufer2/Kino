@@ -29,9 +29,9 @@ $(document).ready( function(){
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
@@ -63,7 +63,7 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ adresa.drzava +"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-edit' data-id='"+ adresa.id +"'>Uredi</button>";
+            prikaz_tablice += "<a href='#forma'><button class='gumb-edit' data-id='"+ adresa.id +"'>Uredi</button></a>";
             prikaz_tablice += "<button class='gumb-delete' data-id='"+ adresa.id +"'>Izbriši</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
@@ -79,7 +79,7 @@ $(document).ready( function(){
         var prikaz_forme = "<form action='src/crud/adresa.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='lokacija'>Lokacija</label>";
+        prikaz_forme += "<label for='lokacija'>Lokacija</label><br>";
         // select za lokaciju
 
         prikaz_forme += "<select name='lokacija' id='lokacija'>";
@@ -89,16 +89,16 @@ $(document).ready( function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='ulica'>Ulica</label>";
+        prikaz_forme += "<label for='ulica'>Ulica</label><br>";
         prikaz_forme += "<input type='text' name='ulica' id='ulica 'required><br/>";
 
-        prikaz_forme += "<label for='broj'>Broj</label>";
+        prikaz_forme += "<label for='broj'>Broj</label><br>";
         prikaz_forme += "<input type='number' name='broj' id='broj' required><br/>";
 
-        prikaz_forme += "<label for='postanski_broj'>Poštanski broj</label>";
+        prikaz_forme += "<label for='postanski_broj'>Poštanski broj</label><br>";
         prikaz_forme += "<input type='number' name='postanski_broj' id='postanski_broj' required><br/>";
 
-        prikaz_forme += "<label for='grad'>Grad</label>";
+        prikaz_forme += "<label for='grad'>Grad</label><br>";
 
         prikaz_forme += "<select name='grad' id='grad'>";
         $.each(lista.grad, function (index, val) {
@@ -107,7 +107,7 @@ $(document).ready( function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='drzava'>Država</label>";
+        prikaz_forme += "<label for='drzava'>Država</label><br>";
 
         prikaz_forme += "<select name='drzava' id='drzava'>";
         $.each(lista.drzava, function (index, val) {
@@ -117,6 +117,7 @@ $(document).ready( function(){
         prikaz_forme += "</select><br/>";
 
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
+        prikaz_forme += "<input type='hidden' name='id'>";
 
         prikaz_forme += "<input type='submit' value='Dodaj'>";
         prikaz_forme += "</form>";
@@ -189,6 +190,7 @@ $(document).ready( function(){
     });
 
     $(document).on('submit', '#pretraga', function (event){
+        $("#test").css("display","none");
 
         var forma = $("#pretraga");
         event.preventDefault();
@@ -204,7 +206,7 @@ $(document).ready( function(){
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Nema podataka.");
+                    $("#test").html("Nema podataka.").css("display","block");
 
                 }
                 $("#forma").html("");
@@ -213,6 +215,7 @@ $(document).ready( function(){
     });
 
     $(document).on('click', '.gumb-delete', function(){
+        $("#test").css("display","block");
         var id = $(this).attr("data-id");
         $("#dialog-potvrda").dialog({
             resizable: false,
@@ -251,6 +254,7 @@ $(document).ready( function(){
     });
 
     $(document).on('click', '.gumb-edit', function() {
+        $("#test").css("display","none");
         var id = $(this).attr("data-id");
         var tablice = ["lokacija","grad","drzava"];
 
@@ -269,6 +273,7 @@ $(document).ready( function(){
                 $("#forma").html( nacrtaj_formu(lista, 2));
 
                 var forma = $("#novi_zapis");
+                $("#lokacija").prop('disabled', true);
 
                 $.each(lista.podaci, function(index, value){
                     $.each(value,function (ind, val) {
@@ -276,15 +281,13 @@ $(document).ready( function(){
                     });
                 });
             },
-            error: function (xhr) {
-                $("#test").html(xhr.status);
-            }
         });
 
     });
 
     $(document).on('click', '#gumb-kreiraj', function() {
         var tablice = ["lokacija","grad","drzava"];
+        $("#test").css("display","none");
 
         $.ajax({
             url : 'src/crud/adresa.php',
@@ -302,6 +305,7 @@ $(document).ready( function(){
     });
 
     $(document).on('submit', '#novi_zapis', function(event) {
+        $("#lokacija").prop('disabled', false);
 
         var forma = $("#novi_zapis");
         event.preventDefault();
@@ -316,10 +320,10 @@ $(document).ready( function(){
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Adresa za tu lokaciju već postoji.");
+                    $("#test").html("Adresa za tu lokaciju već postoji.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                     $("#forma").html("");
                 }
 

@@ -33,9 +33,9 @@ $(document).ready(function(){
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
@@ -73,7 +73,7 @@ $(document).ready(function(){
         var prikaz_forme = "<form action='src/crud/moderatori_lokacija.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='korisnik'>Korisnici </label>";
+        prikaz_forme += "<label for='korisnik'>Korisnici </label><br>";
 
         prikaz_forme += "<select name='korisnik' id='korisnik'>";
         $.each(lista.korisnik, function (index, val) {
@@ -82,7 +82,7 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='lokacija'>Lokacije </label>";
+        prikaz_forme += "<label for='lokacija'>Lokacije </label><br>";
 
         prikaz_forme += "<select name='lokacija' id='lokacija'>";
         $.each(lista.lokacija, function (index, val) {

@@ -22,6 +22,8 @@
 
         <div id="search"></div>
 
+        <div class="korisnik-statistika"></div>
+
         <div id="prikaz-tablice"></div>
 
         <div id="paginacija"></div>
@@ -30,12 +32,22 @@
 
     </div>
 
+    <form method="post" action="src/statistike/statistika.php" id="gen_pdf" enctype="application/x-www-form-urlencoded">
+        <input type="submit" value="PDF">
+    </form>
+
+    <div>
+        <button class="print">Ispis</button>
+    </div>
+
     <div id="grafovi">
 
+        <div id="graf2">
         <canvas id="grafovi_statistika"></canvas>
 
         <div id="legenda"></div>
 
+        </div>
     </div>
 
 </div>

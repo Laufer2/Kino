@@ -1,4 +1,4 @@
-AuthName "privatno"
-AuthUserFile C:\xampp\htdocs\kino\privatno\.htpasswd
 AuthType Basic
-require user admin
+AuthName "privatno"
+AuthUserFile /var/www/webdip.barka.foi.hr/2015_projekti/WebDiP2015x047/privatno/.htpasswd
+require valid-user

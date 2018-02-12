@@ -19,6 +19,8 @@ $(document).ready( function () {
                 data = JSON.parse(data);
                 var tip = parseInt($("#tip").val());
                 var pojam = $("#pojam").val();
+                $("#poruke").html("").css("display","none");
+
                 if(typeof pojam === "undefined" || pojam === ""){
 
                     if(tip === 1){
@@ -39,8 +41,10 @@ $(document).ready( function () {
 
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
 
-                $("#poruke").html("");
-                $("#poruke").html(data.poruka);
+                if(data.poruka){
+                    $("#poruke").html(data.poruka).css("display","block");
+                }
+
 
                 $("#legenda").html("");
 
@@ -64,6 +68,7 @@ $(document).ready( function () {
     function nacrtaj_tablicu_stranica(data) {
 
         var prikaz_tablice = "<table class='tablica'>";
+        prikaz_tablice += "<thead>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Stranica";
@@ -81,6 +86,8 @@ $(document).ready( function () {
         prikaz_tablice += "<button class='uzlazno' data-stupac='vrijeme'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "</tr>";
+        prikaz_tablice += "</thead>";
+
 
         $.each(data.podaci, function (index, log) {
 
@@ -101,6 +108,7 @@ $(document).ready( function () {
     function nacrtaj_tablicu_upit(data) {
 
         var prikaz_tablice = "<table class='tablica'>";
+        prikaz_tablice += "<thead>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Upit";
@@ -118,6 +126,8 @@ $(document).ready( function () {
         prikaz_tablice += "<button class='uzlazno' data-stupac='vrijeme'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "</tr>";
+        prikaz_tablice += "</thead>";
+
 
         $.each(data.podaci, function (index, log) {
 
@@ -139,6 +149,7 @@ $(document).ready( function () {
         var tip = parseInt($("#tip").val());
 
         var prikaz_tablice = "<table class='tablica'>";
+        prikaz_tablice += "<thead>";
         prikaz_tablice += "<tr>";
         if(tip === 1){
             prikaz_tablice += "<th>";
@@ -154,7 +165,7 @@ $(document).ready( function () {
             prikaz_tablice += "</th>";
         }
         prikaz_tablice += "<th>";
-        prikaz_tablice += "Posjete";
+        prikaz_tablice += "Posjeti";
         prikaz_tablice += "<button class='silazno' data-stupac='posjecenost'>&#709;</button>"; //DESC
         prikaz_tablice += "<button class='uzlazno' data-stupac='posjecenost'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
@@ -162,6 +173,8 @@ $(document).ready( function () {
         prikaz_tablice += "Ukupni udio";
         prikaz_tablice += "</th>";
         prikaz_tablice += "</tr>";
+        prikaz_tablice += "</thead>";
+
 
         $.each(data.graf, function (index, log) {
 
@@ -174,7 +187,8 @@ $(document).ready( function () {
             }
 
             prikaz_tablice += "<td>"+ log.posjecenost +"</td>";
-            prikaz_tablice += "<td>"+ log.udio +"</td>";
+            var udio = Math.round( 100 * log.posjecenost / data.ukupna_posjecenost);
+            prikaz_tablice += "<td>"+ udio +" %</td>";
 
             prikaz_tablice += "</tr>";
 
@@ -263,10 +277,6 @@ $(document).ready( function () {
         });
     });
 
-    $(document).on('click', '#print', function () {
-        window.print();
-    });
-
     $(document).on('click', '.uzlazno', function () {
         sort('ASC', $(this).attr("data-stupac"));
     });
@@ -283,6 +293,16 @@ $(document).ready( function () {
         pocetna();
     });
 
+    $(document).on('click', '.print', function () {
+        if($("#pojam").val() !== ""){
+            $(".korisnik-statistika").html("Korisnik: " + $("#pojam").val());
+            $(".legenda-graf2").css("display","none");
+        }
+
+        window.print();
+        $(".legenda-graf2").css("display","inline");
+    });
+
     $(document).on('submit', '#pretraga', function (event){
 
         var forma = $("#pretraga");
@@ -297,6 +317,7 @@ $(document).ready( function () {
                 data = JSON.parse(data);
                 var pojam = $("#pojam").val();
                 var tip = parseInt($("#tip").val());
+                $("#poruke").html("").css("display","none");
 
                 if( pojam === ""){
                     if( tip === 1){
@@ -310,8 +331,11 @@ $(document).ready( function () {
                 }
 
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
-                $("#poruke").html("");
-                $("#poruke").html(data.poruka);
+
+                if(data.poruka){
+                    $("#poruke").html(data.poruka).css("display","block");
+                }
+
                 $("#legenda").html("");
 
                 var platno1 = document.getElementById("grafovi_statistika");
@@ -320,9 +344,7 @@ $(document).ready( function () {
                 platno1.height = 400;
 
                 var grafLajkova = new graf({
-                    boje : ["BlueViolet","Brown","BurlyWood","CadetBlue","Coral","CornflowerBlue",
-                        "Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGrey","DarkGreen",
-                        "DarkKhaki","DarkMagenta","DarkOliveGreen"]
+                    boje : ["BlueViolet","Brown","BurlyWood","CadetBlue","Coral","CornflowerBlue", "Cornsilk","Crimson"]
                 });
 
                 grafLajkova.crtaj(data.graf, data.ukupna_posjecenost, platno1);
@@ -369,11 +391,12 @@ $(document).ready( function () {
                 pocetni_kut1 += udio1;
 
                 var tip = parseInt($("#tip").val());
-                var prikaz_legende = "<span style='display:inline-block;width:20px;background-color:"+ this.boje[i] +";'>&nbsp;</span>&nbsp;";
+                var prikaz_legende = "<span class='legenda-graf2' " +
+                    "style='background-color:"+ this.boje[i] +";'>&nbsp;</span>&nbsp;";
                 if(tip === 1){
-                    prikaz_legende +=  datal[i]["stranica"] + "<br/>";
+                    prikaz_legende += "<span class='legenda-graf2'>" + datal[i]["stranica"] + "</span><br/>";
                 } else {
-                    prikaz_legende +=  datal[i]["upit"] + "<br/>";
+                    prikaz_legende += "<span class='legenda-graf2'>" + datal[i]["upit"] + "</span><br/>";
                 }
 
                 $("#legenda").append(prikaz_legende);
@@ -390,5 +413,27 @@ $(document).ready( function () {
         ctx.closePath();
         ctx.fill();
     }
+
+    $(document).on('submit',"#gen_pdf", function(event){
+
+        event.preventDefault();
+
+        $.ajax({
+
+            url : "src/statistike/statistika.php",
+            type : "POST",
+            data : {
+                pdf : 1,
+                aktivna_stranica : $("#aktivan").attr("data-stranica"),
+                interval : $("#interval").val(),
+                tip : $("#tip").val(),
+                pojam : $("#pojam").val(),
+                stupac : $("#aktivan").attr("data-stupac"),
+                tip_sorta : $("#aktivan").attr("data-tip_sorta")
+            }
+
+        });
+
+    });
 
 });

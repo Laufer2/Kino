@@ -1,6 +1,20 @@
 $(document).ready(function () {
     "use strict";
 
+    $.ajax({
+
+        url : "src/istek_sesije.php",
+        method : "post",
+
+        success : function (data) {
+            var poruka = JSON.parse(data);
+            if (poruka["redirect"] !== 0){
+                window.location.replace(decodeURIComponent(poruka.redirect));
+            }
+        }
+    });
+
+
     $("#odjava").click(function (event) {
 
         $.ajax({
@@ -8,10 +22,9 @@ $(document).ready(function () {
             type: "POST",
 
             success: function (data) {
-                window.location.replace('http://localhost:8000/kino/index.php');
+                var poruka = JSON.parse(data);
+                window.location.replace(decodeURIComponent(poruka.redirect));
             }
         });
     });
-
-
 });

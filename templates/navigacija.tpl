@@ -1,7 +1,16 @@
 <nav id="navigacija">
 
     <ul>
-        <li><a href="index.php">Naslovnica</a></li>
+        {if isset($privatno)}
+            <li><a href="../index.php">Naslovnica</a></li>
+            <li><a href="../registracija.php">Registracija</a></li>
+            <li><a href="../prijava.php">Prijava</a></li>
+            <li><a href="../o_autoru.php">O autoru</a></li>
+            <li><a href="../dokumentacija.php">Dokumentacija</a></li>
+        {/if}
+        {if !isset($privatno)}
+            <li><a href="index.php">Naslovnica</a></li>
+        {/if}
         {if isset($Lurker)}
             <li><a href="registracija.php">Registracija</a></li>
             <li><a href="prijava.php">Prijava</a></li>
@@ -24,6 +33,7 @@
             <li><a href="filmovi.php">Filmovi</a></li>
             <li><a href="potvrde.php">Potvrde rezervacija</a></li>
             <li><a href="termini.php">Termini</a></li>
+            <li><a href="korisnicke_slike.php">Korisničke slike</a></li>
             <li><a href="app_statistika.php">Aplikativna statistika</a></li>
         {/if}
 

@@ -131,7 +131,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $pojam = "%" . $pojam . "%";
         $upit = "SELECT * FROM korisnik k JOIN tipkorisnika t ON k.tip_id = t.id_tipkorisnika WHERE k.korisnicko_ime LIKE '$pojam' OR 
                   t.naziv_tipkorisnika LIKE '$pojam' OR k.email LIKE '$pojam' OR k.ime LIKE '$pojam' OR k.prezime LIKE '$pojam'";
-        if(isset($stupac) && $stupac != "" ) {
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;
@@ -208,8 +208,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 "lozinka" => md5($red['lozinka']),
                 "ime" => $red['ime'],
                 "prezime" => $red['prezime'],
-                "akt_rok" => date("F j, Y, H:i",$red['aktivacijski_rok']),
-                //"akt_kod" => $red['aktivacijski_kod'],
+                "akt_rok" => date("d.m.Y, H:i", $red['aktivacijski_rok']),
                 "neuspjesne_prijave" => $red['neuspjesne_prijave']
             );
             array_push($json['podaci'],$polje);

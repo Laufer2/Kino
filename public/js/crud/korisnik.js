@@ -34,7 +34,7 @@ $(document).ready( function(){
         prikaz_tablice += "Dodaj novi zapis";
         prikaz_tablice += "</button>";
 
-        prikaz_tablice += "<table class='tablica'>";
+        prikaz_tablice += "<table class='tablica tablica-korisnik'>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Korisničko ime";
@@ -51,7 +51,7 @@ $(document).ready( function(){
         prikaz_tablice += "<th>E-mail</th>";
         prikaz_tablice += "<th>Status aktivacije</th>";
         prikaz_tablice += "<th>Neuspješne prijave</th>";
-        prikaz_tablice += "<th>Lozinka</th>";
+        prikaz_tablice += "<th>Lozinka(sha1)</th>";
         prikaz_tablice += "<th>Aktivacijski rok</th>";
         //prikaz_tablice += "<th>Aktivacijski kod</th>";
         prikaz_tablice += "<th>Funkcije</th>";
@@ -67,7 +67,7 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ korisnik.email +"</td>";
             prikaz_tablice += "<td>"+ korisnik.status +"</td>";
             prikaz_tablice += "<td>"+ korisnik.neuspjesne_prijave +"</td>";
-            prikaz_tablice += "<td>"+ korisnik.lozinka +"</td>";
+            prikaz_tablice += "<td class='celija-lozinka'>"+ korisnik.lozinka +"</td>";
             prikaz_tablice += "<td>"+ korisnik.akt_rok +"</td>";
             //prikaz_tablice += "<td>"+ korisnik.akt_kod +"</td>";
 
@@ -89,12 +89,12 @@ $(document).ready( function(){
         var prikaz_forme = "<form action='src/crud/korisnik.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='korisnicko'>Korisničko ime</label>";
+        prikaz_forme += "<label for='korisnicko'>Korisničko ime</label><br>";
         prikaz_forme += "<input type='text' name='korisnicko' id='korisnicko' required>";
         prikaz_forme += "<span id='korisnicko_poruka'></span>";
         prikaz_forme += "<br/>";
 
-        prikaz_forme += "<label for='tipkorisnika'>Tip korisnika</label>";
+        prikaz_forme += "<label for='tipkorisnika'>Tip korisnika</label><br>";
         prikaz_forme += "<select name='tipkorisnika' id='tipkorisnika'>";
         $.each(lista.tipkorisnika, function (index, val) {
 
@@ -102,28 +102,28 @@ $(document).ready( function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='ime'>Ime</label>";
+        prikaz_forme += "<label for='ime'>Ime</label><br>";
         prikaz_forme += "<input type='text' name='ime' id='ime' required><br/>";
 
-        prikaz_forme += "<label for='prezime'>Prezime</label>";
+        prikaz_forme += "<label for='prezime'>Prezime</label><br>";
         prikaz_forme += "<input type='text' name='prezime' id='prezime' required><br/>";
 
-        prikaz_forme += "<label for='email'>E-mail</label>";
+        prikaz_forme += "<label for='email'>E-mail</label><br>";
         prikaz_forme += "<input type='text' name='email' id='email' required>";
         prikaz_forme += "<span id='email_poruka'></span>";
         prikaz_forme += "<br/>";
 
-        prikaz_forme += "<label for='lozinka'>Lozinka</label>";
+        prikaz_forme += "<label for='lozinka'>Lozinka</label><br>";
         prikaz_forme += "<input type='text' name='lozinka' id='lozinka' required><br/>";
 
-        prikaz_forme += "<label for='status'>Status aktivacije</label>";
+        prikaz_forme += "<label for='status'>Status aktivacije</label><br>";
         prikaz_forme += "<select name='status' id='status'>";
         prikaz_forme += "<option value='0'>Neaktiviran</option>";
         prikaz_forme += "<option value='1'>Aktiviran</option>";
         prikaz_forme += "<option value='2'>Zaključan</option>";
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='neuspjesne_prijave'>Neuspješne prijave</label>";
+        prikaz_forme += "<label for='neuspjesne_prijave'>Neuspješne prijave</label><br>";
         prikaz_forme += "<input type='number' name='neuspjesne_prijave' id='neuspjesne_prijave' required><br/>";
 
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";

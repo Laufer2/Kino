@@ -77,12 +77,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit = "INSERT INTO adresa VALUES (default,'$ulica', $broj, $lokacija, $grad, $drzava, $postanski_broj)";
             $rezultat = $baza->update($upit);
             break;
-
-        case 2:// auriranje
+        case 2:// ažuriranje
 
             $upit = "UPDATE adresa SET lokacija_id = $lokacija, ulica = '$ulica', broj = $broj, grad_id = $grad, 
-                      drzava_id = $drzava WHERE id_adresa = $id;";
+                      drzava_id = $drzava WHERE id_adresa = $id";
             $rezultat = $baza->update($upit);
+            $json['upit']=$upit;
             break;
 
         case 3: // brisanje
@@ -117,7 +117,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $upit = "SELECT * FROM adresa a JOIN lokacija l ON a.lokacija_id = l.id_lokacija JOIN grad g ON a.grad_id = g.id_grad
                       JOIN drzava d ON a.drzava_id = d.id_drzava WHERE d.naziv_drzava LIKE '$pojam' OR g.naziv_grad LIKE '$pojam' OR 
                       l.naziv_lokacija LIKE '$pojam' OR a.ulica LIKE '$pojam'";
-        if(isset($stupac) && $stupac != "" ) {
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;

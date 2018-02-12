@@ -73,7 +73,7 @@ $(document).ready(function(){
         var prikaz_forme = "<form action='src/crud/zanr_filma.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='film'>Film</label>";
+        prikaz_forme += "<label for='film'>Film</label><br>";
 
         prikaz_forme += "<select name='film' id='film'>";
         $.each(lista.film, function (index, val) {
@@ -82,7 +82,7 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='zanr'>Zanr</label>";
+        prikaz_forme += "<label for='zanr'>Zanr</label><br>";
 
         prikaz_forme += "<select name='zanr' id='zanr'>";
         $.each(lista.zanr, function (index, val) {
@@ -264,10 +264,10 @@ $(document).ready(function(){
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Taj zapis već postoji.");
+                    $("#test").html("Taj zapis već postoji.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                     $("#forma").html("");
                 }
 

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-08 15:16:16
+/* Smarty version 3.1.30, created on 2018-02-11 13:26:07
   from "C:\xampp\htdocs\kino\templates\filmovi.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a7c5bb0cbe740_66232368',
+  'unifunc' => 'content_5a80365f104861_85608329',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '53b5e32f2bbb23466077ccc5eedb647ca1ccb591' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\filmovi.tpl',
-      1 => 1518099374,
+      1 => 1518351930,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a7c5bb0cbe740_66232368 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a80365f104861_85608329 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -48,17 +48,17 @@ function content_5a7c5bb0cbe740_66232368 (Smarty_Internal_Template $_smarty_tpl)
 
                 <div id="redatelji">
                     <label>Redatelj</label><br/>
-                    <input type="text" name="redatelj[]" required><button type="button" id="novi-redatelj">+</button><br/>
+                    <input type="text" name="redatelj[]" required><button type="button" class="gumb-plus" id="novi-redatelj">+</button><br/>
                 </div>
 
                 <div id="glumci">
                     <label>Glavni glumci</label><br/>
-                    <input type="text" name="glumac[]" required><button type="button" id="novi-glumac">+</button><br/>
+                    <input type="text" name="glumac[]" required><button type="button" class='gumb-plus' id="novi-glumac">+</button><br/>
                 </div>
 
                 <div id="scenaristi">
                     <label>Scenarist</label><br/>
-                    <input type="text" name="scenarist[]" required><button type="button" id="novi-scenarist">+</button><br/>
+                    <input type="text" name="scenarist[]" required><button type="button" class="gumb-plus" id="novi-scenarist">+</button><br/>
                 </div>
 
                 <input type="submit" value="Kreiraj novi film">

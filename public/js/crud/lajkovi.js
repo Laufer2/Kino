@@ -33,9 +33,9 @@ $(document).ready(function(){
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
@@ -63,8 +63,8 @@ $(document).ready(function(){
             prikaz_tablice += "<td>"+ vrijednost.vrijeme +"</td>";
 
             prikaz_tablice += "<td>";
+            prikaz_tablice += "<a href='#forma'><button class='gumb-edit' data-idk='"+ vrijednost.idk +"' data-idl='"+ vrijednost.idl +"'>Uredi</button></a>";
             prikaz_tablice += "<button class='gumb-delete' data-idk='"+ vrijednost.idk +"' data-idl='"+ vrijednost.idl +"'>Izbriši</button>";
-            prikaz_tablice += "<button class='gumb-edit' data-idk='"+ vrijednost.idk +"' data-idl='"+ vrijednost.idl +"'>Uredi</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
 
@@ -78,7 +78,7 @@ $(document).ready(function(){
         var prikaz_forme = "<form action='src/crud/lajkovi.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='korisnik'>Korisnik </label>";
+        prikaz_forme += "<label for='korisnik'>Korisnik</label><br>";
 
         prikaz_forme += "<select name='korisnik' id='korisnik'>";
         $.each(lista.korisnik, function (index, val) {
@@ -87,7 +87,7 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='lokacija'>Lokacija </label>";
+        prikaz_forme += "<label for='lokacija'>Lokacija</label><br>";
 
         prikaz_forme += "<select name='lokacija' id='lokacija'>";
         $.each(lista.lokacija, function (index, val) {
@@ -96,18 +96,17 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='svidjanje'>Svidjanje</label>";
+        prikaz_forme += "<label for='svidjanje'>Sviđanje</label><br>";
         prikaz_forme += "<select name='svidjanje' id='svidjanje'>";
         prikaz_forme += "<option value='0'>Ne sviđa mi se</option>";
         prikaz_forme += "<option value='1'>Sviđa mi se</option>";
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label>Vrijeme</label><br/>";
-        prikaz_forme += "<label for='datum1'>Datum</label>";
-        prikaz_forme += "<input type='date' name='datum1' required>";
-        prikaz_forme += "<label for='sati1'>Vrijeme</label>";
-        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' required><span>:</span>";
-        prikaz_forme += "<input type='number' name='minute1' placeholder='min' required><br/>";
+        prikaz_forme += "<label for='datum1'>Datum</label><br>";
+        prikaz_forme += "<input type='date' name='datum1' required><br>";
+        prikaz_forme += "<label for='sati1'>Vrijeme</label><br>";
+        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' min='0' max='23' required><br>";
+        prikaz_forme += "<input type='number' name='minute1' placeholder='min' min='0' max='59' required><br/>";
 
         prikaz_forme += "<input type='hidden' name='tablica' value='"+ tablice +"'>";
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
@@ -209,9 +208,9 @@ $(document).ready(function(){
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Nema podataka.");
+                    $("#test").html("Nema podataka").css("display","block");
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                 }
                 $("#forma").html("");
             }
@@ -323,10 +322,10 @@ $(document).ready(function(){
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Taj zapis već postoji.");
+                    $("#test").html("Taj zapis već postoji.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                     $("#forma").html("");
                 }
 

@@ -16,7 +16,7 @@ $smarty->display('zaglavlje.tpl');
 $smarty->display('navigacija.tpl');
 
 if($tip_korisnika < 4){
-    $smarty->display('slike.tpl');
+    $smarty->display('naslovnica.tpl');
 }else{
     $smarty->display('zabrana.tpl');
 }

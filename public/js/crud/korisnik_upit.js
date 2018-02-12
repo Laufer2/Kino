@@ -33,21 +33,21 @@ $(document).ready(function(){
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Upiti";
-        prikaz_tablice += "<button class='silazno' data-stupac='s.naziv_upit'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='s.naziv_upit'>&#708;</button>"; //ASC
+        prikaz_tablice += "<button class='silazno' data-stupac='u.naziv_upit'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='u.naziv_upit'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Korisnik";
-        prikaz_tablice += "<button class='silazno' data-stupac='k.korisnicko_ime'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='k.korisnicko_ime'>&#708;</button>"; //ASC
+        prikaz_tablice += "<button class='silazno' data-stupac='k2.korisnicko_ime'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='k2.korisnicko_ime'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Vrijeme";
@@ -80,7 +80,7 @@ $(document).ready(function(){
         var prikaz_forme = "<form action='src/crud/korisnik_upit.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='upit'>Lokacija </label>";
+        prikaz_forme += "<label for='upit'>Lokacija </label><br>";
 
         prikaz_forme += "<select name='upit' id='upit'>";
         $.each(lista.upit, function (index, val) {
@@ -90,7 +90,7 @@ $(document).ready(function(){
 
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='korisnik'>Korisnik </label>";
+        prikaz_forme += "<label for='korisnik'>Korisnik </label><br>";
 
         prikaz_forme += "<select name='korisnik' id='korisnik'>";
         $.each(lista.korisnik, function (index, val) {
@@ -99,12 +99,11 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label>Vrijeme</label><br/>";
-        prikaz_forme += "<label for='datum1'>Datum</label>";
-        prikaz_forme += "<input type='date' name='datum1' required>";
-        prikaz_forme += "<label for='sati1'>Vrijeme</label>";
-        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' required><span>:</span>";
-        prikaz_forme += "<input type='number' name='minute1' placeholder='min' required><br/>";
+        prikaz_forme += "<label for='datum1'>Datum</label><br>";
+        prikaz_forme += "<input type='date' name='datum1' required><br>";
+        prikaz_forme += "<label for='sati1'>Vrijeme</label><br>";
+        prikaz_forme += "<input type='number' name='sati1' placeholder='sati' min='0' max='23' required>";
+        prikaz_forme += "<input type='number' name='minute1' placeholder='min' min='0' max='60' required><br/>";
 
         prikaz_forme += "<input type='hidden' name='tablica' value='"+ tablice +"'>";
         prikaz_forme += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
@@ -188,7 +187,7 @@ $(document).ready(function(){
             url: "src/crud/korisnik_upit.php",
             type: "POST",
             data: {
-                aktivna_stranica: $(this).attr("data-upit"),
+                aktivna_stranica: $(this).attr("data-stranica"),
                 tip_sorta: $(this).attr("data-tip_sorta"),
                 stupac: $(this).attr("data-stupac"),
                 pojam: pojam,
@@ -283,11 +282,11 @@ $(document).ready(function(){
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
 
-                if(data.poruka['poruka']){
-                    $("#test").html("Taj zapis već postoji.");
+                if(data.poruka){
+                    $("#test").html("Taj zapis već postoji.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                     $("#forma").html("");
                 }
 

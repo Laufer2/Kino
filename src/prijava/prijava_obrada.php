@@ -43,15 +43,12 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
         //istekao rok
         if($status_aktivacije == 0){
             if($aktivacijski_rok <= (time() + ($pomak * 60 * 60))){
-                $url = "http://localhost:8000/kino/aktivacija.php?kod=$akt_kod";
-                /*
+
                 $uri = $_SERVER["REQUEST_URI"];
                 $pos = strrpos($uri, "/");
-                $dir = $_SERVER["SERVER_NAME"] . substr($uri, 0, $pos + 1);
+                $dir = $_SERVER["HTTP_HOST"] . substr($uri, 0, $pos - 11);
+                $url = "http://" . $dir . "aktivacija.php?kod=$akt_kod";
 
-                $url = $_SERVER['REQUEST_URI'] . "/aktivacija.php?kod=$akt_kod";
-                */
-                //$url = "http://barka.foi.hr/WebDiP/2015_projekti/WebDiP2015x047/aktivacija.php?kod=$akt_kod"
                 posalji_poruku("",$url);
                 exit();
             }else{
@@ -113,14 +110,10 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
             }
             $_SESSION['kino'] = $korisnik;
 
-            /*
             $uri = $_SERVER["REQUEST_URI"];
             $pos = strrpos($uri, "/");
-            $url = $_SERVER["SERVER_NAME"] . substr($uri, 0, $pos + 1);
-            $url = "http://" . $dir . "/index.php";
-            */
-            //$url = "http://barka.foi.hr/WebDiP/2015_projekti/WebDiP2015x047/index.php
-            $url = "http://localhost:8000/kino/index.php";
+            $dir = $_SERVER["HTTP_HOST"] . substr($uri, 0, $pos - 11);
+            $url = "http://" . $dir . "index.php";
 
             dnevnik("Prijava",1, $id_korisnik);
 

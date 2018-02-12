@@ -29,9 +29,9 @@ $(document).ready( function(){
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
@@ -75,7 +75,7 @@ $(document).ready( function(){
             prikaz_tablice += "<td>"+ rezervacija.lokacija+"</td>";
 
             prikaz_tablice += "<td>";
-            prikaz_tablice += "<button class='gumb-edit' data-id='"+ rezervacija.id +"' data-projek='"+ rezervacija.id_projekcija +"'>Uredi</button>";
+            prikaz_tablice += "<a href='#forma'><button class='gumb-edit' data-id='"+ rezervacija.id +"' data-projek='"+ rezervacija.id_projekcija +"'>Uredi</button></a>";
             prikaz_tablice += "<button class='gumb-delete' data-id='"+ rezervacija.id +"'>Izbriši</button>";
             prikaz_tablice += "</td>";
             prikaz_tablice += "</tr>";
@@ -91,7 +91,7 @@ $(document).ready( function(){
         var prikaz_forme = "<form action='src/crud/rezervacija.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='multipart/form-data'>";
 
-        prikaz_forme += "<label for='korisnik'>Korisnik</label>";
+        prikaz_forme += "<label for='korisnik'>Korisnik</label><br>";
         // select za lokaciju
 
         prikaz_forme += "<select name='korisnik' id='korisnik'>";
@@ -101,13 +101,13 @@ $(document).ready( function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='status'>Status rezervacije</label>";
+        prikaz_forme += "<label for='status'>Status rezervacije</label><br>";
         prikaz_forme += "<input type='number' name='status' id='status 'required><br/>";
 
-        prikaz_forme += "<label for='broj_rezervacija'>Broj rezervacija</label>";
+        prikaz_forme += "<label for='broj_rezervacija'>Broj rezervacija</label><br>";
         prikaz_forme += "<input type='number' name='broj_rezervacija' id='broj_rezervacija' required><br/>";
 
-        prikaz_forme += "<label for='projekcija'>Projekcija</label>";
+        prikaz_forme += "<label for='projekcija'>Projekcija</label><br>";
 
         prikaz_forme += "<select name='projekcija' id='projekcija'>";
         $.each(lista.projekcija, function (index, val) {
@@ -315,10 +315,10 @@ $(document).ready( function(){
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
 
                 if(data.poruka['poruka']){
-                    $("#test").html("Dogodila se greška.");
+                    $("#test").html("Dogodila se greška.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                     $("#forma").html("");
                 }
 

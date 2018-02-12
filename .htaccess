@@ -1,0 +1,4 @@
+RewriteEngine On
+Rewritebase /
+RewriteCond %{HTTPS} off
+#RewriteRule ^prijava\.php$ https://barka.foi.hr%{REQUEST_URI} [L,R=301]

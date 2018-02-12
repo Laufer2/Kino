@@ -1,7 +1,7 @@
 <div id="container">
 
     <div id="linkovi-tablice">
-        <ul>
+        <ul id="crud-linkovi">
             <li><a href="crud.php?tablica=korisnik">Korisnici</a></li>
             <li><a href="crud.php?tablica=tipkorisnika">Tip Korisnika</a></li>
             <li><a href="crud.php?tablica=lokacija">Lokacija</a></li>
@@ -39,10 +39,6 @@
     <div id="paginacija"></div>
 
     <div id="prikaz-forme">
-        <div class="forma-natpis">
-            <h2>Forma za unos</h2>
-        </div>
-
         <div id="forma"></div>
         <div id="test"></div>
     </div>

@@ -4,6 +4,7 @@ require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
+require_once '../../vanjske_biblioteke/fpdf/fpdf.php';
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -12,9 +13,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $tip_sorta = filter_input(INPUT_POST,'tip_sorta');
     $aktivna_stranica = filter_input(INPUT_POST, 'aktivna_stranica');
     $akcija = filter_input(INPUT_POST, 'akcija');
-    $ispis = filter_input(INPUT_POST,'ispis');
     $interval = filter_input(INPUT_POST, 'interval');
     $tip = filter_input(INPUT_POST, 'tip');
+    $dapdf = filter_input(INPUT_POST, 'pdf');
 
 
     $baza = new baza();
@@ -87,6 +88,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $json['stupac'] = "";
         }
 
+        $json['upit'] = $upit;
         $rezultat = $baza->selectdb($upit);
 
         $redovi = $rezultat->num_rows;
@@ -236,6 +238,35 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     $json['ukupna_posjecenost'] = $posjecenost;
 
+    //generiraj pdf
+    if(isset($_POST['pdf']) && $dapdf){
+
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',16);
+
+        if($tip == 1){
+            $pregled = "Izvještaj za posjet stranicama";
+            $pdf->Cell(0,10,$pregled,0,1, 'C');
+        }else{
+            $pregled = "Izvještaj za korištenje upita";
+            $pdf->Cell(0,10,$pregled,0,1,'C');
+        }
+        $datum = "Datum: " . date("d.m.Y, H:i", $trenutno_vrijeme);
+        $pdf->Cell(0,10,$datum,0,1,'C');
+        $vremenski_interval = "Vremenski interval: " . $interval;
+        $pdf->Cell(0,10,$vremenski_interval,0,1,'C');
+        if(isset($pojam) && $pojam !== ""){
+            $filter = "Filter: " . $pojam;
+        }
+
+
+        $pdf->Cell(40,10,'Hello World!');
+        $pdf->Output();
+
+    }
+
+
     echo json_encode($json);
 }
 
@@ -261,4 +292,5 @@ function graf ($upit, $db_stupac, $tablica){
 
         return $json;
     }
+    return array();
 }

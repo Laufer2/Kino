@@ -1,15 +1,16 @@
 <div id="container">
 
-    <div id="search">
+    <div id="iznad-tablice">
+        <div id="search">
 
-    </div>
+        </div>
+        <div id="prikaz-tablice">
 
-    <div id="prikaz-tablice">
+        </div>
 
-    </div>
+        <div id="paginacija">
 
-    <div id="paginacija">
-
+        </div>
     </div>
 
 </div>

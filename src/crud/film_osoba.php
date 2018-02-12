@@ -3,6 +3,7 @@
 require_once '../klase/baza.php';
 require_once '../stranice_ispisa.php';
 require_once '../klase/datoteka.php';
+require_once '../dnevnik_rada/dnevnik_rada.php';
 
 if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
@@ -75,6 +76,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             }
 
             $upit = "INSERT INTO filmosoba VALUES ($film, $osoba, $uloga)";
+            dnevnik($upit, 2, 0);
             $rezultat = $baza->update($upit);
 
             break;
@@ -94,9 +96,8 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $pojam = "%" . $pojam . "%";
         $upit = "SELECT * FROM filmosoba f JOIN film f2 ON f.film_id = f2.id_film JOIN osoba o ON f.osoba_id = o.id_osoba 
                   JOIN tipuloga t ON f.uloga_id = t.id_tipuloga
-                  WHERE f2.naziv_film LIKE '$pojam' OR o.naziv_osoba LIKE '$pojam' OR t.naziv_tipuloga LIKE '$pojam'";
-        dnevnik($upit, 2, 0);
-        if(isset($stupac) && $stupac != "" ) {
+                  WHERE f2.naziv_film LIKE '$pojam' OR o.naziv_osoba LIKE '$pojam' OR t.naziv_tipuloga LIKE '$pojam' ";
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;
@@ -125,7 +126,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         $upit = "SELECT * FROM filmosoba f JOIN film f2 ON f.film_id = f2.id_film JOIN osoba o ON f.osoba_id = o.id_osoba 
                   JOIN tipuloga t ON f.uloga_id = t.id_tipuloga";
-        if(isset($stupac) && $stupac != "" ) {
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;

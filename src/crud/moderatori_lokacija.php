@@ -105,7 +105,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $pojam = "%" . $pojam . "%";
         $upit = "SELECT * FROM moderatorlokacije m JOIN korisnik k ON m.korisnik_id = k.id_korisnik JOIN lokacija l ON m.lokacija_id = l.id_lokacija
                   WHERE k.korisnicko_ime LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam'";
-        if(isset($stupac) && $stupac != "" ) {
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;

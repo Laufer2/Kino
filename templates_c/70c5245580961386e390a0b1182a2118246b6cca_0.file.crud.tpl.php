@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-08 21:29:56
+/* Smarty version 3.1.30, created on 2018-02-09 00:39:26
   from "C:\xampp\htdocs\kino\templates\crud.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a7cb344f41ba5_38514496',
+  'unifunc' => 'content_5a7cdfae3f6461_61678325',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '70c5245580961386e390a0b1182a2118246b6cca' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\crud.tpl',
-      1 => 1518121796,
+      1 => 1518133142,
       2 => 'file',
     ),
   ),
@@ -20,12 +20,12 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a7cb344f41ba5_38514496 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a7cdfae3f6461_61678325 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
     <div id="linkovi-tablice">
-        <ul>
+        <ul id="crud-linkovi">
             <li><a href="crud.php?tablica=korisnik">Korisnici</a></li>
             <li><a href="crud.php?tablica=tipkorisnika">Tip Korisnika</a></li>
             <li><a href="crud.php?tablica=lokacija">Lokacija</a></li>
@@ -63,10 +63,6 @@ function content_5a7cb344f41ba5_38514496 (Smarty_Internal_Template $_smarty_tpl)
     <div id="paginacija"></div>
 
     <div id="prikaz-forme">
-        <div class="forma-natpis">
-            <h2>Forma za unos</h2>
-        </div>
-
         <div id="forma"></div>
         <div id="test"></div>
     </div>

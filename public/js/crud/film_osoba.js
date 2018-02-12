@@ -33,9 +33,9 @@ $(document).ready(function(){
 
     function nacrtaj_tablicu(data) {
 
-        var prikaz_tablice = "<button id='gumb-kreiraj'>";
+        var prikaz_tablice = "<a href='#forma'><button id='gumb-kreiraj'>";
         prikaz_tablice += "Dodaj novi zapis";
-        prikaz_tablice += "</button>";
+        prikaz_tablice += "</button></a>";
 
         prikaz_tablice += "<table class='tablica'>";
         prikaz_tablice += "<tr>";
@@ -79,7 +79,7 @@ $(document).ready(function(){
         var prikaz_forme = "<form action='src/crud/film_osoba.php' ";
         prikaz_forme += "id='novi_zapis' method='post' enctype='application/x-www-form-urlencoded'>";
 
-        prikaz_forme += "<label for='film'>Film</label>";
+        prikaz_forme += "<label for='film'>Film</label><br>";
 
         prikaz_forme += "<select name='film' id='film'>";
         $.each(lista.film, function (index, val) {
@@ -88,7 +88,7 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='osoba'>Osoba</label>";
+        prikaz_forme += "<label for='osoba'>Osoba</label><br>";
 
         prikaz_forme += "<select name='osoba' id='osoba'>";
         $.each(lista.osoba, function (index, val) {
@@ -97,7 +97,7 @@ $(document).ready(function(){
         });
         prikaz_forme += "</select><br/>";
 
-        prikaz_forme += "<label for='uloga'>Uloga</label>";
+        prikaz_forme += "<label for='uloga'>Uloga</label><br>";
 
         prikaz_forme += "<select name='uloga' id='uloga'>";
         $.each(lista.tipuloga, function (index, val) {
@@ -285,7 +285,7 @@ $(document).ready(function(){
                     $("#test").html("Taj zapis već postoji.").css("display","block");
 
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                     $("#forma").html("");
                 }
 

@@ -12,6 +12,10 @@ $smarty->setCompileDir('../templates_c');
 
 $smarty->display('head.tpl');
 
+$smarty->display('zaglavlje.tpl');
+
+$smarty->display('navigacija.tpl');
+
 $smarty->display('korisnici.tpl');
 
 $smarty->display('podnozje.tpl');

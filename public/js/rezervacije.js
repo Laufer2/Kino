@@ -44,6 +44,7 @@ $(document).ready( function(){
         prikaz_tablice += "<th>Vrijeme</th>";
         prikaz_tablice += "<th>Broj rezervacija</th>";
         prikaz_tablice += "<th>Status rezervacije</th>";
+        prikaz_tablice += "<th>Slike</th>";
         prikaz_tablice += "</tr>";
 
         $.each(data.podaci, function (index, rezervacija) {
@@ -54,12 +55,37 @@ $(document).ready( function(){
                 prikaz_tablice += "<td>"+ rezervacija.pocetak +"</td>";
                 prikaz_tablice += "<td>"+ rezervacija.broj_rezervacija +"</td>";
                 prikaz_tablice += "<td>"+ rezervacija.status +"</td>";
+                if(rezervacija.status === "Potvrđena"){
+                    prikaz_tablice += "<td><a href='#forma'><button class='gumb-slika' data-id='"+ rezervacija.id +"'>Slika</button></a></td>";
+                }else{
+                    prikaz_tablice += "<td><button class='gumb-neslika' disabled>Slika</button></td>";
+                }
             prikaz_tablice += "</tr>";
 
         });
 
         prikaz_tablice += "</table>";
         return prikaz_tablice;
+    }
+
+    function nacrtaj_formu(id){
+
+        var prikaz_forme = "<form action='src/slike/obrada_forme.php' ";
+        prikaz_forme += "id='upload_slike' method='post' enctype='multipart/form-data'>";
+
+        prikaz_forme += "<label>Slika&nbsp;</label>";
+        prikaz_forme += "<input type='file' name='slika' id='slika' accept='image/x-png,image/gif,image/jpeg' title='Dopuštene samo slike' required><br/>";
+        prikaz_forme += "<label>Oznaka&nbsp;</label><br>";
+        prikaz_forme += "<div id='oznaka'><input type='text' name='oznaka[]' id='oznaka'>";
+        prikaz_forme += "<button type='button' class='gumb-plus' id='nova-oznaka'>+</button><br/></div>";
+
+        prikaz_forme += "<input type='hidden' name='id' value='"+ id +"'>";
+
+        prikaz_forme += "<input type='submit' value='Dodaj sliku'>";
+        prikaz_forme += "</form>";
+
+        return prikaz_forme;
+
     }
 
     function sort(tip_sorta, stupac){
@@ -86,6 +112,16 @@ $(document).ready( function(){
             }
         });
     }
+
+    $(document).on('click', '.gumb-slika', function () {
+        $("#test").html("").css("display","none");
+        $("#forma").html(nacrtaj_formu($(this).attr("data-id")));
+    });
+
+    $(document).on('click', '#nova-oznaka', function () {
+        var oznaka = "<input type='text' name='oznaka[]'><br/>";
+        $("#oznaka").append(oznaka);
+    });
 
     $(document).on('click', '.broj-paginacija', function () {
         var pojam, akcija="";
@@ -148,4 +184,30 @@ $(document).ready( function(){
         });
     });
 
+    $(document).on('submit', '#upload_slike', function(event){
+
+        event.preventDefault();
+
+        var forma = $(this);
+        var file = new FormData(forma[0]);
+
+        event.preventDefault();
+
+        $.ajax({
+            url : $(this).attr("action"),
+            type : $(this).attr("method"),
+            data : file,
+            cache: false,
+            contentType: false,
+            processData: false,
+
+            success: function (data) {
+                data = JSON.parse(data);
+                $("#forma").html();
+                if(data.poruka){
+                    $("#test").html(data.poruka).css("display","block").css("background-color","#4CAF50");
+                }
+            }
+        });
+    });
 });

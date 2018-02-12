@@ -1,0 +1,39 @@
+@media print {
+    body{
+        margin: 1cm;
+    }
+    nav#navigacija, #pretraga, .print, .silazno, .uzlazno, #gen_pdf, #paginacija, .print{
+        display: none !important;
+        float: none !important;
+    }
+    html, body, div, button, form, canvas, #container, #grafovi, #graf1, #vremenski_intervali, #graf2, #tablicni-podaci, #prikaz-tablice, #poruke, #iznad-tablice, #search, #paginacija{
+        float: none !important;
+    }
+    #poruke, #container, #prikaz-tablice, h2{
+        color: black;
+        width: auto;
+    }
+    select {
+        border: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+        font-size: 18px;
+    }
+    tr, #graf2, #graf1, canvas {
+        page-break-inside: avoid !important;
+    }
+    #udio_nelajkova{
+        page-break-before: always !important;
+        page-break-inside: avoid !important;
+    }
+    .korisnik-statistika{
+        display: inline;
+        margin-left: 5px;
+    }
+    header{
+        background-color: white;
+    }
+}
+

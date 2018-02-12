@@ -155,7 +155,7 @@ $(document).ready( function () {
         });
     });
 
-    $(document).on('click', '#print', function () {
+    $(document).on('click', '.print', function () {
         window.print();
     });
 

@@ -2,27 +2,30 @@
 
 require_once '../klase/baza.php';
 require_once '../klase/korisnik.php';
-require_once '../istek_sesije.php';
 require_once '../statistike/evidencija.php';
 require_once '../dnevnik_rada/dnevnik_rada.php';
 
-/*
-if(istek_sesije()){
-    echo '<script>location.href = "prijava.php"</script>';
-    exit();
-};*/
+
 if(!isset($_SESSION))
 {
     session_start();
 }
 
 $korisnik = $_SESSION['kino']->getIdKorisnik();
+$admin = $_SESSION['kino']->getTipId();
+
 $baza = new baza();
+
 if(isset($_POST['selectmenu'])) {
 
     $json['lokacije'] = array();
 
     $upit = "SELECT * FROM lokacija l JOIN moderatorlokacije m ON l.id_lokacija = m.lokacija_id WHERE korisnik_id = $korisnik";
+
+    if($admin == 1){
+        $upit = "SELECT * FROM lokacija";
+    }
+
     $rezultat = $baza->selectdb($upit);
 
     if ($rezultat->num_rows) {
@@ -33,12 +36,7 @@ if(isset($_POST['selectmenu'])) {
                 "naziv" => $red['naziv_lokacija']
             );
             array_push($json['lokacije'], $polje);
-
         }
-    } else {
-
-        //moderira samo jednu lokaciju
-
     }
 
     $json['filmovi'] = array();
@@ -60,7 +58,6 @@ if(isset($_POST['selectmenu'])) {
 
     echo json_encode($json);
 }else{
-
 
     //termin
     $film = filter_input(INPUT_POST,'Film');

@@ -29,6 +29,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $vrijeme = filter_input(INPUT_POST,'vrijeme');
 
     $korisnik = $_SESSION['kino']->getIdKorisnik();
+    $admin = $_SESSION['kino']->getTipId();
 
     dnevnik("Potvrde rezervacija", 3, 0);
 
@@ -49,6 +50,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         $upit = "SELECT * FROM lokacija JOIN moderatorlokacije m ON lokacija.id_lokacija = m.lokacija_id WHERE m.korisnik_id = $korisnik";
         dnevnik($upit, 2, 0);
+
+        if($admin == 1){
+            $upit = "SELECT * FROM lokacija";
+        }
 
         $rezultat = $baza->selectdb($upit);
 

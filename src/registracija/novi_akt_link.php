@@ -28,9 +28,14 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
 
     if($baza->update($upit)){
         //slanje novog akt maila
+
+        $uri = $_SERVER["REQUEST_URI"];
+        $pos = strrpos($uri, "/");
+        $dir = $_SERVER["HTTP_HOST"] . substr($uri, 0, $pos - 16);
+        $url = "http://" . $dir . "aktivacija.php?kod=$aktivacijski_kod";
+
         $naslov = "Novi aktivacijski link za Kino.org";
-        //$poruka = "Aktivirajte Vaš račun klikom na <a href='http://barka.foi.hr/WebDiP/2015_projekti/WebDiP2015x047/aktivacija.php?kod=$aktivacijski_kod'>aktivacijski link </a>";
-        $poruka = "Aktivirajte Vaš račun klikom na <a href='http://localhost:8000/kino/aktivacija.php?kod=$aktivacijski_kod'>aktivacijski link.</a>";
+        $poruka = "Aktivirajte Vaš račun klikom na <a href='$url'>aktivacijski link.</a>";
 
         if(posalji_mail($email,$naslov,$poruka)){
             posalji_poruku("Aktivacijski link je poslan na vašu e-mail adresu. Račun možete aktivirati tokom $sati h.");

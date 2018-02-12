@@ -163,10 +163,8 @@ $(document).ready(function(){
                 data = JSON.parse(data);
                 pocetna();
                 $("#forma").html();
-                $("#test").html(data.poruka);
-
+                $("#test").html(data.poruka).css("display","block");
             }
-
         });
     });
 
@@ -194,9 +192,9 @@ $(document).ready(function(){
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
 
                 if(data.poruka){
-                    $("#test").html(data.poruka);
+                    $("#test").html(data.poruka).css("display","block");
                 }else{
-                    $("#test").html("");
+                    $("#test").css("display","none");
                 }
                 $("#forma").html("");
             }
@@ -242,10 +240,12 @@ $(document).ready(function(){
         var forma = nacrtaj_formu(2,"");
         $(".forma-natpis").html("").css("display", "inline");
         $("#forma").html(forma);
+        $("#test").css("display","none");
 
     });
 
     $(document).on('click', '.gumb-edit', function() {
+        $("#test").css("display","none");
         var id = $(this).attr("data-id");
         $.ajax({
             url: 'src/crud/katalog.php',
@@ -270,6 +270,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.gumb-delete', function(){
+        $("#test").css("display","none");
         var id = $(this).attr("data-id");
         $("#dialog-potvrda").dialog({
             resizable: false,

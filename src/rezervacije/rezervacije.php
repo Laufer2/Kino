@@ -77,6 +77,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
 
             $polje = array(
+                "id" => $red['id_rezervacija'],
                 "lokacija" => $red['naziv_lokacija'],
                 "film" => $red['naziv_film'],
                 "pocetak" => date("j.m.Y, H:i", $red['dostupan_do']),

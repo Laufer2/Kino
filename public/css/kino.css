@@ -78,6 +78,7 @@ nav#navigacija{
     width: 80%;
     color:#444;
     padding: 5px;
+    margin-bottom: 150px;
 }
 
 .dijagrami{
@@ -117,43 +118,36 @@ button{
 .gumb-delete{
     background-color: #d9534f;
 }
-
 .gumb-edit{
     background-color: #269abc;
 }
-
 #gumb-csv{
     background-color: #269abc;
     float: right;
     margin: 5px;
-
 }
-
-#gumb-kreiraj{
+#gumb-kreiraj, .gumb-plus, .gumb-slika{
     background-color: #286090;
+}
+#gumb-kreiraj{
     float: right;
     margin: 5px;
 }
-
 .gumb-svidja, .gumb-potvrdi{
     background-color: #4CAF50;
     margin-right: 3px;
 }
-
-.gumb-ne-svidja, .gumb-odbij, #print{
+.gumb-ne-svidja, .gumb-odbij, .print{
     background-color: #d9534f;
 }
-
 .gumb-potvrdi, .gumb-odbij{
     padding: 10px;
 }
-
 .gumb-potvrdi:disabled{
     background-color: #999999;
 }
-
-#print{
-    float: right;
+.gumb-block{
+    background-color: #444444;
 }
 
 #dohvati-pomak{
@@ -172,23 +166,32 @@ input[type='submit']{
     background-color: #286090;
 }
 
-input[disabled]{
-
+input[disabled], .gumb-neslika{
     background-color: #999999;
 }
 
 .silazno{
     float: right;
     background-color: #286090;
-    padding: 5% 8%;
+    padding: 4% 6%;
     border: 1px solid #ddd;
 }
 
 .uzlazno{
     float: right;
     background-color: #286090;
-    padding: 5% 8%;
+    padding: 4% 6%;
     border: 1px solid #ddd;
+}
+
+.celija-lozinka{
+    width: 10%;
+}
+
+.tablica-korisnik{
+    table-layout: fixed;
+    width: 100%;
+    word-wrap: break-word;
 }
 
 /* paginacija */
@@ -213,6 +216,9 @@ input[disabled]{
 
 #prikaz-tablice{
     margin-top: 5px;
+}
+tr.red-projekcija:hover{
+    background-color: #e7e7e7;
 }
 
 #aktivan{
@@ -252,10 +258,17 @@ form#pretraga > input[type='submit']{
 #grafovi{
     margin-top: 20px;
 }
-#graf1{
+#graf1, #graf2{
     text-align: left;
-    width: 90%;
+
     margin: 0 auto;
+}
+#graf1{
+    width: 90%;
+}
+
+#graf2{
+    width: 40%;
 }
 
 
@@ -280,7 +293,7 @@ label{
     font-size: 20px;
 }
 
-input, textarea, select{
+input, textarea, select, fieldset{
     font-size: 16px;
     padding: 5px;
     margin-bottom: 10px;
@@ -345,7 +358,38 @@ input[type=checkbox]{
     cursor: pointer;
 }
 
+.zaglavlje{
+    text-transform: capitalize;
+}
 
+#gen_pdf{
+    width: 10%;
+    float: right;
+}
 
+#linkovi-tablice > ul {
+    list-style: none;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+}
 
+#linkovi-tablice > ul li a {
+    display: inline;
+    float: right;
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: #7b1baf;
 
+    border: solid #000000 1px;
+    padding: 10px 20px;
+}
+
+.print{
+    float: right;
+}
+
+.korisnik-statistika{
+    display: none;
+}

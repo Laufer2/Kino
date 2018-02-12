@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-08 19:20:40
+/* Smarty version 3.1.30, created on 2018-02-09 14:28:14
   from "C:\xampp\htdocs\kino\templates\termini.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a7c94f8460398_05156772',
+  'unifunc' => 'content_5a7da1ee3d4c23_01102266',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '559b15b20b63c018a393106f722e25ef9892fb2b' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\termini.tpl',
-      1 => 1518113998,
+      1 => 1518131346,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a7c94f8460398_05156772 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a7da1ee3d4c23_01102266 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -56,7 +56,7 @@ function content_5a7c94f8460398_05156772 (Smarty_Internal_Template $_smarty_tpl)
                     <label for="sati">Vrijeme</label><br>
                     <input type="number" name="sati2" id="sati" placeholder="sati" min="0" max="23" required>
 
-                    <input type="number" name="minute2" id="minute" placeholder="min" min="0" max="60" required><br/>
+                    <input type="number" name="minute2" id="minute" placeholder="min" min="0" max="59" required><br/>
 
                 </fieldset>
 

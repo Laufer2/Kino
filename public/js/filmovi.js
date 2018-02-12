@@ -27,7 +27,7 @@ $(document).ready( function () {
         });
 
         padajuci += "</select>";
-        padajuci += "<button type='button' id='novi-zanr'>+</button><br/>";
+        padajuci += "<button type='button' class='gumb-plus' id='novi-zanr'>+</button><br/>";
 
         return padajuci;
     }

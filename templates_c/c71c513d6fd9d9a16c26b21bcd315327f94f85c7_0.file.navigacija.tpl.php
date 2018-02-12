@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-08 12:57:24
+/* Smarty version 3.1.30, created on 2018-02-12 01:31:10
   from "C:\xampp\htdocs\kino\templates\navigacija.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a7c3b24c5af23_72872069',
+  'unifunc' => 'content_5a80e04e8680f4_66028311',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'c71c513d6fd9d9a16c26b21bcd315327f94f85c7' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\navigacija.tpl',
-      1 => 1518091035,
+      1 => 1518393609,
       2 => 'file',
     ),
   ),
@@ -20,12 +20,21 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a7c3b24c5af23_72872069 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a80e04e8680f4_66028311 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <nav id="navigacija">
 
     <ul>
-        <li><a href="index.php">Naslovnica</a></li>
+        <?php if (isset($_smarty_tpl->tpl_vars['privatno']->value)) {?>
+            <li><a href="../index.php">Naslovnica</a></li>
+            <li><a href="../registracija.php">Registracija</a></li>
+            <li><a href="../prijava.php">Prijava</a></li>
+            <li><a href="../o_autoru.php">O autoru</a></li>
+            <li><a href="../dokumentacija.php">Dokumentacija</a></li>
+        <?php }?>
+        <?php if (!isset($_smarty_tpl->tpl_vars['privatno']->value)) {?>
+            <li><a href="index.php">Naslovnica</a></li>
+        <?php }?>
         <?php if (isset($_smarty_tpl->tpl_vars['Lurker']->value)) {?>
             <li><a href="registracija.php">Registracija</a></li>
             <li><a href="prijava.php">Prijava</a></li>
@@ -48,6 +57,7 @@ function content_5a7c3b24c5af23_72872069 (Smarty_Internal_Template $_smarty_tpl)
             <li><a href="filmovi.php">Filmovi</a></li>
             <li><a href="potvrde.php">Potvrde rezervacija</a></li>
             <li><a href="termini.php">Termini</a></li>
+            <li><a href="korisnicke_slike.php">Korisničke slike</a></li>
             <li><a href="app_statistika.php">Aplikativna statistika</a></li>
         <?php }?>
 

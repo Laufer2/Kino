@@ -10,9 +10,11 @@ $novi_akt_link = "da";
 
 $smarty->assign("Naslov_stranice",$title);
 $smarty->assign('novi_aktivacijski_link',$novi_akt_link);
+$smarty->assign('Lurker',"da");
 
 $smarty->display('head.tpl');
 $smarty->display('zaglavlje.tpl');
+$smarty->display('navigacija.tpl');
 
 if(filter_input(INPUT_GET, 'kod') !== null){
 
@@ -33,16 +35,16 @@ if(filter_input(INPUT_GET, 'kod') !== null){
         //ako nije istekao
         if ($akt_rok >= (time() + ($pomak*60*60)) && $status_aktivacije != 2){
 
-            $upit = "UPDATE Korisnik SET status_aktivacije = 1 WHERE aktivacijski_kod='$aktivacijski_kod'";
+            $upit = "UPDATE korisnik SET status_aktivacije = 1 WHERE aktivacijski_kod='$aktivacijski_kod'";
             $baza->update($upit);
 
-            $smarty->assign('poruka', 'Uspješno ste aktivirali korisnički račun. Možete se prijaviti sa svojim podacima.');
+            $smarty->assign('poruka', ' Uspješno ste aktivirali korisnički račun. Možete se prijaviti sa svojim podacima.');
 
         }else if($status_aktivacije != 2){
-            $smarty->assign('rok_istekao','Rok za aktivaciju je istekao. Unesite e-mail za ponovno slanje aktivacijskog linka.' );
+            $smarty->assign('rok_istekao',' Rok za aktivaciju je istekao. Unesite e-mail za ponovno slanje aktivacijskog linka.' );
 
         }else{
-            $smarty->assign('poruka', 'Vaš račun je zaključan. Kontaktirajte administratora.' );
+            $smarty->assign('poruka', ' Vaš račun je zaključan. Kontaktirajte administratora.' );
         }
     }
 }

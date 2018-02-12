@@ -27,7 +27,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     //novi zapis
     if($akcija < 4) {
 
-        $upit = filter_input(INPUT_POST, 'kupit');
+        $upit1 = filter_input(INPUT_POST, 'upit');
         $korisnik = filter_input(INPUT_POST, 'korisnik');
         $vrijeme2 = filter_input(INPUT_POST, 'vrijeme');
         $datum1 = filter_input(INPUT_POST,'datum1');
@@ -74,13 +74,13 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
     switch ($akcija){
         case 1://kreiranje
-            $upit = "SELECT * FROM korisnikupit WHERE upit_id = $upit AND korisnik_id = $korisnik AND vrijeme = $vrijeme";
+            $upit = "SELECT * FROM korisnikupit WHERE upit_id = $upit1 AND korisnik_id = $korisnik AND vrijeme = $vrijeme";
             $rezultat = $baza->selectdb($upit);
 
             if($rezultat->num_rows){
                 $poruka = "Taj zapis već postoji";
             }else{
-                $upit = "INSERT INTO korisnikupit VALUES ($korisnik, $upit, $vrijeme)";
+                $upit = "INSERT INTO korisnikupit VALUES ($korisnik, $upit1, $vrijeme)";
                 $rezultat = $baza->update($upit);
             }
             break;
@@ -118,7 +118,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $rezultat = $baza->selectdb($upit);
     $redovi = $rezultat->num_rows;
     if(!$redovi){
-        $poruka = 1;
+        $poruka = "Nema podataka";
     }
     if ($rezultat > $prikazi){
         $broj_stranica = ceil($redovi/$prikazi);
@@ -130,7 +130,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if($broj_stranica){
         $upit .= " LIMIT $prikazi OFFSET $offset";
     }
-
     if($rezultat = $baza->selectdb($upit)){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
@@ -149,15 +148,15 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
 
         $json['aktivna_stranica'] = intval($aktivna_stranica);
         $json['broj_stranica'] = $broj_stranica;
-        $json['poruka'] = array('poruka'=>$poruka);
+        $json['poruka'] = $poruka;
 
         echo json_encode($json);
 
     }else{
 
-        $poruka = 1;
+        $poruka = "Pogreška. Pokušajte ponovo";
 
-        $json['poruka'] = array('poruka'=>$poruka);
+        $json['poruka'] = $poruka;
 
         echo json_encode($json);
 

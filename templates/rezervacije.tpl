@@ -13,4 +13,9 @@
         </div>
     </div>
 
+    <div id="prikaz-forme">
+        <div id="forma"></div>
+        <div id="test"></div>
+    </div>
+
 </div>

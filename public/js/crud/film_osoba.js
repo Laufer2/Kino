@@ -51,8 +51,8 @@ $(document).ready(function(){
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>";
         prikaz_tablice += "Uloga";
-        prikaz_tablice += "<button class='silazno' data-stupac='u.naziv_tipuloga'>&#709;</button>"; //DESC
-        prikaz_tablice += "<button class='uzlazno' data-stupac='u.naziv_tipuloga'>&#708;</button>"; //ASC
+        prikaz_tablice += "<button class='silazno' data-stupac='t.naziv_tipuloga'>&#709;</button>"; //DESC
+        prikaz_tablice += "<button class='uzlazno' data-stupac='t.naziv_tipuloga'>&#708;</button>"; //ASC
         prikaz_tablice += "</th>";
         prikaz_tablice += "<th>Funkcije</th>";
         prikaz_tablice += "</tr>";

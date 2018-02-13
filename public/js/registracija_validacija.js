@@ -111,31 +111,29 @@ $( document ).ready( function() {
 
         var lozinka = $("#lozinka").val();
         var ponovljena_lozinka = $("#ponovo_lozinka").val();
-        var regex2 = "";
+        var regex2 = /.*^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/;
 
-        polje_validacija[4] = 1;
-        /* Ugnijezditi s prvim ifom
-        if(regex2.test(lozinka)){
-            polje_validacija[4] = 1;
-            $("#lozinka_poruka").html("");
-        }else{
-            polje_validacija[4] = 0;
-            $("#lozinka_poruka").html("Lozinka mora sadržavati 1 veliko slovo i 1 broj.");
-            //dijakritički znakovi????
-        }*/
+
 
         if(lozinka.length < 8 ){
             polje_validacija[3] = 0;
             $("#lozinka_poruka").html("Lozinka mora biti duza od 7 znakova.");
+
         }else{
             polje_validacija[3] = 1;
-            $("#lozinka_poruka").html("");
-            if (lozinka !== ponovljena_lozinka){
-                polje_validacija[5] = 0;
-                $("#ponovo_lozinka_poruka").html("Lozinke nisu jednake.");
+            if(regex2.test(lozinka)){
+                polje_validacija[4] = 1;
+                if (lozinka !== ponovljena_lozinka){
+                    polje_validacija[5] = 0;
+                    $("#ponovo_lozinka_poruka").html("Lozinke nisu jednake.");
+                }else{
+                    polje_validacija[5] = 1;
+                    $("#ponovo_lozinka_poruka").html("");
+                }
+                $("#lozinka_poruka").html("");
             }else{
-                polje_validacija[5] = 1;
-                $("#ponovo_lozinka_poruka").html("");
+                polje_validacija[4] = 0;
+                $("#lozinka_poruka").html("Lozinka mora minimalno sadržavati 1 malo, 1 veliko slovo i 1 broj.");
             }
         }
 

@@ -17,7 +17,6 @@ $baza = new baza();
 $upit = "INSERT INTO rezervacija VALUES (default, $broj_rezervacija, default, $korisnik, $projekcija)";
 dnevnik($upit, 2, 0);
 
-$json['upit'] = $upit;
 
 if($rezultati = $baza->update($upit)){
 

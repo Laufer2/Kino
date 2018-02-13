@@ -36,6 +36,7 @@ if($_FILES['slika']['error'] !== UPLOAD_ERR_NO_FILE) {
 
     $upit = "INSERT INTO slika VALUES (default, '$ime', $rezervacija)";
     $baza->update($upit);
+    dnevnik(mysql_escape_string($upit),2,0);
 
     $upit = "SELECT id_slika FROM slika WHERE naziv_slika = '$ime'";
     $rez = $baza->selectdb($upit);

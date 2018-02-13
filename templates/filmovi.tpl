@@ -45,8 +45,6 @@
 
     </div>
 
-    <div id="poruke">
-
-    </div>
+    <div id="poruke"></div>
 
 </div>

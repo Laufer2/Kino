@@ -38,14 +38,22 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if ($akcija == 5 && $pojam != ""){ // search
         $pojam = "%" . $pojam . "%";
         $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
-                  JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija WHERE r.korisnik_id = $korisnik AND 
-                  (f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
+                  JOIN film f ON p.film_id = f.id_film 
+                  JOIN lokacija l ON p.lokacija_id = l.id_lokacija 
+                  WHERE r.korisnik_id = $korisnik AND r.status < 2 
+                  AND (f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
+
+        dnevnik(mysql_escape_string($upit), 2, 0);
 
     }else{
+
         $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
-                  JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija WHERE r.korisnik_id = $korisnik";
+                  JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija 
+                  WHERE r.korisnik_id = $korisnik AND r.status < 2";
+
         dnevnik($upit, 2, 0);
     }
+    $json['upit'] = $upit;
 
 
     if(isset($tip_sorta) && $tip_sorta != "" ) {

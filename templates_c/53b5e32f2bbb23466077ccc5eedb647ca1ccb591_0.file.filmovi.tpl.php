@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-11 13:26:07
+/* Smarty version 3.1.30, created on 2018-02-12 22:40:39
   from "C:\xampp\htdocs\kino\templates\filmovi.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a80365f104861_85608329',
+  'unifunc' => 'content_5a8209d7d0fab8_57013086',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '53b5e32f2bbb23466077ccc5eedb647ca1ccb591' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\filmovi.tpl',
-      1 => 1518351930,
+      1 => 1518471637,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a80365f104861_85608329 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a8209d7d0fab8_57013086 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="container">
 
@@ -69,9 +69,7 @@ function content_5a80365f104861_85608329 (Smarty_Internal_Template $_smarty_tpl)
 
     </div>
 
-    <div id="poruke">
-
-    </div>
+    <div id="poruke"></div>
 
 </div><?php }
 }

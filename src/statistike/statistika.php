@@ -55,6 +55,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                               FROM korisnikstranica k JOIN stranica s ON k.stranica_id = s.id_stranica
                               WHERE k.vrijeme >= $proslo_vrijeme AND k.vrijeme <= $trenutno_vrijeme 
                               GROUP BY s.naziv_stranica";
+                dnevnik($grafupit,2,0);
 
                 $grafstranica = graf($grafupit,$db_stupac,$tablica);
                 $json['graf'] = $grafstranica;
@@ -63,6 +64,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             case 2: // prikaz upita
                 $upit = "SELECT * FROM upit u JOIN korisnikupit k ON u.id_upit = k.upit_id 
                       JOIN korisnik k2 ON k.korisnik_id = k2.id_korisnik WHERE k.vrijeme >= $proslo_vrijeme AND k.vrijeme <= $trenutno_vrijeme";
+                dnevnik($upit,2,0);
                 $db_stupac = "naziv_upit";
                 $tablica = "upit";
 
@@ -87,7 +89,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $json['stupac'] = "";
         }
 
-        $json['upit'] = $upit;
         $rezultat = $baza->selectdb($upit);
 
         $redovi = $rezultat->num_rows;
@@ -188,6 +189,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                           FROM korisnikupit k JOIN upit u ON k.upit_id = u.id_upit
                           WHERE k.vrijeme >= $proslo_vrijeme AND k.vrijeme <= $trenutno_vrijeme 
                           GROUP BY u.naziv_upit";
+                    dnevnik($upit,2,0);
                     $db_stupac = "naziv_upit";
                     $tablica = "upit";
                 }else {

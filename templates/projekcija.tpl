@@ -11,6 +11,7 @@
 
                 <div id="zanrovi">
                     <span><b>Žanr:</b></span>
+
                 </div>
 
                 <div id="trajanje">
@@ -38,7 +39,7 @@
             <div id="detalji_rezervacija">
 
                 <div id="lokacija">
-                    <span><b>Opis:</b></span>
+                    <span><b>Lokacija:</b></span>
                 </div>
                 <div id="dostupan_od">
                     <span><b>Dostupan od:</b></span>

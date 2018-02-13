@@ -13,6 +13,7 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
     $lozinka = htmlspecialchars(filter_input(INPUT_POST, 'lozinka', FILTER_SANITIZE_STRING));
     $ponovljena_lozinka = htmlspecialchars(filter_input(INPUT_POST, 'ponovo_lozinka', FILTER_SANITIZE_STRING));
 
+
     if(isset($_POST['g-recaptcha-response'])){
         $captcha = $_POST['g-recaptcha-response'];
     }
@@ -26,34 +27,35 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST'){
     $odgovor = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$tajni_kljuc."&response=".$captcha."&remoteip=".$ip);
     $kljuc_odgovora = json_decode($odgovor,true);
 
+
     if($kljuc_odgovora["success"] !== true) {
 
-        posalji_poruku("Automatu, išššš, išššš!.");
+        posalji_poruku("Automatu, išššš, išššš!");
 
     } else {
 
-        /*
-        if(!preg_match("/^[a-zA-Z0-9.!#$%&’*+/?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/", $email)){
-           posalji_poruku("Nepravilno strukturirana e-mail adresa.");
-           exit();
-        }*/
 
         $upit = "SELECT * FROM korisnik WHERE email = '$email';";
         $baza = new baza();
 
         $rezultat = $baza->selectdb($upit);
         if($rezultat->num_rows != 0){
-            posalji_poruku( "Već postoji korisnički račun s navedenom e-mail adresom.");
+            echo "Već postoji korisnički račun s navedenom e-mail adresom.";
+            exit();
+        }
+
+        if(!preg_match("/.*^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/", $lozinka)){
+            echo "Lozinka mora minimalno sadržavati 1 malo, 1 veliko slovo te jedan broj.";
             exit();
         }
 
         if(strcmp($lozinka, $ponovljena_lozinka) != 0) {
-            posalji_poruku("Lozinke nisu jednake");
+            echo "Lozinke nisu jednake";
             exit();
         }
 
         if (strlen($korisnicko_ime) < 4){
-            posalji_poruku("Korisnicko ime mora imati min 4 znaka.");
+            echo "Korisničko ime mora sadržavati minimalno 4 znaka.";
             exit();
         }
 

@@ -79,10 +79,9 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             break;
         case 2:// ažuriranje
 
-            $upit = "UPDATE adresa SET lokacija_id = $lokacija, ulica = '$ulica', broj = $broj, grad_id = $grad, 
+            $upit = "UPDATE adresa SET lokacija_id = $lokacija, ulica = '$ulica', broj = $broj, grad_id = $grad, postanski_broj = $postanski_broj, 
                       drzava_id = $drzava WHERE id_adresa = $id";
             $rezultat = $baza->update($upit);
-            $json['upit']=$upit;
             break;
 
         case 3: // brisanje

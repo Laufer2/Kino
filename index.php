@@ -16,6 +16,9 @@ if($tip_korisnika < 4){
 
     $smarty->assign('naslovnica_prijavljeni',"da");
 
+}else{
+
+    $smarty->assign('naslovnica_neprijavljeni',"da");
 }
 
 $smarty->display('naslovnica.tpl');

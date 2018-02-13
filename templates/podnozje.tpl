@@ -8,7 +8,7 @@
 {if isset($naslovnica_prijavljeni)}
     <script src="public/js/naslovnica_prijavljeni.js"></script>
 {/if}
-{if isset($Lurker)}
+{if isset($naslovnica_neprijavljeni)}
     <script src="public/js/naslovnica.js"></script>
 {/if}
 {if isset($registracija)}

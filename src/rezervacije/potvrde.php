@@ -138,7 +138,6 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $upit .= " LIMIT $prikazi OFFSET $offset";
     }
 
-    $json['upit'] = $upit;
 
     if($rezultat = $baza->selectdb($upit)){
 

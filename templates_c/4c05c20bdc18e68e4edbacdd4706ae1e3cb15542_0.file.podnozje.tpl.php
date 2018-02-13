@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-12 16:17:12
+/* Smarty version 3.1.30, created on 2018-02-12 20:06:43
   from "C:\xampp\htdocs\kino\templates\podnozje.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5a81aff8d35c51_60009162',
+  'unifunc' => 'content_5a81e5c3d9e666_80436263',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4c05c20bdc18e68e4edbacdd4706ae1e3cb15542' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\podnozje.tpl',
-      1 => 1518448630,
+      1 => 1518462401,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a81aff8d35c51_60009162 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5a81e5c3d9e666_80436263 (Smarty_Internal_Template $_smarty_tpl) {
 if (isset($_smarty_tpl->tpl_vars['privatno']->value)) {?>
     <?php echo '<script'; ?>
  src="../public/js/funkcije.js"><?php echo '</script'; ?>
@@ -41,7 +41,7 @@ if (isset($_smarty_tpl->tpl_vars['naslovnica_prijavljeni']->value)) {?>
  src="public/js/naslovnica_prijavljeni.js"><?php echo '</script'; ?>
 >
 <?php }
-if (isset($_smarty_tpl->tpl_vars['Lurker']->value)) {?>
+if (isset($_smarty_tpl->tpl_vars['naslovnica_neprijavljeni']->value)) {?>
     <?php echo '<script'; ?>
  src="public/js/naslovnica.js"><?php echo '</script'; ?>
 >

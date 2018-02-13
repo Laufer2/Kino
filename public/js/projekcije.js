@@ -25,7 +25,7 @@ $(document).ready(function () {
 
         $.each(data.projekcija, function (index, value) {
 
-            $("#naziv_filma").append(value.naziv);
+            $("#naziv_filma").append("<span>"+value.naziv+"&nbsp;</span>");
 
             $.each(value.zanr, function(ind, val){
                 $("#zanrovi").append("<span>"+val+"&nbsp;</span>");
@@ -35,13 +35,14 @@ $(document).ready(function () {
                 $("#redatelj").append("<span>"+val+"&nbsp;</span>");
             });
 
+            $.each(value.scenarist, function(ind, val){
+                $("#scenarist").append("<span>"+val+"&nbsp;</span>");
+            });
+
             $.each(value.glumci, function(ind, val){
                 $("#glumci").append("<span>"+val+"&nbsp;</span>");
             });
 
-            $.each(value.scenarist, function(ind, val){
-                $("#zanrovi").append("<span>"+val+"&nbsp;</span>");
-            });
 
             $("#trajanje").append(value.trajanje + " min");
 
@@ -79,7 +80,7 @@ $(document).ready(function () {
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#poruke").append(data.poruka).css("display","block").css("background-color", "#4CAF50");
+                $("#poruke").html(data.poruka).css("display","block").css("background-color", "#4CAF50");
             }
             });
         }

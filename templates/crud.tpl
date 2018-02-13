@@ -5,9 +5,9 @@
             <li><a href="crud.php?tablica=korisnik">Korisnici</a></li>
             <li><a href="crud.php?tablica=tipkorisnika">Tip Korisnika</a></li>
             <li><a href="crud.php?tablica=lokacija">Lokacija</a></li>
-            <li><a href="crud.php?tablica=drzava">Drzava</a></li>
+            <li><a href="crud.php?tablica=drzava">Država</a></li>
             <li><a href="crud.php?tablica=grad">Grad</a></li>
-            <li><a href="crud.php?tablica=zanr">Zanr</a></li>
+            <li><a href="crud.php?tablica=zanr">Žanr</a></li>
             <li><a href="crud.php?tablica=osoba">Osoba</a></li>
             <li><a href="crud.php?tablica=tipuloga">Tip uloga</a></li>
             <li><a href="crud.php?tablica=tag">Oznaka</a></li>
@@ -19,7 +19,7 @@
             <li><a href="crud.php?tablica=film">Film</a></li>
             <li><a href="crud.php?tablica=projekcija">Projekcija</a></li>
             <li><a href="crud.php?tablica=moderatorlokacije">Moderatori lokacija</a></li>
-            <li><a href="crud.php?tablica=zanrfilma">Zanr filma</a></li>
+            <li><a href="crud.php?tablica=zanrfilma">Žanr filma</a></li>
             <li><a href="crud.php?tablica=tagslika">Tag slike</a></li>
             <li><a href="crud.php?tablica=slika">Slike</a></li>
             <li><a href="crud.php?tablica=filmosoba">Film osobe</a></li>

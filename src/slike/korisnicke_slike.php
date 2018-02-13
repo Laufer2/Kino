@@ -13,6 +13,7 @@ if(!isset($_SESSION))
 $korisnik = $_SESSION['kino']->getIdKorisnik();
 $admin = $_SESSION['kino']->getTipId();
 
+dnevnik("Korisničke slike",3,$korisnik);
 $json = array();
 
 $projekcija = filter_input(INPUT_POST,'projekcija');
@@ -26,6 +27,7 @@ if(intval($padajuci) == 1 ) {
     $json['lokacije'] = array();
 
     $upit = "SELECT * FROM lokacija l JOIN moderatorlokacije m ON l.id_lokacija = m.lokacija_id WHERE korisnik_id = $korisnik";
+    dnevnik($upit,2,$korisnik);
 
     if ($admin == 1) {
         $upit = "SELECT * FROM lokacija";

@@ -62,7 +62,7 @@ $(document).ready( function () {
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#poruke").html(data.poruka);
+                $("#poruke").html(data.poruka).css("display","block").css("background_color","#4CAF50");
             }
         });
 

@@ -63,8 +63,8 @@ if(isset($_POST['selectmenu'])){
     $rezultat = $baza->selectdb($upit);
     list($id_film)=$rezultat->fetch_array();
 
-    upis_osoba($redatelji, 1 , $id_film);
-    upis_osoba($glumci, 2 , $id_film);
+    upis_osoba($redatelji, 2 , $id_film);
+    upis_osoba($glumci, 1 , $id_film);
     upis_osoba($scenaristi, 3 , $id_film);
 
     foreach ($zanrovi as $zanr){
@@ -97,14 +97,9 @@ function upis_osoba($polje, $uloga, $id_film){
         }else{
             list($id) = $rez->fetch_array();
 
-            $upit = "SELECT * FROM filmosoba WHERE osoba_id = $id AND uloga_id = $uloga";
-            $rez = $baza->selectdb($upit);
+            $upit = "INSERT INTO filmosoba VALUES ($id_film,$id,$uloga)";
+            $baza->update($upit);
 
-            if(!$rez->num_rows) {
-
-                $upit = "INSERT INTO filmosoba VALUES ($id_film,$id,$uloga)";
-                $baza->update($upit);
-            }
         }
     }
 }

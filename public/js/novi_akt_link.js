@@ -16,7 +16,7 @@ $(document).ready( function () {
             success: function (data) {
 
                 var json = JSON.parse(data);
-                $("#poruke").html(json['poruka']);
+                $("#poruke").html(json['poruka']).css("display","block");
 
             }
         });

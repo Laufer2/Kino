@@ -159,7 +159,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $broj_stranica = stranice_ispisa("korisnik", $prikazi);
 
         $upit = "SELECT * FROM korisnik k JOIN tipkorisnika t ON k.tip_id = t.id_tipkorisnika";
-        if(isset($stupac) && $stupac != "" ) {
+        if(isset($tip_sorta) && $tip_sorta != "" ) {
             $upit .= " ORDER BY $stupac $tip_sorta";
             $json['tip_sorta'] = $tip_sorta;
             $json['stupac'] = $stupac;

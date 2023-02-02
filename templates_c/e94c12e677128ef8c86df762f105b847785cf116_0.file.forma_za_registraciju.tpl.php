@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-10 17:53:09
-  from "C:\xampp\htdocs\kino\templates\forma_za_registraciju.tpl" */
+/* Smarty version 4.3.0, created on 2023-01-24 13:55:29
+  from 'C:\xampp\htdocs\kino\templates\forma_za_registraciju.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
-  'version' => '3.1.30',
-  'unifunc' => 'content_5a7f237587f610_63934649',
+  'version' => '4.3.0',
+  'unifunc' => 'content_63cfd54153bb05_46425001',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e94c12e677128ef8c86df762f105b847785cf116' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\forma_za_registraciju.tpl',
-      1 => 1518280799,
+      1 => 1673623480,
       2 => 'file',
     ),
   ),
@@ -20,9 +20,8 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a7f237587f610_63934649 (Smarty_Internal_Template $_smarty_tpl) {
-?>
-<div id="container">
+function content_63cfd54153bb05_46425001 (Smarty_Internal_Template $_smarty_tpl) {
+?><div id="container">
 
     <div id="prikaz-forme">
 

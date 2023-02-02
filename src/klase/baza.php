@@ -3,9 +3,9 @@
 class baza{
 
     const server = "localhost";
-    const username = "WebDiP2015x047";
-    const password = "admin_CaPL";
-    const dbime = "WebDiP2015x047";
+    const username = "laufer";
+    const password = "administrator1";
+    const dbime = "kino";
 
 
     function spoji(){

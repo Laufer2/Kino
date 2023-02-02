@@ -40,18 +40,18 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
                   JOIN film f ON p.film_id = f.id_film 
                   JOIN lokacija l ON p.lokacija_id = l.id_lokacija 
-                  WHERE r.korisnik_id = $korisnik AND r.status < 2 
+                  WHERE r.korisnik_id = $korisnik  
                   AND (f.naziv_film LIKE '$pojam' OR l.naziv_lokacija LIKE '$pojam')";
 
-        dnevnik(mysql_escape_string($upit), 2, 0);
+        #dnevnik(mysql_escape_string($upit), 2, 0);
 
     }else{
 
         $upit = "SELECT * FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija 
                   JOIN film f ON p.film_id = f.id_film JOIN lokacija l ON p.lokacija_id = l.id_lokacija 
-                  WHERE r.korisnik_id = $korisnik AND r.status < 2";
+                  WHERE r.korisnik_id = $korisnik";
 
-        dnevnik($upit, 2, 0);
+        #dnevnik($upit, 2, 0);
     }
     $json['upit'] = $upit;
 
@@ -83,13 +83,24 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     if($rezultat = $baza->selectdb($upit)){
 
         while ($red = $rezultat->fetch_array(MYSQLI_ASSOC)){
-
+            
+            switch ($red['status']){
+                case 1:
+                    $status = "Potvrđena";
+                    break;
+                case 2:
+                    $status = "Odbijena";
+                    break;
+                default:
+                    $status = "Obrađuje se...";
+            }
+                
             $polje = array(
                 "id" => $red['id_rezervacija'],
                 "lokacija" => $red['naziv_lokacija'],
                 "film" => $red['naziv_film'],
                 "pocetak" => date("j.m.Y, H:i", $red['dostupan_do']),
-                "status" => $red['status'] == 0 ? "Nije potvrđena" : "Potvrđena",
+                "status" => $status,
                 "broj_rezervacija" => $red['broj_rezervacija'],
             );
 

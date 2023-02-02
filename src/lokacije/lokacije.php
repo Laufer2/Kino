@@ -47,7 +47,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                   (SELECT COUNT(*) FROM lajkovi WHERE lokacija_id=l.id_lokacija AND svida_mi_se = 0) as ne_lajkovi
                   FROM lokacija l JOIN adresa a ON l.id_lokacija = a.lokacija_id JOIN drzava d ON a.drzava_id = d.id_drzava
                   JOIN grad g ON a.grad_id = g.id_grad";
-        dnevnik($upit, 2, 0);
+        #dnevnik($upit, 2, 0);
 
     }
 

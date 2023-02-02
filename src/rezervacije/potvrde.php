@@ -31,7 +31,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
     $korisnik = $_SESSION['kino']->getIdKorisnik();
     $admin = $_SESSION['kino']->getTipId();
 
-    dnevnik("Potvrde rezervacija", 3, 0);
+    #dnevnik("Potvrde rezervacija", 3, 0);
 
     $baza = new baza();
     $dat = new datoteka();
@@ -49,10 +49,10 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $json['lokacija'] = array();
 
         $upit = "SELECT * FROM lokacija JOIN moderatorlokacije m ON lokacija.id_lokacija = m.lokacija_id WHERE m.korisnik_id = $korisnik";
-        dnevnik($upit, 2, 0);
+        #dnevnik($upit, 2, 0);
 
         if($admin == 1){
-            $upit = "SELECT * FROM lokacija";
+            $upit = "SELECT * FROM lokacija;";
         }
 
         $rezultat = $baza->selectdb($upit);
@@ -89,8 +89,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $json['poruka'] = "Korisnik je obaviješten o odbijanju rezervacije.";
         }
         $baza->update($upit);
-        posalji_mail($mail, $naslov, $poruka);
-
+        #posalji_mail($mail, $naslov, $poruka);
     }
 
     if ($akcija == 5 && $pojam != ""){ // search
@@ -103,14 +102,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                   WHERE r.status = 0 AND p.lokacija_id = $lokacija AND ( f.naziv_film LIKE '$pojam' OR k.korisnicko_ime LIKE '$pojam')";
 
     }else {
-
         $upit = "SELECT f.naziv_film, k.korisnicko_ime, p.max_gledatelja, r.broj_rezervacija, f.godina, p.dostupan_do, r.id_rezervacija, k.email,
                   (SELECT SUM(r.broj_rezervacija)  FROM rezervacija r WHERE r.status = 1 AND r.projekcija_id = p.id_projekcija) as ostalo 
                   FROM rezervacija r JOIN projekcija p ON r.projekcija_id = p.id_projekcija
                   JOIN film f ON p.film_id = f.id_film JOIN korisnik k ON r.korisnik_id = k.id_korisnik 
-                  WHERE r.status = 0 AND p.lokacija_id = $lokacija";
-        dnevnik($upit, 2, 0);
-
+                  WHERE r.status IS NULL AND p.lokacija_id = $lokacija";
+        #dnevnik($upit, 2, 0);
     }
 
     if(isset($tip_sorta) && $tip_sorta != "" ) {
@@ -122,10 +119,11 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
         $json['tip_sorta'] = "";
         $json['stupac'] = "";
     }
+
     $rezultat = $baza->selectdb($upit);
     $redovi = $rezultat->num_rows;
     if(!$redovi){
-        $json['poruka'] = "Nema podataka.";
+        $json['poruka'] = "$upit";
     }
     if ($rezultat > $prikazi){
         $broj_stranica = ceil($redovi/$prikazi);

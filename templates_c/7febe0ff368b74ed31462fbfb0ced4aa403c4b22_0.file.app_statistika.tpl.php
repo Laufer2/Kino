@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-11 13:53:36
-  from "C:\xampp\htdocs\kino\templates\app_statistika.tpl" */
+/* Smarty version 4.3.0, created on 2023-01-24 14:28:16
+  from 'C:\xampp\htdocs\kino\templates\app_statistika.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
-  'version' => '3.1.30',
-  'unifunc' => 'content_5a803cd08138f8_82129535',
+  'version' => '4.3.0',
+  'unifunc' => 'content_63cfdcf0aa9317_84913373',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '7febe0ff368b74ed31462fbfb0ced4aa403c4b22' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\app_statistika.tpl',
-      1 => 1518353613,
+      1 => 1673623480,
       2 => 'file',
     ),
   ),
@@ -20,9 +20,8 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a803cd08138f8_82129535 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63cfdcf0aa9317_84913373 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
-
 <div id="container">
 
     <div id="tablicni-podaci">

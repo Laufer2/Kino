@@ -36,12 +36,12 @@ if($_FILES['slika']['error'] !== UPLOAD_ERR_NO_FILE) {
 
     $upit = "INSERT INTO slika VALUES (default, '$ime', $rezervacija)";
     $baza->update($upit);
-    dnevnik(mysql_escape_string($upit),2,0);
+    #dnevnik(mysql_escape_string($upit),2,0);
 
     $upit = "SELECT id_slika FROM slika WHERE naziv_slika = '$ime'";
     $rez = $baza->selectdb($upit);
     list($id_slika) = $rez->fetch_array();
-    dnevnik("Upload slike", 1, 0);
+    #dnevnik("Upload slike", 1, 0);
 
     foreach ($oznake as $oznaka) {
 

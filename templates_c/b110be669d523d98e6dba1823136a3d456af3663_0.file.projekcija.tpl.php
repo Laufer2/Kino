@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-12 22:32:45
-  from "C:\xampp\htdocs\kino\templates\projekcija.tpl" */
+/* Smarty version 4.3.0, created on 2023-02-01 15:00:21
+  from 'C:\xampp\htdocs\kino\templates\projekcija.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
-  'version' => '3.1.30',
-  'unifunc' => 'content_5a8207fd923457_31394407',
+  'version' => '4.3.0',
+  'unifunc' => 'content_63da7075485368_89661882',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b110be669d523d98e6dba1823136a3d456af3663' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\projekcija.tpl',
-      1 => 1518471163,
+      1 => 1673623480,
       2 => 'file',
     ),
   ),
@@ -20,9 +20,8 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a8207fd923457_31394407 (Smarty_Internal_Template $_smarty_tpl) {
-?>
-<div id="container">
+function content_63da7075485368_89661882 (Smarty_Internal_Template $_smarty_tpl) {
+?><div id="container">
     <div id="prikaz-forme">
 
         <div id="forma">

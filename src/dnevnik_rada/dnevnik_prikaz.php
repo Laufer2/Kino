@@ -83,7 +83,7 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 "korisnik" => $red['korisnicko_ime'],
                 "vrijeme" => date("j.m.Y, H:i", $red['vrijeme']),
                 "ip_adresa" => $red['ip_adresa'],
-                "skripta" => $red['skripta'],
+                //"skripta" => $red['skripta'],
                 "zapis" => $red['zapis'],
             );
 

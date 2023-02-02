@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-10 18:46:06
-  from "C:\xampp\htdocs\kino\templates\forma_za_prijavu.tpl" */
+/* Smarty version 4.3.0, created on 2023-01-24 13:55:31
+  from 'C:\xampp\htdocs\kino\templates\forma_za_prijavu.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
-  'version' => '3.1.30',
-  'unifunc' => 'content_5a7f2fde1953b8_69497775',
+  'version' => '4.3.0',
+  'unifunc' => 'content_63cfd5430bacf3_91407595',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3fe741776069cd3feaffa058980ccab743907c9c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\forma_za_prijavu.tpl',
-      1 => 1518280799,
+      1 => 1673623480,
       2 => 'file',
     ),
   ),
@@ -20,9 +20,8 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a7f2fde1953b8_69497775 (Smarty_Internal_Template $_smarty_tpl) {
-?>
-<div id="container">
+function content_63cfd5430bacf3_91407595 (Smarty_Internal_Template $_smarty_tpl) {
+?><div id="container">
     <div id="prikaz-forme">
 
         <div id="forma">

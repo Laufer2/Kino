@@ -74,13 +74,12 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
                 break;
             }
 
-            $upit = "INSERT INTO adresa VALUES (default,'$ulica', $broj, $lokacija, $grad, $drzava, $postanski_broj)";
+            $upit = "INSERT INTO adresa VALUES (default,'$ulica', $broj, $postanski_broj, $lokacija, $grad, $drzava)";
             $rezultat = $baza->update($upit);
             break;
         case 2:// ažuriranje
 
-            $upit = "UPDATE adresa SET lokacija_id = $lokacija, ulica = '$ulica', broj = $broj, grad_id = $grad, postanski_broj = $postanski_broj, 
-                      drzava_id = $drzava WHERE id_adresa = $id";
+            $upit = "UPDATE adresa SET ulica = '$ulica', broj = '$broj', postanski_broj = $postanski_broj, lokacija_id = $lokacija, grad_id = $grad, drzava_id = $drzava WHERE id_adresa = $id";
             $rezultat = $baza->update($upit);
             break;
 
@@ -93,15 +92,15 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD')== 'POST') {
             $upit = "SELECT * FROM adresa WHERE id_adresa = $id";
             $rezultat = $baza->selectdb($upit);
 
-            list($id_adresa, $ulica, $broj, $lokacija, $grad, $drzava, $postanski_broj) = $rezultat->fetch_array();
+            list($id_adresa, $ulica, $broj, $postanski_broj, $lokacija, $grad, $drzava) = $rezultat->fetch_array();
             $polje = array(
                 "id" => $id,
                 "ulica" => $ulica,
                 "broj" => $broj,
-                "grad" => $grad,
-                "drzava" => $drzava,
+                "postanski_broj" => $postanski_broj,
                 "lokacija" => $lokacija,
-                "postanski_broj" => $postanski_broj
+                "grad" => $grad,
+                "drzava" => $drzava
                 );
             array_push($json['podaci'],$polje);
             echo json_encode($json);

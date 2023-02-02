@@ -109,12 +109,12 @@ if(filter_input(INPUT_SERVER, 'REQUEST_METHOD')=='POST') {
                 session_start();
             }
 
-            $trajanje_sesije = $dat->dohvati('trajanje_sesije');
-            $trajanje_sesije = $trajanje_sesije * 60;
+            // $trajanje_sesije = $dat->dohvati('trajanje_sesije');
+            // $trajanje_sesije = $trajanje_sesije * 60;
 
             //default trajanje sesije je 24min pa da ne istekne prije postavlja se aplikacijsko trajanje sesije
-            ini_set("session.gc_maxlifetime", $trajanje_sesije);
-            ini_set("session.cookie_lifetime", $trajanje_sesije);
+            // ini_set("session.gc_maxlifetime", $trajanje_sesije);
+            // ini_set("session.cookie_lifetime", $trajanje_sesije);
 
             $_SESSION['kino'] = $korisnik;
 

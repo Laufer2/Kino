@@ -1,44 +1,44 @@
-$(document).ready( function(){
+$(document).ready(function () {
     "use strict";
 
     pocetna();
 
     function pocetna(id, akcija, mail, korisnik, broj, projekcija, vrijeme) {
         $.ajax({
-            url : 'src/rezervacije/potvrde.php',
-            type : 'POST',
-            data : {
-                aktivna_stranica : 0,
-                akcija : akcija,
-                selectmenu : 1,
+            url: 'src/rezervacije/potvrde.php',
+            type: 'POST',
+            data: {
+                aktivna_stranica: 0,
+                akcija: akcija,
+                selectmenu: 1,
                 id: id,
-                mail : mail,
-                korisnik : korisnik,
-                broj : broj,
-                projekcija : projekcija,
-                vrijeme : vrijeme
+                mail: mail,
+                korisnik: korisnik,
+                broj: broj,
+                projekcija: projekcija,
+                vrijeme: vrijeme
             },
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#poruke").css("display","none");
+                $("#poruke").css("display", "none");
                 $("#lokacije-potvrde").html(padajuci_izbornik(data.lokacija));
                 $("#search").html(search(5, data.lok));
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
-                if("poruka" in data){
-                    $("#poruke").html(data.poruka).css("display","block").css("background-color","#4CAF50");
+                if ("poruka" in data) {
+                    $("#poruke").html(data.poruka).css("display", "block").css("background-color", "#4CAF50");
                 }
             }
         });
     }
 
-    function padajuci_izbornik(data){
+    function padajuci_izbornik(data) {
 
         var padajuci = "<select id='lokacija'>";
 
         $.each(data, function (index, value) {
-            padajuci += "<option value='"+ value.id +"'>"+ value.naziv +"</option>";
+            padajuci += "<option value='" + value.id + "'>" + value.naziv + "</option>";
         });
 
         padajuci += "</select>";
@@ -46,11 +46,11 @@ $(document).ready( function(){
         return padajuci;
     }
 
-    function search(akcija, lokacija){
+    function search(akcija, lokacija) {
         var prikaz_searcha = "<form method='post' action='src/rezervacije/potvrde.php' id='pretraga' enctype='application/x-www-form-urlencoded'>";
         prikaz_searcha += "<input type='text' name='pojam' id='pojam'>";
-        prikaz_searcha += "<input type='hidden' name='akcija' value='"+ akcija +"'>";
-        prikaz_searcha += "<input type='hidden' name='lokacija' value='"+ lokacija +"'>";
+        prikaz_searcha += "<input type='hidden' name='akcija' value='" + akcija + "'>";
+        prikaz_searcha += "<input type='hidden' name='lokacija' value='" + lokacija + "'>";
         prikaz_searcha += "<input type='submit' value='P'>";
         prikaz_searcha += "</form>";
 
@@ -83,25 +83,25 @@ $(document).ready( function(){
         $.each(data.podaci, function (index, rezervacija) {
 
             prikaz_tablice += "<tr>";
-            prikaz_tablice += "<td>"+ rezervacija.projekcija +"</td>";
-            prikaz_tablice += "<td>"+ rezervacija.vrijeme +"</td>";
-            prikaz_tablice += "<td>"+ rezervacija.korisnik +"</td>";
-            prikaz_tablice += "<td>"+ rezervacija.broj_rezervacija +"</td>";
-            prikaz_tablice += "<td>"+ rezervacija.ostalo +"</td>";
-            prikaz_tablice += "<td>"+ rezervacija.max +"</td>";
+            prikaz_tablice += "<td>" + rezervacija.projekcija + "</td>";
+            prikaz_tablice += "<td>" + rezervacija.vrijeme + "</td>";
+            prikaz_tablice += "<td>" + rezervacija.korisnik + "</td>";
+            prikaz_tablice += "<td>" + rezervacija.broj_rezervacija + "</td>";
+            prikaz_tablice += "<td>" + rezervacija.ostalo + "</td>";
+            prikaz_tablice += "<td>" + rezervacija.max + "</td>";
             prikaz_tablice += "<td>";
 
-            if(parseInt(rezervacija.ostalo) < parseInt(rezervacija.broj_rezervacija)){
-                prikaz_tablice += "<button class='gumb-potvrdi' data-id='"+ rezervacija.id +"' disabled>Potvrdi</button>";
-            }else{
-                prikaz_tablice += "<button class='gumb-potvrdi' data-id='"+ rezervacija.id +"' data-mail='"+ rezervacija.mail +"'";
-                prikaz_tablice += " data-projekcija='"+rezervacija.projekcija+"' data-korisnik='"+ rezervacija.korisnik +"'" +
-                    " data-broj='"+ rezervacija.broj_rezervacija +"' data-vrijeme='"+ rezervacija.vrijeme +"'>Potvrdi</button>";
+            if (parseInt(rezervacija.ostalo) < parseInt(rezervacija.broj_rezervacija)) {
+                prikaz_tablice += "<button class='gumb-potvrdi' data-id='" + rezervacija.id + "' disabled>Potvrdi</button>";
+            } else {
+                prikaz_tablice += "<button class='gumb-potvrdi' data-id='" + rezervacija.id + "' data-mail='" + rezervacija.mail + "'";
+                prikaz_tablice += " data-projekcija='" + rezervacija.projekcija + "' data-korisnik='" + rezervacija.korisnik + "'" +
+                    " data-broj='" + rezervacija.broj_rezervacija + "' data-vrijeme='" + rezervacija.vrijeme + "'>Potvrdi</button>";
             }
 
-            prikaz_tablice += "<button class='gumb-odbij' data-id='"+ rezervacija.id +"' data-mail='"+ rezervacija.mail +"' ";
-            prikaz_tablice += " data-projekcija='"+rezervacija.projekcija+"' data-korisnik='"+ rezervacija.korisnik +"'" +
-                " data-broj='"+ rezervacija.broj_rezervacija +"' data-vrijeme='"+ rezervacija.vrijeme +"'>Odbij</button>";
+            prikaz_tablice += "<button class='gumb-odbij' data-id='" + rezervacija.id + "' data-mail='" + rezervacija.mail + "' ";
+            prikaz_tablice += " data-projekcija='" + rezervacija.projekcija + "' data-korisnik='" + rezervacija.korisnik + "'" +
+                " data-broj='" + rezervacija.broj_rezervacija + "' data-vrijeme='" + rezervacija.vrijeme + "'>Odbij</button>";
 
             prikaz_tablice += "</td>";
 
@@ -113,9 +113,9 @@ $(document).ready( function(){
         return prikaz_tablice;
     }
 
-    function sort(tip_sorta, stupac){
-        var pojam, akcija="";
-        if($("#pojam").val() !== ""){
+    function sort(tip_sorta, stupac) {
+        var pojam, akcija = "";
+        if ($("#pojam").val() !== "") {
             pojam = $("#pojam").val();
             akcija = 5;
         }
@@ -124,12 +124,12 @@ $(document).ready( function(){
         $.ajax({
             url: 'src/rezervacije/potvrde.php',
             type: 'POST',
-            data : {
-                stupac : stupac,
-                tip_sorta : tip_sorta,
-                pojam : pojam,
-                akcija : akcija,
-                lokacija : lokacija
+            data: {
+                stupac: stupac,
+                tip_sorta: tip_sorta,
+                pojam: pojam,
+                akcija: akcija,
+                lokacija: lokacija
             },
 
             success: function (data) {
@@ -141,9 +141,9 @@ $(document).ready( function(){
     }
 
     $(document).on('click', '.broj-paginacija', function () {
-        var pojam, akcija="";
+        var pojam, akcija = "";
         var lokacija = $("#lokacija").val();
-        if($("#pojam").val() !== ""){
+        if ($("#pojam").val() !== "") {
             pojam = $("#pojam").val();
             akcija = 5;
         }
@@ -162,9 +162,9 @@ $(document).ready( function(){
             success: function (data) {
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-                if(data.stupac.length > 0){
+                if (data.stupac.length > 0) {
                     $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, data.tip_sorta, data.stupac));
-                }else{
+                } else {
                     $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
                 }
             }
@@ -179,7 +179,7 @@ $(document).ready( function(){
         sort('DESC', $(this).attr("data-stupac"));
     });
 
-    $(document).on('click', '.gumb-odbij', function(){
+    $(document).on('click', '.gumb-odbij', function () {
         var id = $(this).attr("data-id");
         var mail = $(this).attr("data-mail");
         var korisnik = $(this).attr("data-korisnik");
@@ -194,22 +194,22 @@ $(document).ready( function(){
             width: 400,
             modal: true,
             buttons: {
-                "Odbij rezervaciju": function() {
+                "Odbij rezervaciju": function () {
                     //brisanje i refresh tablice
 
-                    pocetna(id,0,mail,korisnik,broj,projekcija,vrijeme);
+                    pocetna(id, 0, mail, korisnik, broj, projekcija, vrijeme);
 
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
 
                 },
-                "Odustani": function() {
-                    $( this ).dialog( "close" );
+                "Odustani": function () {
+                    $(this).dialog("close");
                 }
             }
         });
     });
 
-    $(document).on('click', '.gumb-potvrdi', function() {
+    $(document).on('click', '.gumb-potvrdi', function () {
         var id = $(this).attr("data-id");
         var mail = $(this).attr("data-mail");
         var korisnik = $(this).attr("data-korisnik");
@@ -222,18 +222,18 @@ $(document).ready( function(){
         pocetna(id, 1, mail, korisnik, broj, projekcija, vrijeme);
     });
 
-    $(document).on('change','#lokacija', function () {
+    $(document).on('change', '#lokacija', function () {
         var id = $("#lokacija").val();
         $.ajax({
-            url : "src/rezervacije/potvrde.php",
-            type : "POST",
-            data : {
-                lokacija : id
+            url: "src/rezervacije/potvrde.php",
+            type: "POST",
+            data: {
+                lokacija: id
             },
 
             success: function (data) {
                 data = JSON.parse(data);
-                $("#poruke").css("display","none");
+                $("#poruke").css("display", "none");
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
                 $("#search").html(search(5, id));
                 $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
@@ -241,7 +241,7 @@ $(document).ready( function(){
         });
     });
 
-    $(document).on('submit', '#pretraga', function (event){
+    $(document).on('submit', '#pretraga', function (event) {
 
         var forma = $("#pretraga");
         event.preventDefault();
@@ -249,19 +249,17 @@ $(document).ready( function(){
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
-            data : forma.serialize(),
+            data: forma.serialize(),
 
             success: function (data) {
                 data = JSON.parse(data);
                 $("#prikaz-tablice").html(nacrtaj_tablicu(data));
-                $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica,"",""));
+                $("#paginacija").html(funkcija.paginacija(data.aktivna_stranica, data.broj_stranica, "", ""));
 
-                if("poruka" in data) {
-                    $("#poruke").html(data.poruka).css("display","block").css("background-color","#4CAF50");
+                if ("poruka" in data) {
+                    $("#poruke").html(data.poruka).css("display", "block").css("background-color", "#4CAF50");
                 }
-
             }
         });
     });
-
 });

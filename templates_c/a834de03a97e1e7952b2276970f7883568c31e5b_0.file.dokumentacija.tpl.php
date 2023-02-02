@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2018-02-08 13:04:13
-  from "C:\xampp\htdocs\kino\templates\dokumentacija.tpl" */
+/* Smarty version 4.3.0, created on 2023-01-24 13:55:37
+  from 'C:\xampp\htdocs\kino\templates\dokumentacija.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
-  'version' => '3.1.30',
-  'unifunc' => 'content_5a7c3cbd9bab89_24725752',
+  'version' => '4.3.0',
+  'unifunc' => 'content_63cfd549434235_64607029',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'a834de03a97e1e7952b2276970f7883568c31e5b' => 
     array (
       0 => 'C:\\xampp\\htdocs\\kino\\templates\\dokumentacija.tpl',
-      1 => 1518091451,
+      1 => 1673623480,
       2 => 'file',
     ),
   ),
@@ -20,9 +20,8 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5a7c3cbd9bab89_24725752 (Smarty_Internal_Template $_smarty_tpl) {
-?>
-<div id="container">
+function content_63cfd549434235_64607029 (Smarty_Internal_Template $_smarty_tpl) {
+?><div id="container">
 
     <section>
         <h2>Kratak opis projekta</h2>

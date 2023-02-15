@@ -1,412 +1,432 @@
-body{
-    position: relative;
-    font-family: Tahoma, Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    line-height:1.6;
-    color:#444;
-    padding:0;
+body {
+  position: relative;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  padding: 0;
 
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-header{
-    text-align: center;
-    font-size: x-large;
-    font-weight: bold;
-    color: #ffffff;
+header {
+  text-align: center;
+  font-size: x-large;
+  font-weight: bold;
+  color: #ffffff;
 
-    background-color:  #286090;
+  background-color: #286090;
 
-    padding-top: 5px;
-    padding-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 
-    width: 100%;
+  width: 100%;
 }
 
 /*navigacija*/
 
-nav#navigacija{
-    display: inline-block;
-    padding: 5px 5px;
-    width: 18%;
-    vertical-align: top;
+nav#navigacija {
+  display: inline-block;
+  padding: 5px 5px;
+  width: 18%;
+  vertical-align: top;
 }
 
 #navigacija > ul {
-    list-style: none;
-    line-height: 1;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
 }
 
 #navigacija > ul li a {
-    display: block;
-    color: #ffffff;
-    text-decoration: none;
-    text-transform: uppercase;
-    background-color:  #286090;
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: #286090;
 
-    border-top-style: solid;
-    border-color: #000000;
-    border-width: 1px;
-    padding: 10px 20px;
+  border-top-style: solid;
+  border-color: #000000;
+  border-width: 1px;
+  padding: 10px 20px;
 }
 
-#navigacija > ul li:first-child a{
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-top-style: none;
-
+#navigacija > ul li:first-child a {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-style: none;
 }
 
-#navigacija > ul li:last-child a{
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+#navigacija > ul li:last-child a {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 #navigacija > ul li a:hover {
-    background-color: #444;
+  background-color: #444;
 }
 
-#odjava{
-    cursor: pointer;
+#odjava {
+  cursor: pointer;
 }
 
-#container{
-    display: inline-block;
-    width: 80%;
-    color:#444;
-    padding: 5px;
-    margin-bottom: 150px;
+#container {
+  display: inline-block;
+  width: 80%;
+  color: #444;
+  padding: 5px;
+  margin-bottom: 150px;
 }
 
-.dijagrami{
-    width : 95%;
+.dijagrami {
+  width: 95%;
 }
 
 /* tablica */
 
-table, td, th {
-    border: 1px solid #ddd;
-    text-align: left;
-
+table,
+td,
+th {
+  border: 1px solid #ddd;
+  text-align: left;
 }
 
 table {
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-th, td {
-    padding: 10px;
-    font-size: 18px;
+th,
+td {
+  padding: 10px;
+  font-size: 18px;
 }
 
 /* CRUD gumbi*/
 
-button{
-    border: none;
-    color: white;
-    padding: 15px 25px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 16px;
+button {
+  border: none;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 16px;
 }
 
-.gumb-delete{
-    background-color: #d9534f;
+.gumb-delete {
+  background-color: #d9534f;
 }
-.gumb-edit{
-    background-color: #269abc;
+.gumb-edit {
+  background-color: #269abc;
 }
-#gumb-csv{
-    background-color: #269abc;
-    float: right;
-    margin: 5px;
+#gumb-csv {
+  background-color: #269abc;
+  float: right;
+  margin: 5px;
 }
-#gumb-kreiraj, .gumb-plus, .gumb-slika{
-    background-color: #286090;
+#gumb-kreiraj,
+.gumb-plus,
+.gumb-slika {
+  background-color: #286090;
 }
-#gumb-kreiraj{
-    float: right;
-    margin: 5px;
+#gumb-kreiraj {
+  float: right;
+  margin: 5px;
 }
-.gumb-svidja, .gumb-potvrdi{
-    background-color: #4CAF50;
-    margin-right: 3px;
+.gumb-svidja,
+.gumb-potvrdi {
+  background-color: #4caf50;
+  margin-right: 3px;
 }
-.gumb-ne-svidja, .gumb-odbij, .print{
-    background-color: #d9534f;
+.gumb-ne-svidja,
+.gumb-odbij,
+.print {
+  background-color: #d9534f;
 }
-.gumb-potvrdi, .gumb-odbij{
-    padding: 10px;
+.gumb-potvrdi,
+.gumb-odbij {
+  padding: 10px;
 }
-.gumb-potvrdi:disabled{
-    background-color: #999999;
+.gumb-potvrdi:disabled {
+  background-color: #999999;
 }
-.gumb-block{
-    background-color: #444444;
-}
-
-#dohvati-pomak{
-    background-color: #269abc;
-    width: 80%;
-}
-
-input[type='submit']{
-    border: none;
-    color: white;
-    padding: 15px 25px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 16px;
-    background-color: #286090;
+.gumb-block {
+  background-color: #444444;
 }
 
-input[disabled], .gumb-neslika{
-    background-color: #999999;
+#dohvati-pomak {
+  background-color: #269abc;
+  width: 80%;
 }
 
-.silazno{
-    float: right;
-    background-color: #286090;
-    padding: 4% 6%;
-    border: 1px solid #ddd;
+input[type="submit"] {
+  border: none;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #286090;
 }
 
-.uzlazno{
-    float: right;
-    background-color: #286090;
-    padding: 4% 6%;
-    border: 1px solid #ddd;
+input[disabled],
+.gumb-neslika {
+  background-color: #999999;
 }
 
-.celija-lozinka{
-    width: 10%;
+.silazno {
+  float: right;
+  background-color: #286090;
+  padding: 4% 6%;
+  border: 1px solid #ddd;
 }
 
-.tablica-korisnik{
-    table-layout: fixed;
-    width: 100%;
-    word-wrap: break-word;
+.uzlazno {
+  float: right;
+  background-color: #286090;
+  padding: 4% 6%;
+  border: 1px solid #ddd;
+}
+
+.celija-lozinka {
+  width: 10%;
+}
+
+.tablica-korisnik {
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 /* paginacija */
-#paginacija{
-    margin-top: 15px;
+#paginacija {
+  margin-top: 15px;
 }
 
-.broj-paginacija{
-    cursor: pointer;
-    width: 30px;
-    text-align: center;
-    border-radius: 5px;
-    margin: 2px 2px 2px 2px;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
+.broj-paginacija {
+  cursor: pointer;
+  width: 30px;
+  text-align: center;
+  border-radius: 5px;
+  margin: 2px 2px 2px 2px;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
 }
 
-.broj-container{
-    display: inline;
-    //text-align: center;
+.broj-container {
+  display: inline;
+  /*text-align: center;*/
 }
 
-#prikaz-tablice{
-    margin-top: 5px;
+#prikaz-tablice {
+  margin-top: 5px;
 }
-tr.red-projekcija:hover{
-    background-color: #e7e7e7;
-}
-
-#aktivan{
-    color: white;
-    background-color: #286090;
-    border: none;
+tr.red-projekcija:hover {
+  background-color: #e7e7e7;
 }
 
-#iznad-tablice{
-    margin: 15px;
+#aktivan {
+  color: white;
+  background-color: #286090;
+  border: none;
+}
+
+#iznad-tablice {
+  margin: 15px;
 }
 
 /* search box*/
-#pretraga{
-    display: inline;
+#pretraga {
+  display: inline;
 }
 
-form#pretraga > input[type='submit']{
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    width: auto;
+form#pretraga > input[type="submit"] {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  width: auto;
 }
 
-#search{
-    display: inline;
+#search {
+  display: inline;
 }
 
-#pojam{
-    font-size: 18px;
-    padding: 11px;
-    width: 25%;
+#pojam {
+  font-size: 18px;
+  padding: 11px;
+  width: 25%;
 }
 
-.dijalog, .dijalog-status-racuna, .forma-natpis{
-    display: none;
+.dijalog,
+.dijalog-status-racuna,
+.forma-natpis {
+  display: none;
 }
-#grafovi{
-    margin-top: 20px;
+#grafovi {
+  margin-top: 20px;
 }
-#graf1, #graf2{
-    text-align: left;
+#graf1,
+#graf2 {
+  text-align: left;
 
-    margin: 0 auto;
+  margin: 0 auto;
 }
-#graf1{
-    width: 90%;
-}
-
-#graf2{
-    width: 40%;
+#graf1 {
+  width: 90%;
 }
 
+#graf2 {
+  width: 40%;
+}
 
 /* forma dodaj novi - crud*/
 
-.forma-natpis{
-    text-align: center;
-    font-size: 22px;
+.forma-natpis {
+  text-align: center;
+  font-size: 22px;
 }
 
-#prikaz-forme, #grafovi{
-    text-align: center;
+#prikaz-forme,
+#grafovi {
+  text-align: center;
 }
 
-#forma, #test{
-    width: 50%;
-    margin: 0 auto;
-    text-align: left;
+#forma,
+#test {
+  width: 50%;
+  margin: 0 auto;
+  text-align: left;
 }
 
-label{
-    font-size: 20px;
+label {
+  font-size: 20px;
 }
 
-input, textarea, select, fieldset{
-    font-size: 16px;
-    padding: 5px;
-    margin-bottom: 10px;
-    width: 80%
+input,
+textarea,
+select,
+fieldset {
+  font-size: 16px;
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 80%;
 }
 
-.oznaka-katalog{
-    font-size: 20px;
+.oznaka-katalog {
+  font-size: 20px;
 }
 
-form#novi_zapis > input[type='text'], form#novi_zapis > input[type='number'], #novi_zapis > textarea {
-    font-size: 20px;
-    padding: 5px;
+form#novi_zapis > input[type="text"],
+form#novi_zapis > input[type="number"],
+#novi_zapis > textarea {
+  font-size: 20px;
+  padding: 5px;
 }
 
-#novi_zapis, #csv_forma{
-    margin-top: 15px;
+#novi_zapis,
+#csv_forma {
+  margin-top: 15px;
 }
 
-input:focus, textarea:focus {
-    box-shadow: 0 0 25px hsla(209, 89%, 58%, 0.6);
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 25px hsla(209, 89%, 58%, 0.6);
 }
 
-input[type=checkbox]{
-    width: 20px;
+input[type="checkbox"] {
+  width: 20px;
 }
 
-#poruke, #test{
-    display: none;
-    font-size: 18px;
-    background-color: #d9534f;
-    color: white;
-    padding: 30px;
-    border-radius: 8px;
-    width: 70%;
+#poruke,
+#test {
+  display: none;
+  font-size: 18px;
+  background-color: #d9534f;
+  color: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 70%;
 }
 
 /*rezerviranje*/
 
-#rezerviranje > #broj_rezervacija{
-    font-size : 18px;
-    padding: 10px;
-    margin-top: 10px;
+#rezerviranje > #broj_rezervacija {
+  font-size: 18px;
+  padding: 10px;
+  margin-top: 10px;
 }
 
-#lokacije-naslovnica{
-    text-align: center;
-    margin-top: 2%;
+#lokacije-naslovnica {
+  text-align: center;
+  margin-top: 2%;
 }
 
-#lokacije{
-    padding: 20px;
-    font-size: 20px;
+#lokacije {
+  padding: 20px;
+  font-size: 20px;
 }
 
-.reg-poruka{
-    font-size: 16px;
-    margin-bottom: 20px;
+.reg-poruka {
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
-#zaboravljena-lozinka{
-    cursor: pointer;
+#zaboravljena-lozinka {
+  cursor: pointer;
 }
 
-.zaglavlje{
-    text-transform: capitalize;
+.zaglavlje {
+  text-transform: capitalize;
 }
 
-#gen_pdf{
-    width: 10%;
-    float: right;
+#gen_pdf {
+  width: 10%;
+  float: right;
 }
 
 /*CRUD naslovnica*/
 
-#linkovi-tablice > ul{
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    line-height: 1;
-    margin: 0;
-    padding: 0;
+#linkovi-tablice > ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
 }
 
 #crud-linkovi > li {
-    background-color: #f1f1f1;
-    width: 15%;
-    margin: 10px;
-    text-align: center;
-    padding: 20px;
-    font-size: 20px;
+  background-color: #f1f1f1;
+  width: 15%;
+  margin: 10px;
+  text-align: center;
+  padding: 20px;
+  font-size: 20px;
 }
 
-#crud-linkovi > li > a{
-    text-decoration: none;
-    color: #286090;
+#crud-linkovi > li > a {
+  text-decoration: none;
+  color: #286090;
 }
 
-.lista-slika{
-    display: flex;
-    flex-wrap: wrap;
+.lista-slika {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.slikice{
-    width: 300px;
-    height: 200px;
-    margin: 10px;
+.slikice {
+  width: 300px;
+  height: 200px;
+  margin: 10px;
 }
 
-.print{
-    float: right;
+.print {
+  float: right;
 }
 
-.korisnik-statistika{
-    display: none;
+.korisnik-statistika {
+  display: none;
 }

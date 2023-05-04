@@ -7,8 +7,7 @@
             <div id="podaci">
                 <div>Ime: Boris</div>
                 <div>Prezime: Maduna</div>
-                <div>Broj indeksa: 41335</div>
-                <div>Mail: <a href="mailto:bmaduna@foi.hr">bmaduna@foi.hr</a></div>
+                <div>Mail: <a href="mailto:">mail</a></div>
             </div>
         </section>
     </section>
